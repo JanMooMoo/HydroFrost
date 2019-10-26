@@ -1,8 +1,10 @@
+
+
 .App {
   text-align: center;
 }
 
-.App-logo {
+.WelcomePage-Hydrosmall {
   height: 40vmin;
 }
 
@@ -14,9 +16,177 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  
 }
 
 .App-link {
   color: #09d3ac;
+}
+:root{
+  --gradientYellow:linear-gradient(45deg, rgb(46, 26, 26), rgb(219, 206, 164), rgb(88, 59, 59));
+
+}
+
+html,body {
+  font-family:"Oswald", sans-serif !important;
+  background: rgb(0, 28, 88)!important;
+  color:rgb(231, 215, 69)!important;
+  height:100%;
+  width:100%;
+  overflow-x: hidden;
+}
+
+.text-title{
+  font-family:"Orbitron",cursive;
+  letter-spacing: 0.3rem;
+  text-transform:uppercase;
+  color:white;
+  
+}
+
+.title_1{
+color:rgb(231, 215, 69);
+}
+
+.title_2{
+  color:rgb(39, 141, 224);
+}
+
+.row_underline{
+  border-bottom:1px solid rgb(231, 215, 69);
+  color:white;
+
+
+}
+.row_underline2{
+  border-bottom:1px solid rgb(231, 215, 69);
+  border-top:1px solid rgb(231, 215, 69);
+  color:white;
+  
+}
+
+.col_border{
+  padding-top:4px;
+  border-right:1px solid rgb(231, 215, 69);
+  color:white;
+  overflow:hidden;
+}
+
+.col_no_border{
+  color:white;
+  padding-top:4px;
+
+}
+
+.account_box{
+  background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
+  border:2px solid rgb(219, 206, 164);
+  border-radius:25px;
+  color:rgb(226, 188, 62);
+  padding:20px;
+}
+
+.tab{
+  background: linear-gradient(45deg, rgb(0, 28, 88),rgb(6, 38, 105), rgb(45, 63, 224))!important;
+  border: 1px solid rgb(231, 215, 69); 
+}
+
+.banana{
+  color:rgb(226, 188, 62);
+}
+
+.contract{
+  color:rgb(202, 42, 42);
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: #f0f199!important;
+  background-color: rgb(226, 188, 62)!important;
+  border-color: #dee2e6 #dee2e6 #fff;
+  border-bottom: white!important;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link  {
+  color: rgb(226, 188, 62)!important;
+  background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
+  border-color: #dee2e6 #dee2e6 #fff;
+  border-left:1px solid white!important;
+  border-top:1px solid white!important;
+  border-right:1px solid white!important;
+  border-top-right-radius: 7px!important;
+  border-top-left-radius: 7px!important;
+  padding-left:35px!important;
+  padding-right:35px!important;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover  {
+  color: rgb(226, 188, 62)!important;
+  background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
+  border-color: #dee2e6 #dee2e6 #fff;
+  border-left:1px solid white!important;
+  border-top:1px solid white!important;
+  border-right:1px solid white!important;
+  border-top-right-radius: 7px!important;
+  border-top-left-radius: 7px!important;
+  padding-left:35px!important;
+  padding-right:35px!important;
+  border-bottom: none!important;
+  transform: scale(1.1)!important;
+}
+
+a {
+  color: #c8d2db!important;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.searchbar{
+  border-radius:10px;
+  color:black;
+  width:300px;
+  height:40px;
+  font-size:1.3rem;
+  text-align: center;
+  border: 2px solid rgb(226, 188, 62);
+}
+
+.searchlabel{
+  margin-left:100px;
+  color:rgb(226, 188, 62);
+}
+
+.submit-button{
+
+  border-radius:10px;
+  margin-top:12px;
+  width:300px;
+  height:40px;
+  background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
+  color:rgb(226, 188, 62);
+
+
+}
+
+.frost{
+  font-family:"Orbitron",bold;
+  letter-spacing: 0.4rem;
+  text-transform:uppercase;
+  color:rgb(39, 141, 224);
+  position:inline-block;
+  
+
+}
+
+.banana2{
+  font-family:"Orbitron",bold;
+  letter-spacing: 0.4rem;
+  text-transform:uppercase;
+  color:rgb(39, 141, 224);
+  position:inline-block;
+  color:rgb(226, 188, 62);
+}
+
+.time{
+  color:rgb(128, 224, 39);
+  margin-top:10px;
 }
