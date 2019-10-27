@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import Title from '../Title/Title';
+import Center from 'react-center';
 import {
     
     Container,
@@ -11,6 +12,7 @@ import {
 import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import Moment from 'react-moment';
+import JwPagination from 'jw-react-pagination';
 
 
 let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
@@ -49,8 +51,8 @@ export default class EinToEinSent extends Component {
 
   const snowSolidity =  new web3.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
   if (this._isMounted){
-  this.setState({snowSolidity});}
-  this.setState({ein_transfer_out:[]});
+  this.setState({snowSolidity});
+  this.setState({ein_transfer_out:[]});}
 
   snowSolidity.events.SnowflakeTransfer({filter:{einFrom:this.props.number},fromBlock:0, toBlock:'latest'})
   .on('data',(log)=>{
@@ -86,16 +88,18 @@ export default class EinToEinSent extends Component {
     }
   }
 
+  componentWillUnmount(){
+    this.abortController.abort()
+    this._isMounted = false;}
+
   constructor(props){
     super(props)
-    var exampleItems = Array.from(Array(150).keys()).map(i => ({ id: (i+1), name: 'item ' + (i+1) }));
     this.state = {
         snowSolidity:[],
         account:'',
         balance:'',
         details:'',
         loading:true,
-        exampleItems: exampleItems,
         pageOfItems: [],
         search:'',
         ein_transfer_out:[],
@@ -104,7 +108,14 @@ export default class EinToEinSent extends Component {
         number:'',
         EIN:'',
         
-    }}
+    }
+  
+    this.onChangePage = this.onChangePage.bind(this);
+  }
+  
+  onChangePage(pageOfItems) {
+  this.setState({ pageOfItems });
+  }
 
 
   render(){
@@ -129,7 +140,7 @@ export default class EinToEinSent extends Component {
       
       
       </Row>
-      {this.state.ein_transfer_out.map((send)=>(
+      {this.state.pageOfItems.map((send)=>(
       <Row className ="row_underline" key={send.index}>
 
       <Col className= "col_border" md={2}>
@@ -137,7 +148,7 @@ export default class EinToEinSent extends Component {
       </Col>
 
       <Col className= "col_border" md={2}>
-      <h6 className="time"><Moment unix>{send.blockNumber}</Moment></h6>
+      <h6 className="time"><Moment unix format="LLLL">{send.blockNumber}</Moment></h6>
       </Col>
       
       <Col className= "col_border" md={6}>   
@@ -156,7 +167,7 @@ export default class EinToEinSent extends Component {
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
+       <Row><Col><Center><JwPagination items={this.state.ein_transfer_out} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
    

@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import Title from '../Title/Title';
+import Center from 'react-center';
 import {
     Nav,
     Container,
@@ -11,10 +12,12 @@ import {
 import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import Moment from 'react-moment';
+import JwPagination from 'jw-react-pagination';
 
 
 let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
 let numeral = require('numeral');
+
 
 export default class EthereumToEin extends Component {
 
@@ -44,38 +47,40 @@ async loadBlockchain() {
   
   }
 
+
+
 async loadSnowflake(){
 
   const snowSolidity =  new web3.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
   if (this._isMounted){
 
-  this.setState({snowSolidity});}
-  this.setState({eth_deposit:[]});
+  this.setState({snowSolidity});
+  this.setState({eth_deposit:[]});}
 
-  snowSolidity.events.SnowflakeDeposit({filter:{einTo:this.props.number},fromBlock:0, toBlock:'latest'})
-    .on('data',(log)=>{ 
-      
+  await snowSolidity.events.SnowflakeDeposit({filter:{einTo:this.props.number},fromBlock:0, toBlock:'latest'})
+    .on('data',async (log)=>{  
+  
   let { returnValues: { from, einTo, amount }, blockNumber } = log
-
+ 
   web3.eth.getBlock(blockNumber, (error, block) => {
-  blockNumber = block.timestamp;
-
+  blockNumber = block.timestamp
+ 
+ 
   let values = {from,einTo,amount,blockNumber}
     
   if (this._isMounted){
-  this.setState({eth_deposit:[...this.state.eth_deposit,values]})}
+  this.setState({eth_deposit:[...this.state.eth_deposit,values]})
+  this.setState({loading:false});}
          
 
   var newest = this.state.eth_deposit;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
     this.setState({eth_deposit:newsort});
-    this.setState({loading:false});}
+    }
     
-   })   
-});
-
-    
+   });
+  });
 
   }
 
@@ -88,6 +93,11 @@ componentDidUpdate(prevProps){
   
   }
 }
+
+componentWillUnmount(){
+  this.abortController.abort()
+  this._isMounted = false;}
+  
       
   constructor(props){
     super(props)
@@ -99,7 +109,6 @@ componentDidUpdate(prevProps){
         details:'',
         loading:true,
         exampleItems: exampleItems,
-        pageOfItems: [],
         search:'',
         eth_deposit:[],
         eth_withdraw:[],
@@ -108,21 +117,34 @@ componentDidUpdate(prevProps){
         contractaccount:'',
         number1:'',
         EIN:'',
+        pageOfItems:[],
+        get:''
         
-    }}
+    }
+        this.onChangePage = this.onChangePage.bind(this);
+  }
+  
+  onChangePage(pageOfItems) {
+    this.setState({ pageOfItems });
+  }
 
 
   render(){
+
   return (
    <div>
+     
       <Container>
+        
          <Row><Col><h1> </h1></Col></Row>
          <Row><Col><h1> </h1></Col></Row>
          
      
        <Title name="Hydro Ethereum" title="Deposits To EIN"/>
        
-       <Row><Col><h1> </h1></Col></Row>
+       
+       
+
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
       
@@ -134,15 +156,17 @@ componentDidUpdate(prevProps){
       
       
       </Row>
-      {this.state.eth_deposit.map((deposit,index)=>( 
+      {this.state.pageOfItems.map((deposit,index)=>( 
        <Row className="row_underline" key={index}>
+         
          
              <Col className= "col_border"  md={2}>
              <h4 className="banana">{numeral(deposit.amount/1E18).format('0,0')}</h4>Hydro
              </Col>
+             
 
              <Col className="col_border" md={2}>  
-               <h6 className = "time" ><Moment unix>{deposit.blockNumber}</Moment></h6>
+               <h6 className = "time" ><Moment unix format="LLLL">{deposit.blockNumber}</Moment></h6>
          </Col> 
 
          <Col className="col_border" md={6}>   
@@ -161,7 +185,7 @@ componentDidUpdate(prevProps){
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
+       <Row><Col><Center><JwPagination items={this.state.eth_deposit} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        

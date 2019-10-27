@@ -46,8 +46,8 @@ export default class EinToEinSent extends Component {
 
   const snowSolidity =  new web3.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
   if (this._isMounted){
-  this.setState({snowSolidity});}
-  this.setState({resolvers_added:[]});
+  this.setState({snowSolidity});
+  this.setState({resolvers_added:[]});}
 
   snowSolidity.events.SnowflakeResolverAdded({filter:{ein:this.props.number},fromBlock:0, toBlock:'latest'})
   .on('data',(log)=>{
@@ -82,6 +82,10 @@ export default class EinToEinSent extends Component {
       this.loadSnowflake();
     }
   }
+
+  componentWillUnmount(){
+    this.abortController.abort()
+    this._isMounted = false;}
 
   constructor(props){
     super(props)
@@ -135,7 +139,7 @@ export default class EinToEinSent extends Component {
       </Col>
 
       <Col className= "col_border" md={2} >
-      <h6 className="time"><Moment unix>{ResolverAdded.blockNumber}</Moment></h6>
+      <h6 className="time"><Moment unix format="LLLL">{ResolverAdded.blockNumber}</Moment></h6>
       </Col>
          
       <Col className= "col_border" md={6}>   

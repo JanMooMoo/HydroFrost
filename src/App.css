@@ -72,6 +72,14 @@ color:rgb(231, 215, 69);
   overflow:hidden;
 }
 
+.col_border2{
+  padding-top:4px;
+  border-right:1px solid rgb(231, 215, 69);
+  border-left:1px solid rgb(231, 215, 69);
+  color:white;
+  overflow:hidden;
+}
+
 .col_no_border{
   color:white;
   padding-top:4px;
@@ -79,16 +87,17 @@ color:rgb(231, 215, 69);
 }
 
 .account_box{
-  background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
+  background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
   border:2px solid rgb(219, 206, 164);
   border-radius:25px;
   color:rgb(226, 188, 62);
   padding:20px;
+  margin-top:1rem;
 }
 
 .tab{
   background: linear-gradient(45deg, rgb(0, 28, 88),rgb(6, 38, 105), rgb(45, 63, 224))!important;
-  border: 1px solid rgb(231, 215, 69); 
+  border: 1px solid rgb(241, 241, 238); 
 }
 
 .banana{
@@ -100,14 +109,15 @@ color:rgb(231, 215, 69);
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-  color: #f0f199!important;
-  background-color: rgb(226, 188, 62)!important;
+  color: rgb(226, 188, 62)!important;
+ 
+  background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
   border-color: #dee2e6 #dee2e6 #fff;
-  border-bottom: white!important;
+  border-bottom: none!important;
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link  {
-  color: rgb(226, 188, 62)!important;
+  color: rgb(245, 248, 255)!important;
   background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
   border-color: #dee2e6 #dee2e6 #fff;
   border-left:1px solid white!important;
@@ -120,8 +130,8 @@ color:rgb(231, 215, 69);
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover  {
-  color: rgb(226, 188, 62)!important;
-  background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
+  color: rgb(241, 239, 232)!important;
+  background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88));
   border-color: #dee2e6 #dee2e6 #fff;
   border-left:1px solid white!important;
   border-top:1px solid white!important;
@@ -143,7 +153,7 @@ a {
 .searchbar{
   border-radius:10px;
   color:black;
-  width:300px;
+  width:330px;
   height:40px;
   font-size:1.3rem;
   text-align: center;
@@ -159,7 +169,7 @@ a {
 
   border-radius:10px;
   margin-top:12px;
-  width:300px;
+  width:330px;
   height:40px;
   background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
   color:rgb(226, 188, 62);
@@ -190,3 +200,38 @@ a {
   color:rgb(128, 224, 39);
   margin-top:10px;
 }
+
+.spinner{
+  margin-left:20px;
+}
+
+.page-item.active .page-link{
+  z-index: 1;
+  color: rgb(255, 244, 244)!important;
+  background: linear-gradient(to left, rgb(1, 1, 5), rgb(226, 188, 62))!important;
+  border-color: #007bff;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: rgb(230, 224, 224)!important;
+  border-radius:5px!important;
+  /* background-color: #fff; */
+  border: 1px solid rgb(95, 143, 206)!important;
+  background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88))!important;
+  background:rgb(241, 241, 241)
+}
+
+.ethereumaccount{
+  color:rgb(226, 188, 62);
+  margin-top:10px;
+}
+
+.navlink2{
+  margin-left:9rem;
+}
+

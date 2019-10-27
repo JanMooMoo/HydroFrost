@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import Title from '../Title/Title';
 import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
+import { RotateSpinner } from "react-spinners-kit";
+import Center from 'react-center';
 import {Nav,
   NavItem,
   NavLink,
@@ -35,6 +37,7 @@ export default class WelcomePage extends Component {
   componentWillMount(){
       this._isMounted = true;
       this.loadBlockchain();
+      //this.loadmarket();
 
      }
      
@@ -53,21 +56,31 @@ export default class WelcomePage extends Component {
  
   const snowSolidity =  new web3.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
   if (this._isMounted){
-  this.setState({snowSolidity});}
-
+  this.setState({snowSolidity});
+  this.setState({number:this.state.value})}
   
-  
-
-  this.setState({number:this.state.value})
-
   const get_ein = await snowSolidity.methods.deposits(this.state.number).call();
   if (this._isMounted){
-  this.setState({EIN_balance:(get_ein)/1E18});}
-
+  this.setState({EIN_balance:(get_ein)/1E18})
+  this.setState({loading:false})
+  }
   
-  
-
 }
+
+/*async loadmarket(){
+
+  fetch('https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress=0xebbdf302c940c6bfd49c6b165f457fdb324649bc5&apikey=ZPRBBU2E6Z4QMEXPI7BWMCMVK7I6XZ6ZXE')
+        .then(res => res.json())
+        .then((data) => {
+          this.setState({ contacts: data })
+          console.log("hydro",this.state.contacts)
+        })
+        .catch(console.log)
+}*/
+
+componentWillUnmount(){
+  this.abortController.abort()
+  this._isMounted = false;}
 
   constructor(props){
     super(props)
@@ -86,6 +99,7 @@ export default class WelcomePage extends Component {
         number:'',
         EIN_balance:'',
         value:1,
+        contacts:[]
 
         
         
@@ -99,13 +113,16 @@ export default class WelcomePage extends Component {
   }
 
   handleSubmit(event) {
-      
+    this.setState({loading:true})
     this.loadBlockchain();
     event.preventDefault();
   }
 
 
   render(){
+
+  const {loading} = this.state
+
   return (
    <div>
       <Container>
@@ -119,31 +136,43 @@ export default class WelcomePage extends Component {
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
 
-       <label className="searchlabel">Search for EIN</label>
-       
-      
+       <Row><Col><h4>
+        <Center><RotateSpinner
+                size={60}
+                color="rgb(241, 241, 241)"
+                loading={loading}/>
+        </Center>  
+      </h4></Col></Row>
+
        <Row>
-         <Col><form onSubmit={this.handleSubmit}>
-       
-          <input type="text" value={this.state.value} onChange={this.handleChange} className="searchbar" />
+       <Col md={8}></Col>
+       <Col><label className="searchlabel">Search for EIN</label>
+       </Col>
+       </Row>
+
+
       
-        
-        <input type="submit" value="Submit" className="submit-button"/>
-      </form></Col>
-         <Col></Col>
+      <Row>
+      <Col md={8}></Col><Col><form onSubmit={this.handleSubmit}>
+      <input type="text" value={this.state.value} onChange={this.handleChange} className="searchbar" /> 
+      <input type="submit" value="Submit" className="submit-button"/>
+      </form>
+      </Col>
+      </Row>
+
+      <Row>
+
          <Col>
          <div className="account_box">
+         
            <h2>
-             EIN: {this.state.number}
+             EIN: {this.state.number} 
            </h2>
            <h2>
              Balance: {numeral(this.state.EIN_balance).format('0,0')} Hydro
            </h2>
+           
          </div>
          </Col>
        </Row>
@@ -151,21 +180,7 @@ export default class WelcomePage extends Component {
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-
+       
   <Tabs defaultActiveKey="ethereum_deposit" transition={false} id="noanim-tab-example" >
   
   <Tab eventKey="ethereum_deposit" title="Ethereum Deposits to EIN" className="tab" >

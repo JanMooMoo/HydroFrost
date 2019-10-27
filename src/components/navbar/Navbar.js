@@ -4,6 +4,7 @@ import {Container, Row,Col, Image,} from 'react-bootstrap';
 import {Hydrosmall} from '../../Images/Hydrosmall.png';
 import {logo} from '../../logo.svg';
 import styled from 'styled-components';
+import Center from 'react-center';
 
 
 //<img src={require('../../Images/Hydrosmall.png')} alt="snow" height={70} width={60} className="navbar-brand"/>
@@ -15,16 +16,33 @@ export default class Navbar extends Component {
 
      
 
-     <ul className="navbar-nav align-items-center">
-     <Link to='/' className="nav-link ">
-       <li>
+     <ul className="navbar-nav align-items-center" >
+
+     <li className="navlink2">
+       <Link to='/Ethereum' className="nav-link">
+       <h3 className="banana2">Ethereum</h3><h3 className="frost">Explorer</h3>
+     </Link>
+     </li>
+     
+     <Link to='/' className="nav-link">
+       <li className="navlink2">
        <h3 className="banana2">HYDRO</h3><h3 className="frost">frost</h3>
        </li>
        </Link>
-       <Link to='/' className="nav-link " >
-       
+      
+  
+      
+
+    
+       <li className="navlink2">
+       <Link to='/Snowflake' className="nav-link " >
+       <h3 className="banana2">Snowflake</h3><h3 className="frost">Explorer</h3>
      </Link>
+
+       </li>
      </ul>
+
+     
 
    </NavWrapper>
   );
@@ -32,8 +50,8 @@ export default class Navbar extends Component {
 }
 
 const NavWrapper = styled.nav`
-height:80px;
-max-height:80px;
+height:90px;
+max-height:90px;
 
 background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224),rgb(226, 188, 62))!important;
 background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;

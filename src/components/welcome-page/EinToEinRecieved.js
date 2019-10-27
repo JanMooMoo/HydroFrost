@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import Title from '../Title/Title';
+import Center from 'react-center';
 import {
     Container,
     Row,
@@ -11,6 +12,7 @@ import Web3 from 'web3';
 
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import Moment from 'react-moment';
+import JwPagination from 'jw-react-pagination';
 
 
 let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
@@ -47,8 +49,8 @@ export default class EinToEinRecieved extends Component {
     
   const snowSolidity =  new web3.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
   if (this._isMounted){
-  this.setState({snowSolidity});}
-  this.setState({ein_transfer_in:[]});
+  this.setState({snowSolidity});
+  this.setState({ein_transfer_in:[]});}
 
   snowSolidity.events.SnowflakeTransfer({filter:{einTo:this.props.number},fromBlock:0, toBlock:'latest'})
     .on('data',(log)=>{
@@ -82,6 +84,10 @@ export default class EinToEinRecieved extends Component {
     }
   }
 
+  componentWillUnmount(){
+    this.abortController.abort()
+    this._isMounted = false;}
+
   constructor(props){
     super(props)
     var exampleItems = Array.from(Array(150).keys()).map(i => ({ id: (i+1), name: 'item ' + (i+1) }));
@@ -100,8 +106,14 @@ export default class EinToEinRecieved extends Component {
         number:'',
         EIN:'',
         
-    }}
+    }
+    this.onChangePage = this.onChangePage.bind(this);
+}
 
+onChangePage(pageOfItems) {
+  // update local state with new page of items
+  this.setState({ pageOfItems });
+}
 
   render(){
   return (
@@ -125,7 +137,7 @@ export default class EinToEinRecieved extends Component {
       
       
       </Row>
-      {this.state.ein_transfer_in.map((recieved,index)=>(
+      {this.state.pageOfItems.map((recieved,index)=>(
        <Row className ="row_underline" key={index}>
 
         <Col className= "col_border" md={2}>   
@@ -133,7 +145,7 @@ export default class EinToEinRecieved extends Component {
         </Col>
 
         <Col className= "col_border" md={2}>   
-        <h6 className="time"><Moment unix>{recieved.blockNumber}</Moment></h6>
+        <h6 className="time"><Moment unix format="LLLL">{recieved.blockNumber}</Moment></h6>
         </Col>
 
         <Col className= "col_border" md={6}>   
@@ -152,7 +164,7 @@ export default class EinToEinRecieved extends Component {
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
+       <Row><Col><Center><JwPagination items={this.state.ein_transfer_in} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
    
