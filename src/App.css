@@ -111,8 +111,7 @@ color:rgb(231, 215, 69);
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
   color: rgb(226, 188, 62)!important;
- 
-  background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
+  background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88));
   border-color: #dee2e6 #dee2e6 #fff;
   border-bottom: none!important;
 }
@@ -214,9 +213,11 @@ a {
 
 .page-item.active .page-link{
   z-index: 1;
-  color: rgb(255, 244, 244)!important;
+  color: rgb(226, 188, 62)!important;
   background: linear-gradient(to left, rgb(1, 1, 5), rgb(226, 188, 62))!important;
+  background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88))!important;
   border-color: #007bff;
+  border:1px solid rgb(226, 188, 62)!important;
 }
 
 .page-link {

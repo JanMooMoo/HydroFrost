@@ -141,7 +141,7 @@ onChangePage(pageOfItems) {
        <Row className ="row_underline" key={index}>
 
         <Col className= "col_border" md={2}>   
-        <h4 className="banana"> {numeral(recieved.amount/1E18).format('0,0')}</h4>Hydro
+        <h4 className="banana"> {numeral(recieved.amount/1E18).format('0,0.00')}</h4>Hydro
         </Col>
 
         <Col className= "col_border" md={2}>   

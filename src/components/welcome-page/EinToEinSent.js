@@ -144,7 +144,7 @@ export default class EinToEinSent extends Component {
       <Row className ="row_underline" key={send.index}>
 
       <Col className= "col_border" md={2}>
-      <h4 className="banana">{numeral(send.amount/1E18).format('0,0')}</h4>Hydro
+      <h4 className="banana">{numeral(send.amount/1E18).format('0,0.00')}</h4>Hydro
       </Col>
 
       <Col className= "col_border" md={2}>

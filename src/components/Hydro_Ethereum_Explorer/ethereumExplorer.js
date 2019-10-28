@@ -139,7 +139,7 @@ export default class ethereumExplorer extends Component {
         {this.state.pageOfItems.map((transfer,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border2" md={2}>
-        <h4 className="banana">{numeral(transfer._amount/1E18).format('0,0')} </h4>Hydro
+        <h4 className="banana">{numeral(transfer._amount/1E18).format('0,0.00')} </h4>Hydro
         </Col>
 
         <Col className= "col_border" md={2}>
