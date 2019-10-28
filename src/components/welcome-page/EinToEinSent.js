@@ -59,8 +59,8 @@ export default class EinToEinSent extends Component {
   
   let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
 
-  web3.eth.getBlock(blockNumber, (error, block) => {
-  blockNumber = block.timestamp;
+  //web3.eth.getBlock(blockNumber, (error, block) => {
+  //blockNumber = block.timestamp;
   
   let values = {einFrom,einTo,amount,blockNumber}
 
@@ -75,7 +75,7 @@ export default class EinToEinSent extends Component {
     
    });   
           
-  })
+ // })
 
   }
 
@@ -134,7 +134,7 @@ export default class EinToEinSent extends Component {
       
       <Row className ="row_underline2">
       <Col className ="col_border" md={2}><h3 >Amount</h3></Col>
-      <Col className ="col_border" md={2}><h3 >Date</h3></Col>
+      <Col className ="col_border" md={2}><h3 >Block</h3></Col>
       <Col className= "col_border" md={6}><h3>Sent To</h3></Col>
       <Col className= "col_no_border" md={2}><h3>From</h3></Col>
       
@@ -147,9 +147,9 @@ export default class EinToEinSent extends Component {
       <h4 className="banana">{numeral(send.amount/1E18).format('0,0.00')}</h4>Hydro
       </Col>
 
-      <Col className= "col_border" md={2}>
-      <h6 className="time"><Moment unix format="LLLL">{send.blockNumber}</Moment></h6>
-      </Col>
+      <Col className= "col_border" md={2}>   
+        <h6 className="time">{send.blockNumber}</h6>mined
+        </Col>
       
       <Col className= "col_border" md={6}>   
       <div>

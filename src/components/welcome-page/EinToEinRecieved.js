@@ -57,8 +57,8 @@ export default class EinToEinRecieved extends Component {
   
   let { returnValues: { einFrom, einTo, amount }, blockNumber } = log
 
-  web3.eth.getBlock(blockNumber, (error, block) => {
-  blockNumber = block.timestamp;
+  //web3.eth.getBlock(blockNumber, (error, block) => {
+ // blockNumber = block.timestamp;
 
   let values = {einFrom,einTo,amount,blockNumber}
 
@@ -73,7 +73,7 @@ export default class EinToEinRecieved extends Component {
     
    });   
           
-     });
+     
     }
 
   componentDidUpdate(prevProps){
@@ -115,6 +115,10 @@ onChangePage(pageOfItems) {
   this.setState({ pageOfItems });
 }
 
+/*<Col className= "col_border" md={2}>   
+<h6 className="time"><Moment unix format="LLLL">{recieved.blockNumber}</Moment></h6>
+</Col>*/
+
   render(){
   return (
    <div>
@@ -131,7 +135,7 @@ onChangePage(pageOfItems) {
       
       <Row className ="row_underline2">
       <Col className= "col_border" md={2}><h3>Amount</h3></Col>
-      <Col className= "col_border" md={2}><h3>Date</h3></Col>
+      <Col className= "col_border" md={2}><h3>Block</h3></Col>
       <Col className= "col_border" md={6}><h3>Recieved By</h3></Col>
       <Col className="col_no_border" md={2}><h3>From</h3></Col>
       
@@ -145,7 +149,7 @@ onChangePage(pageOfItems) {
         </Col>
 
         <Col className= "col_border" md={2}>   
-        <h6 className="time"><Moment unix format="LLLL">{recieved.blockNumber}</Moment></h6>
+        <h6 className="time">{recieved.blockNumber}</h6>mined
         </Col>
 
         <Col className= "col_border" md={6}>   

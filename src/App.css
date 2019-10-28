@@ -93,8 +93,8 @@ color:rgb(231, 215, 69);
   color:rgb(226, 188, 62);
   padding:20px;
   margin-top:1rem;
-  height:164px;
-  min-height:160px;
+  height:180px;
+  min-height:180px!important;
 }
 
 .tab{
@@ -162,13 +162,42 @@ a {
   border: 2px solid rgb(219, 206, 164);
 }
 
-.searchlabel{
-  margin-left:100px;
-  color:rgb(219, 206, 164);
+
+
+@media (max-width:500px) {
+  .searchbar{
+    border-radius:10px;
+    color:black;
+    width:11rem;
+    height:40px;
+    font-size:1.3rem;
+    text-align: center;
+    border: 2px solid rgb(219, 206, 164)
+  }
 }
 
-.submit-button{
+@media (min-width:600px) {
+  .searchbar{
+    border-radius:10px;
+    color:black;
+    width:330px!important;
+    height:40px;
+    font-size:1.3rem;
+    text-align: center;
+    border: 2px solid rgb(219, 206, 164)
+  }
+}
 
+
+.searchlabel{
+  text-align: center;
+  color:rgb(219, 206, 164);
+  margin-left:2px;
+}
+
+
+
+.submit-button{
   border-radius:10px;
   margin-top:12px;
   width:330px;
@@ -176,8 +205,29 @@ a {
   background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
   color:rgb(226, 188, 62);
 
-
 }
+
+@media (max-width:500px) {
+  .submit-button{
+    border-radius:10px;
+    margin-top:12px;
+    width:11rem;
+    height:40px;
+    background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
+    color:rgb(226, 188, 62);
+  }
+  }
+
+  @media (min-width:600px) {
+    .submit-button{
+      border-radius:10px;
+      margin-top:12px;
+      width:330px!important;
+      height:40px;
+      background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
+      color:rgb(226, 188, 62);
+    }
+    }
 
 .frost{
   font-family:"Orbitron",bold;
@@ -203,7 +253,16 @@ a {
   letter-spacing: 0.2rem;
   color:rgb(226, 188, 62);
   position:inline-block;
+ 
+}
 
+.grass3{
+  font-family:"Orbitron",bold;
+  text-transform:uppercase;
+  letter-spacing: 0.2rem;
+  color:rgb(128, 224, 39);
+  position:inline-block;
+ 
 }
 
 .banana2{

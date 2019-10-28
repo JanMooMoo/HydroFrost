@@ -57,8 +57,8 @@ export default class EinToEthereum extends Component {
 
   let { returnValues: { einFrom,to, amount }, blockNumber } = log
 
-  web3.eth.getBlock(blockNumber, (error, block) => {
-  blockNumber = block.timestamp;
+  //web3.eth.getBlock(blockNumber, (error, block) => {
+  //blockNumber = block.timestamp;
 
   let values = {einFrom,to,amount,blockNumber}
 
@@ -73,7 +73,7 @@ export default class EinToEthereum extends Component {
     
    });   
     
-  });
+  //});
   }
 
   componentDidUpdate(prevProps){
@@ -130,7 +130,7 @@ export default class EinToEthereum extends Component {
       
       <Row className ="row_underline2">
       <Col className= "col_border" md={2}><h3>Amount</h3></Col>
-      <Col className= "col_border" md={2}><h3>Date</h3></Col>
+      <Col className= "col_border" md={2}><h3>Block</h3></Col>
       <Col className= "col_border" md={6}><h3>To</h3></Col>
       <Col className="col_no_border" md={2}><h3>From</h3></Col>
       
@@ -142,9 +142,8 @@ export default class EinToEthereum extends Component {
         <h4 className="banana">{numeral(withdraw.amount/1E18).format('0,0.00')} </h4>Hydro
         </Col>
 
-        <Col className= "col_border" md={2}>
-        <h6 className="time">
-        <Moment unix format="LLLL">{withdraw.blockNumber}</Moment></h6>
+        <Col className= "col_border" md={2}>   
+        <h6 className="time">{withdraw.blockNumber}</h6>mined
         </Col>
 
         <Col className= "col_border" md={6}>   

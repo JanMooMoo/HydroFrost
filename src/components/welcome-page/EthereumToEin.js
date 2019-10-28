@@ -62,8 +62,8 @@ async loadSnowflake(){
   
   let { returnValues: { from, einTo, amount }, blockNumber } = log
  
-  web3.eth.getBlock(blockNumber, (error, block) => {
-  blockNumber = block.timestamp
+ // web3.eth.getBlock(blockNumber, (error, block) => {
+ // blockNumber = block.timestamp
  
  
   let values = {from,einTo,amount,blockNumber}
@@ -80,7 +80,7 @@ async loadSnowflake(){
     }
     
    });
-  });
+  //});
 
   }
 
@@ -150,7 +150,7 @@ componentWillUnmount(){
       
       <Row className ="row_underline2">
       <Col className= "col_border" md={2}><h3 >Amount</h3></Col>
-      <Col className= "col_border" md={2}><h3 >Date</h3></Col>
+      <Col className= "col_border" md={2}><h3 >Block</h3></Col>
       <Col className= "col_border" md={6}><h3>From</h3></Col>
       <Col className="col_no_border" md={2}><h3>To</h3></Col>
       
@@ -165,9 +165,9 @@ componentWillUnmount(){
              </Col>
              
 
-             <Col className="col_border" md={2}>  
-               <h6 className = "time" ><Moment unix format="LLLL">{deposit.blockNumber}</Moment></h6>
-         </Col> 
+             <Col className= "col_border" md={2}>   
+        <h6 className="time">{deposit.blockNumber}</h6>mined
+        </Col>
 
          <Col className="col_border" md={6}>   
          <div>
