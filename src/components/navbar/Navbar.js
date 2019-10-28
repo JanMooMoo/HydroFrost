@@ -5,26 +5,63 @@ import {Hydrosmall} from '../../Images/Hydrosmall.png';
 import {logo} from '../../logo.svg';
 import styled from 'styled-components';
 import Center from 'react-center';
+import SideDrawer from './SideDrawer';
+import Backdrop from './Backdrop';
 
 
 //<img src={require('../../Images/Hydrosmall.png')} alt="snow" height={70} width={60} className="navbar-brand"/>
 
 export default class Navbar extends Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+        toggle: false,
+        sideDrawerOpen:false,
+        isOldestFirst:true,
+        loading:true,
+
+     }
+} 
+
+drawerToggleClickHandler =()=>{
+  this.setState((prevState)=>{
+    return {sideDrawerOpen: !prevState.sideDrawerOpen};
+  });
+ };
+
+ backdropClickHandler =()=>{
+  this.setState({sideDrawerOpen:false});
+  
+ };
+
+
+
   render(){
+
+    let sideDrawer;
+let backdrop;
+if(this.state.sideDrawerOpen){
+  sideDrawer=<SideDrawer/>;
+  backdrop=<Backdrop click={this.backdropClickHandler}/>
+}
   return (
+
+    
    <NavWrapper className="navbar navbar-expand-sm px-sm-5">
 
      
-
+<Container>
+<Center>
      <ul className="navbar-nav align-items-center" >
-
-     <li className="navlink2">
-       <Link to='/Ethereum' className="nav-link">
+     
+     <li className="navlink2 ">
+       <Link to='/Ethereum' className="nav-link ml-3">
        <h3 className="leaf">Ethereum</h3><h3 className="frost">Explorer</h3>
      </Link>
      </li>
      
-     <Link to='/' className="nav-link">
+     <Link to='/' className="nav-link ml-3">
        <li className="navlink2">
        <h3 className="banana2">HYDRO</h3><h3 className="frost">frost</h3>
        </li>
@@ -35,14 +72,28 @@ export default class Navbar extends Component {
 
     
        <li className="navlink2">
-       <Link to='/Snowflake' className="nav-link " >
+       <Link to='/Snowflake' className="nav-link ml-3" >
        <h3 className="leaf">Snowflake</h3><h3 className="frost">Explorer</h3>
      </Link>
 
        </li>
      </ul>
 
-     
+     <button className="Nav_btn ml-4" onClick={this.props.drawerClickHandler}>
+            <h1></h1>
+                <div className="drawerline"/>
+                    <h1></h1> 
+                <div className="drawerline"/>
+                    <h1></h1> 
+                <div className="drawerline"/>
+                    <h1></h1>
+                <div className="drawerline"/>
+                    <h1></h1>  
+                    {sideDrawer}
+                    {backdrop}
+            </button>  
+</Center>
+            </Container>
 
    </NavWrapper>
   );
@@ -63,7 +114,7 @@ z-index:500;
 
 
 .nav-link{
-  font-size:1.3rem;
+  font-size:1.2rem;
   text-transform:capitalize;
   color:white;
   cursor:pointer;
