@@ -15,6 +15,7 @@ import {Nav,
   } from 'react-bootstrap';
 
 import {logo} from '../../logo.svg';
+import {Hydrosmall} from '../../Images/Hydrosmall.png';
 import EthereumToEin from './EthereumToEin';
 import EinToEthereum from './EinToEthereum';
 import EinToEinSent from './EinToEinSent';
@@ -37,6 +38,7 @@ export default class WelcomePage extends Component {
   componentWillMount(){
       this._isMounted = true;
       this.loadBlockchain();
+      this.loadmarket();
       //this.loadmarket();
 
      }
@@ -67,16 +69,17 @@ export default class WelcomePage extends Component {
   
 }
 
-/*async loadmarket(){
+async loadmarket(){
 
-  fetch('https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress=0xebbdf302c940c6bfd49c6b165f457fdb324649bc5&apikey=ZPRBBU2E6Z4QMEXPI7BWMCMVK7I6XZ6ZXE')
+  fetch('https://api.coingecko.com/api/v3/simple/price?ids=Hydro&vs_currencies=usd&include_market_cap=true&include_24hr_change=ture&include_last_updated_at=ture')
         .then(res => res.json())
         .then((data) => {
-          this.setState({ contacts: data })
-          console.log("hydro",this.state.contacts)
+          if (this._isMounted){
+          this.setState({ marketcap: data.hydro })}
+          
         })
         .catch(console.log)
-}*/
+}
 
 componentWillUnmount(){
   this.abortController.abort()
@@ -99,7 +102,7 @@ componentWillUnmount(){
         number:'',
         EIN_balance:'',
         value:1,
-        contacts:[]
+        marketcap:[]
 
         
         
@@ -160,9 +163,10 @@ componentWillUnmount(){
       </form>
       </Col>
       </Row>
+      
 
       <Row>
-
+    
          <Col>
          <div className="account_box">
          
@@ -170,12 +174,15 @@ componentWillUnmount(){
              EIN: {this.state.number} 
            </h2>
            <h2>
-             Balance: {numeral(this.state.EIN_balance).format('0,0')} Hydro
+             Balance: {numeral(this.state.EIN_balance).format('0,0.00')} Hydro
            </h2>
            
          </div>
          </Col>
+       
+         <Col md={4} className="market"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={50} width={40} className="navbar-brand"/><h5>Hyrdo Marketcap: USD {numeral(this.state.marketcap.usd_market_cap).format('0,0.00')}</h5> <h5 className="marketprice"> Hyrdo Price: USD {numeral(this.state.marketcap.usd).format('0,0.0000000000')} </h5></Col>
        </Row>
+       
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
