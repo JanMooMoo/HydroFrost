@@ -56,12 +56,12 @@ if(this.state.sideDrawerOpen){
      <ul className="navbar-nav align-items-center" >
      
      <li className="navlink2 ">
-       <Link to='/Ethereum' className="nav-link ml-3">
+       <Link to='/Ethereum' className="nav-link ml-1">
        <h3 className="leaf">Ethereum</h3><h3 className="frost">Explorer</h3>
      </Link>
      </li>
      
-     <Link to='/' className="nav-link ml-3">
+     <Link to='/' className="nav-link ml-5">
        <li className="navlink2">
        <h3 className="banana2">HYDRO</h3><h3 className="frost">frost</h3>
        </li>
@@ -72,7 +72,7 @@ if(this.state.sideDrawerOpen){
 
     
        <li className="navlink2">
-       <Link to='/Snowflake' className="nav-link ml-3" >
+       <Link to='/Snowflake' className="nav-link ml-5" >
        <h3 className="leaf">Snowflake</h3><h3 className="frost">Explorer</h3>
      </Link>
 
