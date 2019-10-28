@@ -104,6 +104,7 @@ color:rgb(231, 215, 69);
   color:rgb(226, 188, 62);
 }
 
+
 .contract{
   color:rgb(202, 42, 42);
 }
@@ -183,7 +184,6 @@ a {
   text-transform:uppercase;
   color:rgb(39, 141, 224);
   position:inline-block;
-  
 
 }
 
@@ -191,9 +191,16 @@ a {
   font-family:"Orbitron",bold;
   letter-spacing: 0.4rem;
   text-transform:uppercase;
-  color:rgb(39, 141, 224);
   position:inline-block;
   color:rgb(226, 188, 62);
+}
+
+.leaf{
+  font-family:"Orbitron",bold;
+  letter-spacing: 0.4rem;
+  text-transform:uppercase;
+  position:inline-block;
+  color:rgb(252, 246, 246);
 }
 
 .time{

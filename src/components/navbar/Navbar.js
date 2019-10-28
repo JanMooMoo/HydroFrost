@@ -20,7 +20,7 @@ export default class Navbar extends Component {
 
      <li className="navlink2">
        <Link to='/Ethereum' className="nav-link">
-       <h3 className="banana2">Ethereum</h3><h3 className="frost">Explorer</h3>
+       <h3 className="leaf">Ethereum</h3><h3 className="frost">Explorer</h3>
      </Link>
      </li>
      
@@ -36,7 +36,7 @@ export default class Navbar extends Component {
     
        <li className="navlink2">
        <Link to='/Snowflake' className="nav-link " >
-       <h3 className="banana2">Snowflake</h3><h3 className="frost">Explorer</h3>
+       <h3 className="leaf">Snowflake</h3><h3 className="frost">Explorer</h3>
      </Link>
 
        </li>
