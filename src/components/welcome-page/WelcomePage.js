@@ -170,17 +170,17 @@ componentWillUnmount(){
          <Col>
          <div className="account_box">
          
-           <h2>
+           <h4 className="banana3">
              EIN: {this.state.number} 
-           </h2>
-           <h2>
+           </h4>
+           <h4 className="banana3">
              Balance: {numeral(this.state.EIN_balance).format('0,0.00')} Hydro
-           </h2>
+           </h4>
            
          </div>
          </Col>
        
-         <Col md={4} className="market"><h6 className="grass">Hyrdo Marketcap: USD {numeral(this.state.marketcap.usd_market_cap).format('0,0.00')}</h6> <img src={require('../../Images/Hydrosmall.png')} alt="snow" height={50} width={40} className="navbar-brand"/> <h6 className="grass"> Hyrdo Price: USD {numeral(this.state.marketcap.usd).format('0,0.0000000000')} </h6></Col>
+         <Col md={4} className="market"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={50} width={40} className="navbar-brand"/><h6 className="grass2">Hyrdo Marketcap: USD {numeral(this.state.marketcap.usd_market_cap).format('0,0.00')}</h6><h6 className="banana3"> Hyrdo Price: USD {numeral(this.state.marketcap.usd).format('0,0.0000000000')} </h6></Col>
        </Row>
        
        <Row><Col><h1> </h1></Col></Row>

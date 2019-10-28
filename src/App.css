@@ -188,18 +188,20 @@ a {
 
 }
 
-.frost2{
+.banana3{
   font-family:"Orbitron",bold;
   text-transform:uppercase;
-  color:rgb(39, 141, 224);
+  letter-spacing: 0.2rem;
+  color:#ffffff;
   position:inline-block;
 
 }
 
-.frost3{
+.grass2{
   font-family:"Orbitron",bold;
   text-transform:uppercase;
-  color:rgb(226, 188, 62);
+  letter-spacing: 0.2rem;
+  color:rgb(128, 224, 39);
   position:inline-block;
 
 }
