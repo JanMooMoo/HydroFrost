@@ -93,6 +93,8 @@ color:rgb(231, 215, 69);
   color:rgb(226, 188, 62);
   padding:20px;
   margin-top:1rem;
+  height:164px;
+  min-height:160px;
 }
 
 .tab{
@@ -186,6 +188,22 @@ a {
 
 }
 
+.frost2{
+  font-family:"Orbitron",bold;
+  text-transform:uppercase;
+  color:rgb(39, 141, 224);
+  position:inline-block;
+
+}
+
+.frost3{
+  font-family:"Orbitron",bold;
+  text-transform:uppercase;
+  color:rgb(226, 188, 62);
+  position:inline-block;
+
+}
+
 .banana2{
   font-family:"Orbitron",bold;
   letter-spacing: 0.4rem;
@@ -200,6 +218,14 @@ a {
   text-transform:uppercase;
   position:inline-block;
   color:rgb(252, 246, 246);
+}
+
+.grass{
+  font-family:"Orbitron",bold;
+  letter-spacing: 0.4rem;
+  text-transform:uppercase;
+  position:inline-block;
+  color:rgb(128, 224, 39);
 }
 
 .time{
@@ -247,7 +273,7 @@ a {
   background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
   border:2px solid rgb(219, 206, 164);
   border-radius:25px;
-  color:rgb(95, 226, 62);
+  color:rgb(241, 241, 241);
   margin-right:13px;
   padding-top:10px;
   padding-bottom:10px;
@@ -258,7 +284,7 @@ a {
 }
 
 .marketprice{
-  color:rgb(95, 226, 62);
+  color:rgb(253, 253, 253);
   margin-top:10px;
 }
 
