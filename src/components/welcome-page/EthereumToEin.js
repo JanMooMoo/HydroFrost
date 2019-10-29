@@ -11,11 +11,14 @@ import {
 
 import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
+import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Moment from 'react-moment';
 import JwPagination from 'jw-react-pagination';
 
 
-let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+let web2 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+
 let numeral = require('numeral');
 
 
@@ -27,6 +30,8 @@ export default class EthereumToEin extends Component {
 
   componentWillMount(){
       this._isMounted = true;
+      if (this._isMounted){this.setState({check_network: this.props.mainnet});}
+
 
      }
      
@@ -51,9 +56,42 @@ async loadBlockchain() {
 
 async loadSnowflake(){
 
-  const snowSolidity =  new web3.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
-  if (this._isMounted){
+  this.setState({check_network:this.props.mainnet})
 
+  if(this.state.check_network == true){
+    const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
+
+    if (this._isMounted){
+      this.setState({snowSolidity});
+      this.setState({eth_deposit:[]});}
+    
+      await snowSolidity.events.SnowflakeDeposit({filter:{einTo:this.props.number},fromBlock:7728191, toBlock:'latest'})
+        .on('data',async (log)=>{  
+      
+      let { returnValues: { from, einTo, amount }, blockNumber } = log
+     
+     // web3.eth.getBlock(blockNumber, (error, block) => {
+     // blockNumber = block.timestamp
+     
+     
+      let values = {from,einTo,amount,blockNumber}
+        
+      if (this._isMounted){
+      this.setState({eth_deposit:[...this.state.eth_deposit,values]})
+      this.setState({loading:false});}
+             
+    
+      var newest = this.state.eth_deposit;
+      var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+      if (this._isMounted){
+        this.setState({eth_deposit:newsort});
+        }
+     });
+  }
+else{
+  const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
+
+  if (this._isMounted){
   this.setState({snowSolidity});
   this.setState({eth_deposit:[]});}
 
@@ -81,17 +119,25 @@ async loadSnowflake(){
     
    });
   //});
-
   }
+}
 
+componentWillReceiveProps(nextProps){
+  if (this._isMounted){
+    this.setState({check_network:nextProps.mainnet});
+   }
+}
   
 componentDidUpdate(prevProps){
 
   if(this.props.number !== prevProps.number){
     this.setState({number:this.props.number})
     this.loadSnowflake()
-  
   }
+   if(this.props.mainnet !== prevProps.mainnet){
+      this.setState({mainet:this.props.mainnet})
+      this.loadSnowflake()
+    } 
 }
 
 componentWillUnmount(){
@@ -118,7 +164,8 @@ componentWillUnmount(){
         number1:'',
         EIN:'',
         pageOfItems:[],
-        get:''
+        get:'',
+        check_network:'',
         
     }
         this.onChangePage = this.onChangePage.bind(this);

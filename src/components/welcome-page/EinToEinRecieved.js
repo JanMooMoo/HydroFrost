@@ -9,13 +9,15 @@ import {
 } from 'react-bootstrap';
 
 import Web3 from 'web3';
-
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
+import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Moment from 'react-moment';
 import JwPagination from 'jw-react-pagination';
 
 
-let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+let web2 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+
 let numeral = require('numeral');
 
 export default class EinToEinRecieved extends Component {
@@ -23,11 +25,10 @@ export default class EinToEinRecieved extends Component {
   _isMounted = false;
   abortController = new AbortController()
   
-
   componentWillMount(){
       this._isMounted = true;
-      this.loadBlockchain();
-
+      if (this._isMounted){this.setState({check_network: this.props.mainnet});}
+  
      }
      
      
@@ -47,12 +48,16 @@ export default class EinToEinRecieved extends Component {
 
   async loadSnowflake(){
     
-  const snowSolidity =  new web3.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
+  this.setState({check_network:this.props.mainnet})
+
+  if(this.state.check_network == true){
+    const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
+
   if (this._isMounted){
   this.setState({snowSolidity});
   this.setState({ein_transfer_in:[]});}
 
-  snowSolidity.events.SnowflakeTransfer({filter:{einTo:this.props.number},fromBlock:0, toBlock:'latest'})
+  snowSolidity.events.SnowflakeTransfer({filter:{einTo:this.props.number},fromBlock:7728191, toBlock:'latest'})
     .on('data',(log)=>{
   
   let { returnValues: { einFrom, einTo, amount }, blockNumber } = log
@@ -72,14 +77,54 @@ export default class EinToEinRecieved extends Component {
     this.setState({loading:false});}
     
    });   
-          
-     
+
+
     }
+
+else{
+  const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
+  if (this._isMounted){
+  this.setState({snowSolidity});
+  this.setState({ein_transfer_in:[]});}
+
+  snowSolidity.events.SnowflakeTransfer({filter:{einTo:this.props.number},fromBlock:0, toBlock:'latest'})
+    .on('data',(log)=>{
+     
+  let { returnValues: { einFrom, einTo, amount }, blockNumber } = log
+
+  //web3.eth.getBlock(blockNumber, (error, block) => {
+ // blockNumber = block.timestamp;
+
+  let values = {einFrom,einTo,amount,blockNumber}
+  
+  if (this._isMounted){
+  this.setState({ein_transfer_in:[...this.state.ein_transfer_in,values]})}   
+  
+  var newest = this.state.ein_transfer_in;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+    this.setState({ein_transfer_in:newsort});
+    this.setState({loading:false});}
+    
+   });   
+  }      
+     
+  }
+
+  componentWillReceiveProps(nextProps){
+    if (this._isMounted){
+      this.setState({check_network:nextProps.mainnet});
+     }
+  }
 
   componentDidUpdate(prevProps){
 
     if(this.props.number !== prevProps.number){
       this.setState({number:this.props.number})
+      this.loadSnowflake()
+    }
+    if(this.props.mainnet !== prevProps.mainnet){
+      this.setState({mainnet:this.props.mainnet})
       this.loadSnowflake()
     }
   }
@@ -104,7 +149,9 @@ export default class EinToEinRecieved extends Component {
         contract:'',
         contractaccount:'',
         number:'',
+        mainnet:'',
         EIN:'',
+        check:'',
         
     }
     this.onChangePage = this.onChangePage.bind(this);

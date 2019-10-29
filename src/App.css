@@ -41,6 +41,7 @@ html,body {
   letter-spacing: 0.3rem;
   text-transform:uppercase;
   color:white;
+  margin-top:3px;
   text-shadow:2px 2px 0 black,
   1px 3px 0 #000,
   1px 2px 0 #000,
@@ -214,7 +215,7 @@ a {
     height:40px;
     font-size:1.3rem;
     text-align: center;
-    border: 2px solid rgb(219, 206, 164)
+    border: 2px solid rgb(219, 206, 164);
   }
 }
 
@@ -313,8 +314,7 @@ a {
   letter-spacing: 0.2rem;
   color:rgb(226, 188, 62);
   position:inline-block;
-  
- 
+
 }
 
 .grass3{

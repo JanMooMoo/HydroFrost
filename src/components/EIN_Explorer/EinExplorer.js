@@ -11,12 +11,15 @@ import {
 
 import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
+import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Moment from 'react-moment';
 import { RotateSpinner } from "react-spinners-kit";
 import JwPagination from 'jw-react-pagination';
 
 
-let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+let web2 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+
 let numeral = require('numeral');
 let polltry = [];
 
@@ -26,40 +29,31 @@ export default class EinExplorer extends Component {
   abortController = new AbortController()
   
 
-  componentWillMount(){
+  componentDidMount(){
       this._isMounted = true;
-      this.loadBlockchain();
+
       this.loadSnowflake();
 
      }
      
-     
-  async loadBlockchain() { 
-         
-  let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
-      
-  const network = await web3.eth.net.getNetworkType();
+
+
+ async loadSnowflake(){
+   
+  if(this.state.mainnet_ein == true){
+  const snowSolidity =  await new web3.eth.Contract(main1484_ABI, main1484_Address);
   if (this._isMounted){
-  this.setState({net:network});}
-  if(this.state.net == "rinkeby" && this._isMounted){
-    this.setState({networkmessage:true})
-    
-    }
- 
-  }
+  this.setState({snowSolidity});
+  this.setState({hydroTransfer:[]});}
 
- loadSnowflake(){
-
-  const snowSolidity =  new web3.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
-  if (this._isMounted){
-  this.setState({snowSolidity});}
-
-  snowSolidity.events.SnowflakeTransfer({fromBlock:5038504, toBlock:'latest'})
+// await snowSolidity.events.SnowflakeTransfer({fromBlock:7728191, toBlock:'latest'})
+  await snowSolidity.events.SnowflakeTransfer({fromBlock:8438504, toBlock:'latest'})
   .on('data', (log) => {
-      
+  
     let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
     
     let values = {einFrom,einTo, amount,blockNumber}
+    
     
     if (this._isMounted){
         this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
@@ -71,8 +65,35 @@ export default class EinExplorer extends Component {
         this.setState({loading:false});}
 
   })
+} else{
+
   
+  const snowSolidity =  await new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
+
+  if (this._isMounted){
+    this.setState({snowSolidity});
+    this.setState({hydroTransfer:[]});}
+
+  await snowSolidity.events.SnowflakeTransfer({fromBlock:5000000, toBlock:'latest'})
+  .on('data', (log) => {
+  
+    let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
+    
+    let values = {einFrom,einTo, amount,blockNumber}
+   
+    
+    if (this._isMounted){
+        this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
+
+        var newest = this.state.hydroTransfer;
+        var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+        if (this._isMounted){
+        this.setState({hydroTransfer:newsort});
+        this.setState({loading:false});}
+        })
+}
   }
+
 
   componentWillUnmount(){
     this.abortController.abort()
@@ -95,9 +116,16 @@ export default class EinExplorer extends Component {
         contractaccount:'',
         number:'',
         EIN:'',
+        mainnet_ein:true,
         
     }
         this.onChangePage = this.onChangePage.bind(this);
+  }
+
+  toggleChange = () => {
+    this.setState({mainnet_ein: !this.state.mainnet_ein},() => { this.loadSnowflake()
+    this.setState({loading:true})
+    });
   }
   
   onChangePage(pageOfItems) {
@@ -115,10 +143,11 @@ export default class EinExplorer extends Component {
          <Row><Col><h1> </h1></Col></Row>
          
      
-       <Title name="Hydro Transactions" title="From Snowflake Accounts -Rinkeby-"/>
-       
+       <Title name={ !this.state.mainnet_ein ? "Rinkeby":"Main"} title="Network"/>
+
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
+       <Row><Col><input type="checkbox" checked={this.state.mainnet_ein} onChange={this.toggleChange}></input></Col></Row>
        <Row><Col><h4>
         <Center><RotateSpinner
                 size={60}
@@ -155,7 +184,7 @@ export default class EinExplorer extends Component {
         </Col>
 
         <Col className="col_border" md={4}>
-        <h4 className="ethereumaccount">{transfer.einFrom}</h4>From Snowflake Account
+        <h4 className="ethereumaccount">{transfer.einFrom}</h4>From Snowflake 
         </Col>
          
         </Row>))}

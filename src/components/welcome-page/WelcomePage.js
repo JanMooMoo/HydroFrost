@@ -2,8 +2,10 @@ import React,{Component} from 'react';
 import Title from '../Title/Title';
 import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
+import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import { RotateSpinner } from "react-spinners-kit";
 import Center from 'react-center';
+import './togglebutton.css';
 import {Nav,
   NavItem,
   NavLink,
@@ -22,7 +24,7 @@ import EinToEinSent from './EinToEinSent';
 import EinToEinRecieved from './EinToEinRecieved';
 import ResolversAdded from './ResolversAdded';
 
-let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+
 let polltry = [];
 let einTo = [];
 let einFrom = [];
@@ -45,27 +47,45 @@ export default class WelcomePage extends Component {
      
      
   async loadBlockchain() { 
-         
-  let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
-
-  const network = await web3.eth.net.getNetworkType();
-  if (this._isMounted){
-  this.setState({net:network});}
-  if(this.state.net == "rinkeby" && this._isMounted){
-    this.setState({networkmessage:true})
   
+  const{mainnet} = this.state
+
+  if(this.state.mainnet == true){
+  const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+  const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
+  if (this._isMounted){
+  this.setState({snowSolidity});
+  this.setState({number:this.state.value})}
+  
+  const get_ein = await snowSolidity.methods.deposits(this.state.value).call();
+  if (this._isMounted){
+  this.setState({EIN_balance:(get_ein)/1E18})
+  this.setState({loading:false})
   }
- 
+}
+else 
+{
+  const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
   const snowSolidity =  new web3.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
   if (this._isMounted){
   this.setState({snowSolidity});
   this.setState({number:this.state.value})}
   
-  const get_ein = await snowSolidity.methods.deposits(this.state.number).call();
+  const get_ein = await snowSolidity.methods.deposits(this.state.value).call();
   if (this._isMounted){
   this.setState({EIN_balance:(get_ein)/1E18})
   this.setState({loading:false})
   }
+}
+
+
+  /*const network = await web3.eth.net.getNetworkType();
+  if (this._isMounted){
+  this.setState({net:network});}
+  if(this.state.net == "rinkeby" && this._isMounted){
+    this.setState({networkmessage:true})
+  
+  }*/
   
 }
 
@@ -102,7 +122,8 @@ componentWillUnmount(){
         number:'',
         EIN_balance:'',
         value:1,
-        marketcap:[]
+        marketcap:[],
+        mainnet:true,
 
         
         
@@ -112,7 +133,9 @@ componentWillUnmount(){
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    
+    this.setState({value: event.target.value},() => {
+      console.log()});
   }
 
   handleSubmit(event) {
@@ -121,6 +144,12 @@ componentWillUnmount(){
     event.preventDefault();
   }
 
+  toggleChange = () => {
+    this.setState({mainnet: !this.state.mainnet},() => { this.loadBlockchain()
+    this.setState({loading:true})
+    });
+
+  }
 
   render(){
 
@@ -132,11 +161,12 @@ componentWillUnmount(){
          <Row><Col></Col></Row>
          <Row><Col></Col></Row>
          
+        
      
-       <Title name="Rinkeby" title="Network"/>
+       <Title name={ !this.state.mainnet ? "Rinkeby":"Main"} title="Network"/>
        
        
-       <Row><Col><h1> </h1></Col></Row>
+       <Row><Col><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
 
@@ -192,27 +222,32 @@ componentWillUnmount(){
   
   <Tab eventKey="ethereum_deposit" title="Ethereum Deposits to EIN" className="tab" >
    <EthereumToEin
-   number={this.state.number}/>
+   number={this.state.number}
+   mainnet={this.state.mainnet}/>
   </Tab>
 
   <Tab eventKey="ethereum_withdraw" title="EIN withdraw to Ethereum" className="tab">
    <EinToEthereum
-   number={this.state.number}/>
+   number={this.state.number}
+   mainnet={this.state.mainnet}/>
   </Tab>
 
   <Tab eventKey="ein_sent" title="Sent" className="tab">
    <EinToEinSent
-   number={this.state.number}/>
+   number={this.state.number}
+   mainnet={this.state.mainnet}/>
   </Tab>
 
   <Tab eventKey="ein_recieved" title="Recieved" className="tab">
    <EinToEinRecieved
-   number={this.state.number}/>
+   number={this.state.number}
+   mainnet={this.state.mainnet}/>
   </Tab>
 
   <Tab eventKey="resolver_added" title="Resolver Added" className="tab">
    <ResolversAdded
-   number={this.state.number}/>
+   number={this.state.number}
+   mainnet={this.state.mainnet}/>
   </Tab>
   
 </Tabs>

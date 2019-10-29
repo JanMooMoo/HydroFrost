@@ -51,16 +51,18 @@ export default class ethereumExplorer extends Component {
   async loadSnowflake(){
 
   const snowSolidity =  new web3.eth.Contract(HydroToken_ABI, HydroToken_Address);
+  
   if (this._isMounted){
   this.setState({snowSolidity});}
 
+  //snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})
   snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})
   .on('data', (log) => {
       
     let { returnValues: { _from, _to, _amount }, blockNumber } = log
     
     let values = {_from,_to,_amount,blockNumber}
-    
+   
     if (this._isMounted){
         this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
 
