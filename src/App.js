@@ -62,7 +62,7 @@ drawerToggleClickHandler =()=>{
       <Switch>
         
         <Route exact path="/" component ={WelcomePage}/>
-        <Route path="/details" component ={DetailsPage}/>
+        <Route path="/Details" component ={DetailsPage}/>
         <Route path="/Ethereum" component ={ethereumExplorer}/>
         <Route path="/Snowflake" component ={EinExplorer}/>
         <Route component ={DefaultPage}/>
