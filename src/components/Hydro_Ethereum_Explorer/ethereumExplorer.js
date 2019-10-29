@@ -132,9 +132,9 @@ export default class ethereumExplorer extends Component {
       
       <Row className ="row_underline2">
       <Col className= "col_border2" md={2}><h3>Amount</h3></Col>
-      <Col className= "col_border" md={2}><h3>Block</h3></Col>
-      <Col className= "col_border" md={4}><h3>To</h3></Col>
-      <Col className="col_border" md={4}><h3>From</h3></Col>
+      <Col className= "col_border2" md={2}><h3>Block</h3></Col>
+      <Col className= "col_border2" md={4}><h3>To</h3></Col>
+      <Col className="col_border2" md={4}><h3>From</h3></Col>
       
       
         </Row>
@@ -144,19 +144,19 @@ export default class ethereumExplorer extends Component {
         <h4 className="banana">{numeral(transfer._amount/1E18).format('0,0.00')} </h4>Hydro
         </Col>
 
-        <Col className= "col_border" md={2}>
+        <Col className= "col_border2" md={2}>
         <h6 className="time">
         {transfer.blockNumber}</h6>Mined
         </Col>
 
-        <Col className= "col_border" md={4}>   
+        <Col className= "col_border2" md={4}>   
         <div>
         <h6 className="ethereumaccount">{transfer._to}
         </h6>To Ethereum Account
         </div>
         </Col>
 
-        <Col className="col_border" md={4}>
+        <Col className="col_border2" md={4}>
         <h6 className="ethereumaccount">{transfer._from}</h6>From Ethereum Account
         </Col>
          

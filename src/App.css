@@ -82,6 +82,19 @@ color:rgb(231, 215, 69);
   1px 2px 0 #000,
   2px 3px 0 #000;
 }
+@media (max-width:767px) {
+.col_border{
+  padding-top:4px;
+  border-right:none;
+  color:white;
+  overflow:hidden;
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
+}
+}
 
 .col_border2{
   padding-top:4px;

@@ -159,9 +159,9 @@ export default class EinExplorer extends Component {
       
       <Row className ="row_underline2">
       <Col className= "col_border2" md={2}><h3>Amount</h3></Col>
-      <Col className= "col_border" md={2}><h3>Block</h3></Col>
-      <Col className= "col_border" md={4}><h3>To</h3></Col>
-      <Col className="col_border" md={4}><h3>From</h3></Col>
+      <Col className= "col_border2" md={2}><h3>Block</h3></Col>
+      <Col className= "col_border2" md={4}><h3>To</h3></Col>
+      <Col className="col_border2" md={4}><h3>From</h3></Col>
       
       
         </Row>
@@ -171,19 +171,19 @@ export default class EinExplorer extends Component {
         <h4 className="ethereumaccount">{numeral(transfer.amount/1E18).format('0,0.00')} </h4>Hydro
         </Col>
 
-        <Col className= "col_border" md={2}>
+        <Col className= "col_border2" md={2}>
         <h4 className="time">
         {transfer.blockNumber}</h4>Mined
         </Col>
 
-        <Col className= "col_border" md={4}>   
+        <Col className= "col_border2" md={4}>   
         <div>
         <h4 className="ethereumaccount">{transfer.einTo}
         </h4>To Snowflake
         </div>
         </Col>
 
-        <Col className="col_border" md={4}>
+        <Col className="col_border2" md={4}>
         <h4 className="ethereumaccount">{transfer.einFrom}</h4>From Snowflake 
         </Col>
          
