@@ -41,6 +41,11 @@ html,body {
   letter-spacing: 0.3rem;
   text-transform:uppercase;
   color:white;
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
   
 }
 
@@ -59,30 +64,42 @@ color:rgb(231, 215, 69);
 
 }
 .row_underline2{
-  border-bottom:1px solid rgb(231, 215, 69);
-  border-top:1px solid rgb(231, 215, 69);
+  border-bottom:1px solid rgb(219, 206, 164);
+  border-top:1px solid rgb(219, 206, 164);
   color:white;
   
 }
 
 .col_border{
   padding-top:4px;
-  border-right:1px solid rgb(231, 215, 69);
+  border-right:1px solid rgb(219, 206, 164);
   color:white;
   overflow:hidden;
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
 }
 
 .col_border2{
   padding-top:4px;
-  border-right:1px solid rgb(231, 215, 69);
-  border-left:1px solid rgb(231, 215, 69);
+  border-right:1px solid rgb(219, 206, 164);
+  border-left:1px solid rgb(219, 206, 164);
   color:white;
   overflow:hidden;
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
+
 }
 
 .col_no_border{
   color:white;
   padding-top:4px;
+  
 
 }
 
@@ -95,11 +112,21 @@ color:rgb(231, 215, 69);
   margin-top:1rem;
   height:180px;
   min-height:180px!important;
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
 }
 
 .tab{
   background: linear-gradient(45deg, rgb(0, 28, 88),rgb(6, 38, 105), rgb(45, 63, 224))!important;
-  border: 1px solid rgb(241, 241, 238); 
+  border: 1px solid rgb(219, 206, 164); 
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
 }
 
 .banana{
@@ -121,23 +148,27 @@ color:rgb(231, 215, 69);
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link  {
   color: rgb(245, 248, 255)!important;
   background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
-  border-color: #dee2e6 #dee2e6 #fff;
-  border-left:1px solid white!important;
-  border-top:1px solid white!important;
-  border-right:1px solid white!important;
+  border-left:1px solid rgb(219, 206, 164)!important;
+  border-top:1px solid rgb(219, 206, 164)!important;
+  border-right:1px solid rgb(219, 206, 164)!important;
   border-top-right-radius: 7px!important;
   border-top-left-radius: 7px!important;
   padding-left:35px!important;
   padding-right:35px!important;
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover  {
   color: rgb(241, 239, 232)!important;
   background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88));
   border-color: #dee2e6 #dee2e6 #fff;
-  border-left:1px solid white!important;
-  border-top:1px solid white!important;
-  border-right:1px solid white!important;
+  border-left:1px solid rgb(219, 206, 164)!important;
+  border-top:1px solid rgb(219, 206, 164)!important;
+  border-right:1px solid rgb(219, 206, 164)!important;
   border-top-right-radius: 7px!important;
   border-top-left-radius: 7px!important;
   padding-left:35px!important;
@@ -155,7 +186,7 @@ a {
 .searchbar{
   border-radius:10px;
   color:black;
-  width:330px;
+  width:100%;
   height:40px;
   font-size:1.3rem;
   text-align: center;
@@ -163,12 +194,11 @@ a {
 }
 
 
-
-@media (max-width:500px) {
+@media (min-width:768px) {
   .searchbar{
     border-radius:10px;
     color:black;
-    width:11rem;
+    width:6rem;
     height:40px;
     font-size:1.3rem;
     text-align: center;
@@ -176,56 +206,81 @@ a {
   }
 }
 
-@media (min-width:600px) {
+@media (min-width:1000px) {
   .searchbar{
     border-radius:10px;
     color:black;
-    width:330px!important;
+    width:330px;
     height:40px;
     font-size:1.3rem;
     text-align: center;
     border: 2px solid rgb(219, 206, 164)
   }
 }
-
 
 .searchlabel{
   text-align: center;
   color:rgb(219, 206, 164);
   margin-left:2px;
+  
 }
 
-
+@media (min-width:1000px) {
+  .searchlabel{
+    text-align: center;
+    color:rgb(219, 206, 164);
+    width:330px;
+    text-align: center;
+    
+  }
+}
 
 .submit-button{
   border-radius:10px;
   margin-top:12px;
-  width:330px;
+  width:100%;
   height:40px;
   background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
   color:rgb(226, 188, 62);
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
 
 }
 
-@media (max-width:500px) {
+
+@media (min-width:768px) {
   .submit-button{
     border-radius:10px;
     margin-top:12px;
-    width:11rem;
+    width:6rem;
     height:40px;
     background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
     color:rgb(226, 188, 62);
+    text-shadow:2px 2px 0 black,
+    1px 3px 0 #000,
+    1px 2px 0 #000,
+    1px 2px 0 #000,
+    2px 3px 0 #000;
   }
   }
 
-  @media (min-width:600px) {
+
+  @media (min-width:1200px) {
     .submit-button{
       border-radius:10px;
       margin-top:12px;
-      width:330px!important;
+      width:330px;
       height:40px;
       background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
       color:rgb(226, 188, 62);
+      text-shadow:2px 2px 0 black,
+      1px 3px 0 #000,
+      1px 2px 0 #000,
+      1px 2px 0 #000,
+      2px 3px 0 #000;
     }
     }
 
@@ -235,6 +290,11 @@ a {
   text-transform:uppercase;
   color:rgb(39, 141, 224);
   position:inline-block;
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
 
 }
 
@@ -253,6 +313,7 @@ a {
   letter-spacing: 0.2rem;
   color:rgb(226, 188, 62);
   position:inline-block;
+  
  
 }
 
@@ -262,6 +323,11 @@ a {
   letter-spacing: 0.2rem;
   color:rgb(128, 224, 39);
   position:inline-block;
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
  
 }
 
@@ -271,6 +337,11 @@ a {
   text-transform:uppercase;
   position:inline-block;
   color:rgb(226, 188, 62);
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
 }
 
 .leaf{
@@ -279,6 +350,11 @@ a {
   text-transform:uppercase;
   position:inline-block;
   color:rgb(252, 246, 246);
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
 }
 
 .grass{
@@ -342,6 +418,11 @@ a {
   margin-top:15px;
   margin-bottom:10px;
   text-align: center;
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
   
 
 }
