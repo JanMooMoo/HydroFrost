@@ -2,16 +2,16 @@ input[type="checkbox"]
 {
     position:relative;
     width:120px;
-    height:40px;
+    height:37px;
     -webkit-appearance:none;
     background:linear-gradient(0deg,rgb(226, 188, 62),rgb(170, 141, 46));
     outline:none;
-    border-radius:20px;
+    border-radius:10px;
     box-shadow:0 0 0 2px rgb(177, 166, 132), 0 0 0 3px rgb(0, 28, 88), 
     inset 0 0 10px rgba(0,0,0,1), 0 5px 20px rgba(0,0,0,.5), 
     inset 0 0 15px rgba(0,0,0,.2);
     cursor: pointer;
-    margin-top:5px;
+    margin-bottom:7px;
 
 }
 
@@ -30,9 +30,9 @@ input[type="checkbox"]:before
     top:0;
     left:0;
     width:80px;
-    height:40px;
+    height:37px;
     background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
-    border-radius:20px;
+    border-radius:10px;
     box-shadow:0 0 0 1px #232323;
     transform:scale(.98,.96);
     transition: .5s;

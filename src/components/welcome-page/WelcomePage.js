@@ -158,18 +158,18 @@ componentWillUnmount(){
   return (
    <div>
       <Container>
-         <Row><Col></Col></Row>
-         <Row><Col></Col></Row>
+         <Row><Col><h1> </h1></Col></Row>
+         <Row><Col><h1> </h1></Col></Row>
          
         
      
        <Title name={ !this.state.mainnet ? "Rinkeby":"Main"} title="Network"/>
        
        
-       <Row><Col><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-
+       <Row className={ !this.state.loading? "hidden":"frost"}><Col><h1> </h1></Col></Row>
+       <Row className={ !this.state.loading? "hidden":"frost"}><Col><h1> </h1></Col></Row>
+     
+    
        <Row><Col><h4>
         <Center><RotateSpinner
                 size={60}
@@ -187,7 +187,7 @@ componentWillUnmount(){
 
       
       <Row>
-      <Col md={8}></Col><Col><form onSubmit={this.handleSubmit}>
+      <Col md={8}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col><Col><form onSubmit={this.handleSubmit}>
       <input type="text" value={this.state.value} onChange={this.handleChange} className="searchbar" /> 
       <input type="submit" value="Submit" className="submit-button"/>
       </form>
