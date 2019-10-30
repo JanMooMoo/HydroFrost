@@ -39,6 +39,7 @@ export default class SnowflakeExplorerPage extends Component {
       this._isMounted = true;
       this.loadBlockchain();
       this.loadmarket();
+      this.loadPreviousPrice();
       //this.loadmarket();
 
      }
@@ -89,6 +90,20 @@ async loadmarket(){
         .catch(console.log)
 }
 
+
+async loadPreviousPrice(){
+
+  fetch('https://api.coingecko.com/api/v3/coins/ethereum/contract/0xd26114cd6EE289AccF82350c8d8487fedB8A0C07/market_chart/?vs_currency=USD&days=7')
+        .then(res => res.json())
+        .then((data) => {
+         // console.log(data)
+          if (this._isMounted){
+          this.setState({ previousPrice: data.hydro })}
+          
+        })
+        .catch(console.log)
+}
+
 componentWillUnmount(){
   this.abortController.abort()
   this._isMounted = false;}
@@ -112,6 +127,7 @@ componentWillUnmount(){
         value:1,
         marketcap:[],
         mainnet:true,
+        previousPrice:[],
 
         
         

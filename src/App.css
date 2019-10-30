@@ -29,6 +29,8 @@
 
 html,body {
   font-family:"Oswald", sans-serif !important;
+  background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
+
   background: rgb(0, 28, 88)!important;
   color:rgb(231, 215, 69)!important;
   height:100%;
@@ -59,7 +61,7 @@ color:rgb(231, 215, 69);
 }
 
 .row_underline{
-  border-bottom:1px solid rgb(231, 215, 69);
+  border-bottom:1px solid rgb(219, 206, 164);
   color:white;
 
 
@@ -462,6 +464,8 @@ a {
 .hidden{
   display:none!important
 }
+
+
 
 
 

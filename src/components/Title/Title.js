@@ -10,7 +10,8 @@ export default function Title ({name,title}){
                
                {name} {title}
                
-            </h1>       
+            </h1>   
+                     
        </div>
    </div>
   );

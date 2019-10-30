@@ -82,7 +82,7 @@ componentDidMount(){
     const blockNumber = await web2.eth.getBlockNumber();
     if (this._isMounted){
     this.setState({blocks:blockNumber - 800000});}
-    console.log("block", this.state.blocks)
+    
     if (this._isMounted){
     this.setState({hydroTransfer:[]});}
 
@@ -183,7 +183,7 @@ componentDidMount(){
       <Col className= "col_border2" md={2}><h3>Amount</h3></Col>
       <Col className= "col_border2" md={2}><h3>Block</h3></Col>
       <Col className= "col_border2" md={4}><h3>To</h3></Col>
-      <Col className="col_border2" md={4}><h3>From</h3></Col>
+      <Col className="col_no_border" md={4}><h3>From</h3></Col>
       
       
         </Row>
@@ -205,7 +205,7 @@ componentDidMount(){
         </div>
         </Col>
 
-        <Col className="col_border2" md={4}>
+        <Col className="col_no_border" md={4}>
         <h4 className="ethereumaccount">ID: {transfer.einFrom}</h4>From Snowflake 
         </Col>
          

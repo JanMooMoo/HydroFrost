@@ -182,7 +182,7 @@ export default class SnowflakeWithdraw extends Component {
       <Col className= "col_border2" md={2}><h3>Amount</h3></Col>
       <Col className= "col_border2" md={2}><h3>Block</h3></Col>
       <Col className= "col_border2" md={6}><h3>To</h3></Col>
-      <Col className="col_border2" md={2}><h3>From</h3></Col>
+      <Col className="col_no_border" md={2}><h3>From</h3></Col>
       
       
         </Row>
@@ -202,7 +202,7 @@ export default class SnowflakeWithdraw extends Component {
         </h4>To Ethereum Account
         </Col>
 
-        <Col className="col_border2" md={2}>
+        <Col className="col_no_border" md={2}>
         <h4 className="ethereumaccount">ID: {transfer.einFrom}</h4>From Snowflake Account
         </Col>
          
