@@ -85,7 +85,7 @@ export default class SnowflakeWithdraw extends Component {
     
     this.setState({hydroWithdraw:[]});}
 
-    snowSolidity.events.SnowflakeDeposit({fromBlock:5000000, toBlock:'latest'})
+    snowSolidity.events.SnowflakeWithdraw({fromBlock:5000000, toBlock:'latest'})
   .on('data', (log) => {
    
     let { returnValues: { einFrom, to, amount }, blockNumber } = log
