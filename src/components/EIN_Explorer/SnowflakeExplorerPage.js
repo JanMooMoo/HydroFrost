@@ -5,7 +5,6 @@ import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import { RotateSpinner } from "react-spinners-kit";
 import Center from 'react-center';
-import './togglebutton.css';
 import {Nav,
   NavItem,
   NavLink,
@@ -18,11 +17,10 @@ import {Nav,
 
 import {logo} from '../../logo.svg';
 import {Hydrosmall} from '../../Images/Hydrosmall.png';
-import EthereumToEin from './EthereumToEin';
-import EinToEthereum from './EinToEthereum';
-import EinToEinSent from './EinToEinSent';
-import EinToEinRecieved from './EinToEinRecieved';
-import ResolversAdded from './ResolversAdded';
+import EinExplorer from './EinExplorer';
+import SnowflakeDeposit from './SnowflakeDeposit';
+import SnowflakeWithdraw from './SnowflakeWithdraw';
+
 
 
 let polltry = [];
@@ -31,7 +29,7 @@ let einFrom = [];
 let numeral = require('numeral');
 
 
-export default class WelcomePage extends Component {
+export default class SnowflakeExplorerPage extends Component {
 
   _isMounted = false;
   abortController = new AbortController()
@@ -57,11 +55,6 @@ export default class WelcomePage extends Component {
   this.setState({snowSolidity});
   this.setState({number:this.state.value})}
   
-  const get_ein = await snowSolidity.methods.deposits(this.state.value).call();
-  if (this._isMounted){
-  this.setState({EIN_balance:(get_ein)/1E18})
-  this.setState({loading:false})
-  }
 }
 else 
 {
@@ -71,11 +64,6 @@ else
   this.setState({snowSolidity});
   this.setState({number:this.state.value})}
   
-  const get_ein = await snowSolidity.methods.deposits(this.state.value).call();
-  if (this._isMounted){
-  this.setState({EIN_balance:(get_ein)/1E18})
-  this.setState({loading:false})
-  }
 }
 
 
@@ -163,48 +151,14 @@ componentWillUnmount(){
          
         
      
-       <Title name={ !this.state.mainnet ? "Rinkeby":"Main"} title="Network"/>
+       <Title name={ !this.state.mainnet ? "Snowflake Rinkeby":"Snowflake Main"} title="Network"/>
        
        
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
-       
-       
-       
-     
-     
-    
-       <Row><Col><h4>
-        <Center><RotateSpinner
-                size={60}
-                color="rgb(241, 241, 241)"
-                loading={loading}/>
-        </Center>  
-      </h4></Col></Row>
-
-      <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
-      <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
-      <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
-      <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
-      <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
-      <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
-      <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
-      
-      
-     
-
-       <Row>
-       <Col md={8}></Col>
-       <Col><label className="searchlabel">Search for EIN</label>
-       </Col>
-       </Row>
       
       <Row>
-      <Col md={8}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col><Col><form onSubmit={this.handleSubmit}>
-      <input type="text" value={this.state.value} onChange={this.handleChange} className="searchbar" /> 
-      <input type="submit" value="Submit" className="submit-button"/>
-      </form>
-      </Col>
+      <Col md={8}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col>
       </Row>
       
 
@@ -213,12 +167,13 @@ componentWillUnmount(){
          <Col>
          <div className="account_box">
          
-           <h4 className="banana3">
-             EIN: {this.state.number} 
-           </h4>
-           <h4 className="banana3">
-             Balance: {numeral(this.state.EIN_balance).format('0,0.00')} Hydro
-           </h4>
+           <Center> <h4 className="banana3">
+           Welcome to Hydro Frost
+           </h4></Center>
+           <Center> <h6 className="banana3">
+           Explorer exclusively made for Snowflake 
+           </h6></Center>
+          
            
          </div>
          </Col>
@@ -231,37 +186,27 @@ componentWillUnmount(){
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        
-  <Tabs defaultActiveKey="ethereum_deposit" transition={false} id="noanim-tab-example" >
+  <Tabs defaultActiveKey="Ein_transactions" transition={false} id="noanim-tab-example" >
   
-  <Tab eventKey="ethereum_deposit" title="Ethereum Deposits to EIN" className="tab" >
-   <EthereumToEin
+  <Tab eventKey="Ein_transactions" title="EIN Transactions" className="tab" >
+   <EinExplorer
    number={this.state.number}
    mainnet={this.state.mainnet}/>
   </Tab>
 
-  <Tab eventKey="ethereum_withdraw" title="EIN withdraw to Ethereum" className="tab">
-   <EinToEthereum
+  <Tab eventKey="Ein_Deposits" title="Snowflake Deposit" className="tab" >
+   <SnowflakeDeposit
    number={this.state.number}
    mainnet={this.state.mainnet}/>
   </Tab>
 
-  <Tab eventKey="ein_sent" title="Sent" className="tab">
-   <EinToEinSent
+  <Tab eventKey="Ein_Withdraw" title="Snowflake Withdraw" className="tab" >
+   <SnowflakeWithdraw
    number={this.state.number}
    mainnet={this.state.mainnet}/>
   </Tab>
 
-  <Tab eventKey="ein_recieved" title="Recieved" className="tab">
-   <EinToEinRecieved
-   number={this.state.number}
-   mainnet={this.state.mainnet}/>
-  </Tab>
-
-  <Tab eventKey="resolver_added" title="Resolver Added" className="tab">
-   <ResolversAdded
-   number={this.state.number}
-   mainnet={this.state.mainnet}/>
-  </Tab>
+  
   
 </Tabs>
 <Row><Col><h1> </h1></Col></Row>

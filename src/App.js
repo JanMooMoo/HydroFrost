@@ -10,6 +10,7 @@ import ethereumExplorer from './components/Hydro_Ethereum_Explorer/ethereumExplo
 import EinExplorer from './components/EIN_Explorer/EinExplorer'
 import SideDrawer from './components/navbar/SideDrawer';
 import Backdrop from './components/navbar/Backdrop';
+import SnowflakeExplorerPage from './components/EIN_Explorer/SnowflakeExplorerPage'
 
 
 
@@ -64,7 +65,7 @@ drawerToggleClickHandler =()=>{
         <Route exact path="/" component ={WelcomePage}/>
         <Route path="/Details" component ={DetailsPage}/>
         <Route path="/Ethereum" component ={ethereumExplorer}/>
-        <Route path="/Snowflake" component ={EinExplorer}/>
+        <Route path="/Snowflake" component ={SnowflakeExplorerPage}/>
         <Route component ={DefaultPage}/>
     
       </Switch>

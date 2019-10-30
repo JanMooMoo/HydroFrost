@@ -34,19 +34,7 @@ export default class EinToEthereum extends Component {
      }
      
      
-  async loadBlockchain() { 
-         
-  let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
-      
-  const network = await web3.eth.net.getNetworkType();
-  if (this._isMounted){
-  this.setState({net:network});}
-  if(this.state.net == "rinkeby" && this._isMounted){
-    this.setState({networkmessage:true})
-    
-    }
- 
-  }
+  
 
   async loadSnowflake(){
 

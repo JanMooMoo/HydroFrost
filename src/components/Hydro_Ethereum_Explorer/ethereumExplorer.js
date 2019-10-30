@@ -26,7 +26,7 @@ export default class ethereumExplorer extends Component {
   abortController = new AbortController()
   
 
-  componentWillMount(){
+  componentDidMount(){
       this._isMounted = true;
       this.loadBlockchain();
       this.loadSnowflake();
@@ -55,6 +55,10 @@ export default class ethereumExplorer extends Component {
   if (this._isMounted){
   this.setState({snowSolidity});}
 
+  const blockNumber = await web3.eth.getBlockNumber();
+  if (this._isMounted){
+  this.setState({blocks:blockNumber - 800000});}
+
   //snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})
   snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})
   .on('data', (log) => {
@@ -62,7 +66,7 @@ export default class ethereumExplorer extends Component {
     let { returnValues: { _from, _to, _amount }, blockNumber } = log
     
     let values = {_from,_to,_amount,blockNumber}
-   
+  
     if (this._isMounted){
         this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
 
@@ -117,7 +121,7 @@ export default class ethereumExplorer extends Component {
          <Row><Col><h1> </h1></Col></Row>
          
      
-       <Title name="Hydro Transactions" title="From Ethereum Accounts -Main Net-"/>
+       <Title name="Ethereum" title="Main Network"/>
        
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>

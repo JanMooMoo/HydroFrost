@@ -11,8 +11,8 @@ import {
 
 import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
-import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Moment from 'react-moment';
+import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import { RotateSpinner } from "react-spinners-kit";
 import JwPagination from 'jw-react-pagination';
 
@@ -23,52 +23,52 @@ let web2 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.i
 let numeral = require('numeral');
 let polltry = [];
 
-export default class EinExplorer extends Component {
+export default class SnowflakeWithdraw extends Component {
 
   _isMounted = false;
   abortController = new AbortController()
   
 
-componentDidMount(){
+  componentDidMount(){
       this._isMounted = true;
-      if (this._isMounted){ this.setState({check_network: this.props.mainnet},()=>this.loadSnowflake());}
-    
+     
+    if (this._isMounted){ this.setState({check_network:this.props.mainnet},()=>this.loadSnowflake());}
+      
      }
+     
+
 
  async loadSnowflake(){
+    if (this._isMounted){
+    this.setState({check_network:this.props.mainnet})}
 
-  if (this._isMounted){
-  this.setState({check_network:this.props.mainnet})}
+    if(this.state.check_network == true){
+    const snowSolidity =   new web3.eth.Contract(main1484_ABI, main1484_Address);
+    if (this._isMounted){
+    this.setState({snowSolidity});
 
-  if(this.state.check_network == true){
-  const snowSolidity =   new web3.eth.Contract(main1484_ABI, main1484_Address);
-  if (this._isMounted){
-  this.setState({snowSolidity});}
+    const blockNumber = await web3.eth.getBlockNumber();
+    if (this._isMounted){
+    this.setState({blocks:blockNumber - 800000});}
 
-  const blockNumber = await web3.eth.getBlockNumber();
-  if (this._isMounted){
-  this.setState({blocks:blockNumber - 800000});}
-  if (this._isMounted){
-  this.setState({hydroTransfer:[]});}
-  
-  
-  snowSolidity.events.SnowflakeTransfer({fromBlock:8438504, toBlock:'latest'})
+    this.setState({hydroWithdraw:[]});}
 
-
+  snowSolidity.events.SnowflakeWithdraw({fromBlock:8338504, toBlock:'latest'})
+  //snowSolidity.events.SnowflakeDeposit({fromBlock:7728191, toBlock:'latest'})
   .on('data', (log) => {
   
-    let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
-    
-    let values = {einFrom,einTo, amount,blockNumber}
+    let { returnValues: { einFrom, to, amount }, blockNumber } = log
+
+    let values = {einFrom,to, amount,blockNumber}
     
     
     if (this._isMounted){
-        this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
+        this.setState({hydroWithdraw:[...this.state.hydroWithdraw,values]})}
 
-        var newest = this.state.hydroTransfer;
+        var newest = this.state.hydroWithdraw;
         var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
         if (this._isMounted){
-        this.setState({hydroTransfer:newsort});
+        this.setState({hydroWithdraw:newsort});
         this.setState({loading:false});}
 
   })
@@ -76,31 +76,30 @@ componentDidMount(){
 
   const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
 
-    if (this._isMounted){
-    this.setState({snowSolidity});}
+  if (this._isMounted){
+    this.setState({snowSolidity});
 
     const blockNumber = await web2.eth.getBlockNumber();
     if (this._isMounted){
     this.setState({blocks:blockNumber - 800000});}
-    console.log("block", this.state.blocks)
-    if (this._isMounted){
-    this.setState({hydroTransfer:[]});}
-
-  snowSolidity.events.SnowflakeTransfer({fromBlock:5000000, toBlock:'latest'})
-  .on('data', (log) => {
-  
-    let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
     
-    let values = {einFrom,einTo, amount,blockNumber}
+    this.setState({hydroWithdraw:[]});}
+
+    snowSolidity.events.SnowflakeDeposit({fromBlock:5000000, toBlock:'latest'})
+  .on('data', (log) => {
+   
+    let { returnValues: { einFrom, to, amount }, blockNumber } = log
+    
+    let values = {einFrom,to, amount,blockNumber}
    
     
     if (this._isMounted){
-        this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
+        this.setState({hydroWithdraw:[...this.state.hydroWithdraw,values]})}
 
-        var newest = this.state.hydroTransfer;
+        var newest = this.state.hydroWithdraw;
         var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
         if (this._isMounted){
-        this.setState({hydroTransfer:newsort});
+        this.setState({hydroWithdraw:newsort});
         this.setState({loading:false});}
         })
 }
@@ -138,11 +137,11 @@ componentDidMount(){
         loading:true,
         pageOfItems: [],
         search:'',
-        hydroTransfer:[],
+        hydroWithdraw:[],
         contract:'',
-        blocks:'',
         contractaccount:'',
         number:'',
+        blocks:'',
         EIN:'',
         check_network:'',
         
@@ -166,7 +165,7 @@ componentDidMount(){
          <Row><Col><h1> </h1></Col></Row>
          
      
-       <Title name="Ein to" title="Ein"/>
+       <Title name="EIN" title="Withdraw"/>
 
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
@@ -182,8 +181,8 @@ componentDidMount(){
       <Row className ="row_underline2">
       <Col className= "col_border2" md={2}><h3>Amount</h3></Col>
       <Col className= "col_border2" md={2}><h3>Block</h3></Col>
-      <Col className= "col_border2" md={4}><h3>To</h3></Col>
-      <Col className="col_border2" md={4}><h3>From</h3></Col>
+      <Col className= "col_border2" md={6}><h3>To</h3></Col>
+      <Col className="col_border2" md={2}><h3>From</h3></Col>
       
       
         </Row>
@@ -198,15 +197,13 @@ componentDidMount(){
         {transfer.blockNumber}</h4>Mined
         </Col>
 
-        <Col className= "col_border2" md={4}>   
-        <div>
-        <h4 className="ethereumaccount">ID: {transfer.einTo}
-        </h4>To Snowflake
-        </div>
+        <Col className= "col_border2" md={6}>  
+        <h4 className="ethereumaccount">{transfer.to}
+        </h4>To Ethereum Account
         </Col>
 
-        <Col className="col_border2" md={4}>
-        <h4 className="ethereumaccount">ID: {transfer.einFrom}</h4>From Snowflake 
+        <Col className="col_border2" md={2}>
+        <h4 className="ethereumaccount">ID: {transfer.einFrom}</h4>From Snowflake Account
         </Col>
          
         </Row>))}
@@ -214,7 +211,7 @@ componentDidMount(){
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><Center><JwPagination items={this.state.hydroTransfer} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
+       <Row><Col><Center><JwPagination items={this.state.hydroWithdraw} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
    
