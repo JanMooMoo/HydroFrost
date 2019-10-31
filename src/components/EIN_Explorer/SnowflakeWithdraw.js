@@ -172,7 +172,7 @@ export default class SnowflakeWithdraw extends Component {
        <Row><Col><h4>
         <Center><RotateSpinner
                 size={60}
-                color="rgb(241, 241, 241)"
+                color={!this.state.check_network? "rgb(226, 188, 62)":"rgb(241, 241, 241)"}
                 loading={loading}/>
         </Center>  
       </h4></Col></Row>
