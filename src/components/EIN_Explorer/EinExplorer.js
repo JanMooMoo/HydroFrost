@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import Title from '../Title/Title';
+import ReactGA from 'react-ga';
 import Center from 'react-center';
+
 import {
     Nav,
     Container,
@@ -32,6 +34,8 @@ export default class EinExplorer extends Component {
 componentDidMount(){
       this._isMounted = true;
       if (this._isMounted){ this.setState({check_network: this.props.mainnet},()=>this.loadSnowflake());}
+      this.loadGA();
+      
     
      }
 
@@ -151,8 +155,22 @@ componentDidMount(){
         this.onChangePage = this.onChangePage.bind(this);
   }
   
+  
   onChangePage(pageOfItems) {
     this.setState({ pageOfItems });
+    this.GA_ChangePage()
+  }
+
+  loadGA() {
+    ReactGA.initialize('UA-151322976-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }
+
+  GA_ChangePage(){
+    ReactGA.event({
+    category: "Snowflake Explorer Ein Transactions Change Page",
+    action: "Ein transactions Change Page"
+    });
   }
 
   render(){
@@ -190,12 +208,12 @@ componentDidMount(){
         {this.state.pageOfItems.map((transfer,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border2" md={2}>
-        <h4 className="ethereumaccount">{numeral(transfer.amount/1E18).format('0,0.00')} </h4>Hydro
+        <h4 className="ethereumaccount">{numeral(transfer.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(transfer.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border2" md={2}>
         <h4 className="time">
-        {transfer.blockNumber}</h4>Mined
+        {numeral(transfer.blockNumber).format('0,0')}</h4>Mined
         </Col>
 
         <Col className= "col_border2" md={4}>   

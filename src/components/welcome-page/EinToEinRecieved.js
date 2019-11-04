@@ -13,6 +13,7 @@ import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Moment from 'react-moment';
 import JwPagination from 'jw-react-pagination';
+import {Link} from 'react-router-dom';
 
 
 let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
@@ -193,11 +194,11 @@ onChangePage(pageOfItems) {
        <Row className ="row_underline" key={index}>
 
         <Col className= "col_border" md={2}>   
-        <h4 className="banana"> {numeral(recieved.amount/1E18).format('0,0.00')}</h4>Hydro
+        <h4 className="banana"> {numeral(recieved.amount/1E18).format('0,0.00')}</h4>Hydro ~ $ {numeral(recieved.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border" md={2}>   
-        <h6 className="time">{recieved.blockNumber}</h6>mined
+        <h6 className="time">{numeral(recieved.blockNumber).format('0,0')}</h6>Mined
         </Col>
 
         <Col className= "col_border" md={6}>   
@@ -208,7 +209,8 @@ onChangePage(pageOfItems) {
         </Col>
 
         <Col className="col_no_border"  md={2}>
-        <h4 className="banana" >ID: {recieved.einFrom}</h4>EIN Account
+        <h4 className="banana" >ID:{recieved.einFrom}</h4>EIN Account
+    
         </Col>
          
        </Row>))}

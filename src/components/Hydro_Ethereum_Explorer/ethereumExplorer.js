@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import Title from '../Title/Title';
+import ReactGA from 'react-ga';
 import Center from 'react-center';
 import {
     Nav,
@@ -12,9 +13,13 @@ import {
 import Web3 from 'web3';
 import {HydroToken_ABI, HydroToken_Address} from '../blockchain-data/hydrocontract';
 import {Hydro_Testnet_Token_ABI, Hydro_Testnet_Token_Address} from '../blockchain-data/hydrocontract_testnet';
+import {FaucetButton} from './Button3';
 import Moment from 'react-moment';
 import JwPagination from 'jw-react-pagination';
 import { RotateSpinner } from "react-spinners-kit";
+import {HydroTestFaucet} from './HydroTestFaucet'
+import  './FaucetModal.css';
+
 
 
 let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
@@ -33,6 +38,8 @@ export default class ethereumExplorer extends Component {
       this._isMounted = true;
       this.loadBlockchain();
       this.loadSnowflake();
+      this.loadmarket();
+      this.loadGA();
 
      }
      
@@ -89,6 +96,7 @@ export default class ethereumExplorer extends Component {
   this.setState({snowSolidity});
   this.setState({hydroTransfer:[]});}
 
+
   const blockNumber = await web2.eth.getBlockNumber();
   if (this._isMounted){
   this.setState({blocks:blockNumber - 800000});}
@@ -112,7 +120,19 @@ export default class ethereumExplorer extends Component {
 
   })
 }
-  }
+}
+
+async loadmarket(){
+
+  fetch('https://api.coingecko.com/api/v3/simple/price?ids=Hydro&vs_currencies=usd&include_market_cap=true&include_24hr_change=ture&include_last_updated_at=ture')
+        .then(res => res.json())
+        .then((data) => {
+          if (this._isMounted){
+          this.setState({ marketcap: data.hydro })}
+          
+        })
+        .catch(console.log)
+}
 
   componentWillUnmount(){
     this.abortController.abort()
@@ -136,6 +156,8 @@ export default class ethereumExplorer extends Component {
         number:'',
         EIN:'',
         mainnet:true,
+        marketcap:[],
+        summaryModalShow: false,
         
     }
         this.onChangePage = this.onChangePage.bind(this);
@@ -143,17 +165,46 @@ export default class ethereumExplorer extends Component {
   
   onChangePage(pageOfItems) {
     this.setState({ pageOfItems });
+    this.GA_ChangePage()
   }
 
   toggleChange = () => {
     this.setState({mainnet: !this.state.mainnet},() => { this.loadSnowflake()
     this.setState({loading:true})
+    this.GA_ChangeNetwork()
+    });
+  }
+
+  loadGA() {
+    ReactGA.initialize('UA-151322976-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }
+
+  GA_ChangePage(){
+    ReactGA.event({
+    category: "Ethereum Explorer Ein Transactions Change Page",
+    action: "Ethereum Explorer Change Page"
+    });
+  }
+
+  GA_ChangeNetwork(){
+    ReactGA.event({
+    category: "Ethereum Change Network",
+    action: "Change Network"
+    });
+  }
+
+  GA_ModalFaucet(){
+    ReactGA.event({
+    category: "Open Modal Faucet",
+    action: "Open Modal Faucet"
     });
   }
 
   render(){
   
   const{loading}=this.state
+  let summaryModalClose =() =>this.setState({summaryModalShow:false});
 
   return (
    <div>
@@ -173,7 +224,17 @@ export default class ethereumExplorer extends Component {
                 loading={loading}/>
         </Center>  
       </h4></Col></Row>
-      <Row><Col md={8}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col><Col></Col></Row>
+
+      <Row>
+        <Col md={10}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col>
+        <Col >
+        <button className="faucetbutton"><h6 className="faucet"onClick={() => this.setState({summaryModalShow:true},()=>this.GA_ModalFaucet())}>Faucet</h6></button> 
+          {this.state.summaryModalShow && <HydroTestFaucet
+          show={this.state.summaryModalShow}
+          onHide={summaryModalClose}
+        />}
+        </Col>
+      </Row>
        
       <Row><Col><h1> </h1></Col></Row>
 
@@ -188,12 +249,13 @@ export default class ethereumExplorer extends Component {
         {this.state.pageOfItems.map((transfer,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border2" md={2}>
-        <h4 className="banana">{numeral(transfer._amount/1E18).format('0,0.00')} </h4>Hydro
+        <h4 className="banana">{numeral(transfer._amount/1E18).format('0,0.00')} </h4><Row><Col className="dollarvalue">Hydro ~ ${numeral(transfer._amount/1E18 * this.state.marketcap.usd).format('0,0.00')}</Col></Row>
         </Col>
 
         <Col className= "col_border2" md={2}>
         <h6 className="time">
-        {transfer.blockNumber}</h6>Mined
+        {numeral(transfer.blockNumber).format('0,0')}</h6>Mined
+       
         </Col>
 
         <Col className= "col_border2" md={4}>   

@@ -8,12 +8,13 @@ import {
     Col,
     Image,
 } from 'react-bootstrap';
-
+ 
 import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Moment from 'react-moment';
 import JwPagination from 'jw-react-pagination';
+
 
 
 let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
@@ -70,7 +71,7 @@ async loadSnowflake(){
       
       let { returnValues: { from, einTo, amount }, blockNumber } = log
      
-     // web3.eth.getBlock(blockNumber, (error, block) => {
+      //web3.eth.getBlock(blockNumber, (error, block) => {
      // blockNumber = block.timestamp
      
      
@@ -87,6 +88,7 @@ async loadSnowflake(){
         this.setState({eth_deposit:newsort});
         }
      });
+    //})
   }
 else{
   const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
@@ -100,8 +102,8 @@ else{
   
   let { returnValues: { from, einTo, amount }, blockNumber } = log
  
- // web3.eth.getBlock(blockNumber, (error, block) => {
- // blockNumber = block.timestamp
+  //web2.eth.getBlock(blockNumber, (error, block) => {
+  //blockNumber = block.timestamp
  
  
   let values = {from,einTo,amount,blockNumber}
@@ -118,7 +120,7 @@ else{
     }
     
    });
-  //});
+ // });
   }
 }
 
@@ -135,7 +137,7 @@ componentDidUpdate(prevProps){
     this.loadSnowflake()
   }
    if(this.props.mainnet !== prevProps.mainnet){
-      this.setState({mainet:this.props.mainnet})
+      this.setState({mainnet:this.props.mainnet})
       this.loadSnowflake()
     } 
 }
@@ -157,8 +159,6 @@ componentWillUnmount(){
         exampleItems: exampleItems,
         search:'',
         eth_deposit:[],
-        eth_withdraw:[],
-        ein_transfer:[],
         contract:'',
         contractaccount:'',
         number1:'',
@@ -166,16 +166,19 @@ componentWillUnmount(){
         pageOfItems:[],
         get:'',
         check_network:'',
+        pass:'',
+        blocks:'',
         
     }
         this.onChangePage = this.onChangePage.bind(this);
+        
   }
   
   onChangePage(pageOfItems) {
     this.setState({ pageOfItems });
   }
 
-
+  
   render(){
 
   return (
@@ -183,17 +186,14 @@ componentWillUnmount(){
      
       <Container>
         
-         <Row><Col><h1> </h1></Col></Row>
-         <Row><Col><h1> </h1></Col></Row>
+      <Row><Col><h1> </h1></Col></Row>
+      <Row><Col><h1> </h1></Col></Row>
          
      
        <Title name="Hydro Ethereum" title="Deposits To EIN"/>
-       
-       
-       
 
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
+      <Row><Col><h1> </h1></Col></Row>
+      <Row><Col><h1> </h1></Col></Row>
       
       <Row className ="row_underline2">
       <Col className= "col_border" md={2}><h3 >Amount</h3></Col>
@@ -208,12 +208,12 @@ componentWillUnmount(){
          
          
              <Col className= "col_border"  md={2}>
-             <h4 className="banana">{numeral(deposit.amount/1E18).format('0,0.00')}</h4>Hydro
+             <h4 className="banana">{numeral(deposit.amount/1E18).format('0,0.00')}</h4>Hydro ~ $ {numeral(deposit.amount/1E18 * this.props.marketUsd).format('0,0.00')}
              </Col>
              
 
              <Col className= "col_border" md={2}>   
-        <h6 className="time">{deposit.blockNumber}</h6>mined
+        <h6 className="time">{numeral(deposit.blockNumber).format('0,0')}</h6>Mined
         </Col>
 
          <Col className="col_border" md={6}>   
@@ -224,7 +224,7 @@ componentWillUnmount(){
          </Col>
 
          <Col className="col_no_border" md={2}>
-             <h4 className="banana">ID: {deposit.einTo}</h4>EIN Account
+             <h4 className="banana" >ID:{deposit.einTo}</h4>EIN Account
              </Col>
          
        </Row>))}

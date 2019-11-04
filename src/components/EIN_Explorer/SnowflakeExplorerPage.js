@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import Title from '../Title/Title';
 import Web3 from 'web3';
+import ReactGA from 'react-ga';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import { RotateSpinner } from "react-spinners-kit";
@@ -40,6 +41,7 @@ export default class SnowflakeExplorerPage extends Component {
       this.loadBlockchain();
       this.loadmarket();
       this.loadPreviousPrice();
+      this.loadGA();
       //this.loadmarket();
 
      }
@@ -128,12 +130,15 @@ componentWillUnmount(){
         marketcap:[],
         mainnet:true,
         previousPrice:[],
-
-        
-        
+          
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  loadGA() {
+    ReactGA.initialize('UA-151322976-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }
 
   handleChange(event) {
@@ -151,10 +156,17 @@ componentWillUnmount(){
   toggleChange = () => {
     this.setState({mainnet: !this.state.mainnet},() => { this.loadBlockchain()
     this.setState({loading:true})
+    this.GA_ChangeNetwork();
     });
 
   }
-
+  
+  GA_ChangeNetwork(){
+    ReactGA.event({
+    category: "Snowflake Explorer Change Network",
+    action: "Change Network"
+    });
+  }
   render(){
 
   const {loading} = this.state
@@ -202,24 +214,27 @@ componentWillUnmount(){
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        
-  <Tabs defaultActiveKey="Ein_transactions" transition={false} id="noanim-tab-example" >
+  <Tabs defaultActiveKey="Ein_transactions" transition={false} id="Ein Explorer" mountOnEnter unmountOnExit >
   
-  <Tab eventKey="Ein_transactions" title="EIN Transactions" className="tab" >
+  <Tab eventKey="Ein_transactions" title="EIN Transactions"  className="tab" >
    <EinExplorer
    number={this.state.number}
-   mainnet={this.state.mainnet}/>
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
   </Tab>
 
-  <Tab eventKey="Ein_Deposits" title="Snowflake Deposit" className="tab" >
-   <SnowflakeDeposit
+  <Tab eventKey="Ein_Deposits"  title="Snowflake Deposit" className="tab" >
+  <SnowflakeDeposit
    number={this.state.number}
-   mainnet={this.state.mainnet}/>
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
   </Tab>
 
   <Tab eventKey="Ein_Withdraw" title="Snowflake Withdraw" className="tab" >
    <SnowflakeWithdraw
    number={this.state.number}
-   mainnet={this.state.mainnet}/>
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
   </Tab>
 
   

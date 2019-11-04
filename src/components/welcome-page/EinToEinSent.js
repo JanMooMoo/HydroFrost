@@ -186,11 +186,11 @@ export default class EinToEinSent extends Component {
       <Row className ="row_underline" key={index}>
 
       <Col className= "col_border" md={2}>
-      <h4 className="banana">{numeral(send.amount/1E18).format('0,0.00')}</h4>Hydro
+      <h4 className="banana">{numeral(send.amount/1E18).format('0,0.00')}</h4>Hydro Hydro ~ $ {numeral(send.amount/1E18 * this.props.marketUsd).format('0,0.00')}
       </Col>
 
       <Col className= "col_border" md={2}>   
-        <h6 className="time">{send.blockNumber}</h6>mined
+        <h6 className="time">{numeral(send.blockNumber).format('0,0')}</h6>Mined
         </Col>
       
       <Col className= "col_border" md={6}>   

@@ -10,13 +10,18 @@ import {
 
 import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
+import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
+import Center from 'react-center';
+import JwPagination from 'jw-react-pagination';
 import Moment from 'react-moment';
 
 
-let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+let web2 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+
 let numeral = require('numeral');
 
-export default class EinToEinSent extends Component {
+export default class ResolversAdded extends Component {
 
   _isMounted = false;
   abortController = new AbortController()
@@ -24,7 +29,7 @@ export default class EinToEinSent extends Component {
 
   componentWillMount(){
       this._isMounted = true;
-      this.loadBlockchain();
+      if (this._isMounted){this.setState({check_network: this.props.mainnet});}
 
      }
      
@@ -43,13 +48,17 @@ export default class EinToEinSent extends Component {
   }
 
   async loadSnowflake(){
+  
+  this.setState({check_network:this.props.mainnet})
+  
 
-  const snowSolidity =  new web3.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
+  if(this.state.check_network == true){
+  const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
   if (this._isMounted){
   this.setState({snowSolidity});
   this.setState({resolvers_added:[]});}
 
-  snowSolidity.events.SnowflakeResolverAdded({filter:{ein:this.props.number},fromBlock:0, toBlock:'latest'})
+  snowSolidity.events.SnowflakeResolverAdded({filter:{ein:this.props.number},fromBlock:7728191, toBlock:'latest'})
   .on('data',(log)=>{
 
   let { returnValues: { ein,resolver,withdrawAllowance }, blockNumber } = log
@@ -60,18 +69,54 @@ export default class EinToEinSent extends Component {
   let values = {ein,resolver,withdrawAllowance,blockNumber}
          
   if (this._isMounted){
-  this.setState({resolvers_added:[...this.state.resolvers_added,values]})}
+  this.setState({resolvers_added:[...this.state.resolvers_added,values]})
+  this.setState({loading:false});}
 
   var newest = this.state.resolvers_added;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
-  this.setState({resolvers_added:newsort});
-  this.setState({loading:false});}
+  this.setState({resolvers_added:newsort});}
     
    });   
           
   })
+  } 
+  else{
+    const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
+    if (this._isMounted){
+    this.setState({snowSolidity});
+    this.setState({resolvers_added:[]});}
+  
+    snowSolidity.events.SnowflakeResolverAdded({filter:{ein:this.props.number},fromBlock:0, toBlock:'latest'})
+    .on('data',(log)=>{
+  
+    let { returnValues: { ein,resolver,withdrawAllowance }, blockNumber } = log
+  
+    web3.eth.getBlock(blockNumber, (error, block) => {
+    blockNumber = block.timestamp;
+      
+    let values = {ein,resolver,withdrawAllowance,blockNumber}
+           
+    if (this._isMounted){
+    this.setState({resolvers_added:[...this.state.resolvers_added,values]})
+    this.setState({loading:false});}
+  
+    var newest = this.state.resolvers_added;
+    var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+    if (this._isMounted){
+    this.setState({resolvers_added:newsort});
+    }
+      
+     });           
+    })
+  }
+  
+  }
 
+  componentWillReceiveProps(nextProps){
+    if (this._isMounted){
+      this.setState({check_network:nextProps.mainnet});
+     }
   }
 
   componentDidUpdate(prevProps){
@@ -81,6 +126,10 @@ export default class EinToEinSent extends Component {
       this.setState({number:this.props.number})
       this.loadSnowflake();
     }
+      if(this.props.mainnet !== prevProps.mainnet){
+      this.setState({mainnet:this.props.mainnet})
+      this.loadSnowflake()
+      }
   }
 
   componentWillUnmount(){
@@ -104,8 +153,15 @@ export default class EinToEinSent extends Component {
         contractaccount:'',
         number:'',
         EIN:'',
+        check_network:'',
         
-    }}
+    }
+        this.onChangePage = this.onChangePage.bind(this);
+  }
+
+  onChangePage(pageOfItems) {
+    this.setState({ pageOfItems });
+  }
 
 
   render(){
@@ -131,11 +187,11 @@ export default class EinToEinSent extends Component {
       
       
       </Row>
-      {this.state.resolvers_added.map((ResolverAdded,index)=>(
+      {this.state.pageOfItems.map((ResolverAdded,index)=>(
       <Row className ="row_underline" key={index}>
 
       <Col className= "col_border" md={2} >
-      <h4 className="banana">{numeral(ResolverAdded.withdrawAllowance/1E18).format('0,0.00')}</h4>Hydro
+      <h4 className="banana">{numeral(ResolverAdded.withdrawAllowance/1E18).format('0,0.00')}</h4>Hydro ~ $ {numeral(ResolverAdded.withdrawAllowance/1E18 * this.props.marketUsd).format('0,0.00')}
       </Col>
 
       <Col className= "col_border" md={2} >
@@ -158,7 +214,7 @@ export default class EinToEinSent extends Component {
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
+       <Row><Col><Center><JwPagination items={this.state.resolvers_added} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
   

@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "cogo-toast": "^4.1.1",
     "jw-react-pagination": "^1.1.0",
     "moment": "^2.24.0",
     "numeral": "^2.0.6",
@@ -12,6 +13,7 @@
     "react-bootstrap": "^1.0.0-beta.14",
     "react-center": "^1.1.1",
     "react-dom": "^16.10.2",
+    "react-ga": "^2.7.0",
     "react-moment": "^0.9.6",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
@@ -19,6 +21,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "styled-components": "^4.4.0",
+    "uifx": "^2.0.3",
     "web3": "^1.2.2"
   },
   "scripts": {

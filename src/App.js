@@ -7,10 +7,11 @@ import WelcomePage from './components/welcome-page/WelcomePage'
 import DetailsPage from './components/details-page/DetailsPage'
 import DefaultPage from './components/default-page/DefaultPage'
 import ethereumExplorer from './components/Hydro_Ethereum_Explorer/ethereumExplorer'
-import EinExplorer from './components/EIN_Explorer/EinExplorer'
 import SideDrawer from './components/navbar/SideDrawer';
 import Backdrop from './components/navbar/Backdrop';
 import SnowflakeExplorerPage from './components/EIN_Explorer/SnowflakeExplorerPage'
+
+
 
 
 
@@ -38,10 +39,13 @@ drawerToggleClickHandler =()=>{
  };
    
  
+ 
  backdropClickHandler =()=>{
    this.setState({sideDrawerOpen:false});
    
   };
+
+  
 
 
   render(){

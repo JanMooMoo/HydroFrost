@@ -174,11 +174,11 @@ export default class EinToEthereum extends Component {
         {this.state.pageOfItems.map((withdraw,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border" md={2}>
-        <h4 className="banana">{numeral(withdraw.amount/1E18).format('0,0.00')} </h4>Hydro
+        <h4 className="banana">{numeral(withdraw.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(withdraw.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border" md={2}>   
-        <h6 className="time">{withdraw.blockNumber}</h6>mined
+        <h6 className="time">{numeral(withdraw.blockNumber).format('0,0')}</h6>Mined
         </Col>
 
         <Col className= "col_border" md={6}>   

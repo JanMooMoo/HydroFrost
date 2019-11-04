@@ -3,6 +3,7 @@ import Title from '../Title/Title';
 import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
+import ReactGA from 'react-ga';
 import { RotateSpinner } from "react-spinners-kit";
 import Center from 'react-center';
 import './togglebutton.css';
@@ -25,6 +26,7 @@ import EinToEinRecieved from './EinToEinRecieved';
 import ResolversAdded from './ResolversAdded';
 
 
+
 let polltry = [];
 let einTo = [];
 let einFrom = [];
@@ -41,6 +43,7 @@ export default class WelcomePage extends Component {
       this._isMounted = true;
       this.loadBlockchain();
       this.loadmarket();
+      this.initializeReactGA()
       //this.loadmarket();
 
      }
@@ -49,6 +52,7 @@ export default class WelcomePage extends Component {
   async loadBlockchain() { 
   
   const{mainnet} = this.state
+  
 
   if(this.state.mainnet == true){
   const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
@@ -101,6 +105,11 @@ async loadmarket(){
         .catch(console.log)
 }
 
+ initializeReactGA() {
+  ReactGA.initialize('UA-151322976-1');
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
+
 componentWillUnmount(){
   this.abortController.abort()
   this._isMounted = false;}
@@ -141,19 +150,37 @@ componentWillUnmount(){
   handleSubmit(event) {
     this.setState({loading:true})
     this.loadBlockchain();
+    this.GA_Submit();
     event.preventDefault();
   }
 
   toggleChange = () => {
     this.setState({mainnet: !this.state.mainnet},() => { this.loadBlockchain()
     this.setState({loading:true})
+    this.GA_ChangeNetwork();
     });
 
   }
 
+  GA_Submit(){
+    ReactGA.event({
+    category: "Search Ein",
+    action: "Search Ein"
+    });
+  }
+
+  GA_ChangeNetwork(){
+    ReactGA.event({
+    category: "Frost Change Network",
+    action: "Change Network"
+    });
+  }
+
+
   render(){
 
   const {loading} = this.state
+  
 
   return (
    <div>
@@ -219,6 +246,9 @@ componentWillUnmount(){
            <h4 className="banana3">
              Balance: {numeral(this.state.EIN_balance).format('0,0.00')} Hydro
            </h4>
+           <h6 className="grass3">
+            $ {numeral(this.state.EIN_balance * this.state.marketcap.usd).format('0,0.00000')}
+           </h6>
            
          </div>
          </Col>
@@ -231,36 +261,41 @@ componentWillUnmount(){
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        
-  <Tabs defaultActiveKey="ethereum_deposit" transition={false} id="noanim-tab-example" >
+  <Tabs defaultActiveKey="ethereum_deposit" transition={false} id="noanim-tab-example" mountOnEnter>
   
   <Tab eventKey="ethereum_deposit" title="Ethereum Deposits to EIN" className="tab" >
    <EthereumToEin
    number={this.state.number}
-   mainnet={this.state.mainnet}/>
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
   </Tab>
 
   <Tab eventKey="ethereum_withdraw" title="EIN withdraw to Ethereum" className="tab">
    <EinToEthereum
    number={this.state.number}
-   mainnet={this.state.mainnet}/>
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
   </Tab>
 
   <Tab eventKey="ein_sent" title="Sent" className="tab">
    <EinToEinSent
    number={this.state.number}
-   mainnet={this.state.mainnet}/>
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
   </Tab>
 
   <Tab eventKey="ein_recieved" title="Recieved" className="tab">
    <EinToEinRecieved
    number={this.state.number}
-   mainnet={this.state.mainnet}/>
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
   </Tab>
 
-  <Tab eventKey="resolver_added" title="Resolver Added" className="tab">
+  <Tab eventKey="resolver_added" title="Resolvers Added" className="tab">
    <ResolversAdded
    number={this.state.number}
-   mainnet={this.state.mainnet}/>
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
   </Tab>
   
 </Tabs>
