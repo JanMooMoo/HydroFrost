@@ -4,12 +4,13 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/navbar/Navbar'
 import WelcomePage from './components/welcome-page/WelcomePage'
+import EthereumExplorer from './components/Hydro_Ethereum_Explorer/EthereumExplorer'
+import SnowflakeExplorerPage from './components/EIN_Explorer/SnowflakeExplorerPage'
 import DetailsPage from './components/details-page/DetailsPage'
 import DefaultPage from './components/default-page/DefaultPage'
-import ethereumExplorer from './components/Hydro_Ethereum_Explorer/ethereumExplorer'
 import SideDrawer from './components/navbar/SideDrawer';
 import Backdrop from './components/navbar/Backdrop';
-import SnowflakeExplorerPage from './components/EIN_Explorer/SnowflakeExplorerPage'
+
 
 
 
@@ -67,9 +68,9 @@ drawerToggleClickHandler =()=>{
       <Switch>
         
         <Route exact path="/" component ={WelcomePage}/>
-        <Route path="/Details" component ={DetailsPage}/>
-        <Route path="/Ethereum" component ={ethereumExplorer}/>
+        <Route path="/Ethereum" component ={EthereumExplorer}/>
         <Route path="/Snowflake" component ={SnowflakeExplorerPage}/>
+        <Route path="/Details" component ={DetailsPage}/>
         <Route component ={DefaultPage}/>
     
       </Switch>

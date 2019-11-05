@@ -200,8 +200,8 @@ export default class ResolversAdded extends Component {
          
       <Col className= "col_border" md={6}>   
       <div>
-      <h4 className="banana"> {ResolverAdded.resolver}
-      </h4><h6 className="contract">Contract</h6>
+      <h6 className="ethereumaccount"> {ResolverAdded.resolver}
+      </h6><h6 className="contract">Contract</h6>
       </div>
       </Col>
 

@@ -35,6 +35,8 @@ html,body {
   height:100%;
   width:100%;
   overflow-x: hidden;
+  backgrdound: linear-gradient(to left, rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))!important;
+
 }
 
 .text-title{

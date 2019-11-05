@@ -13,7 +13,6 @@ import {
 import Web3 from 'web3';
 import {HydroToken_ABI, HydroToken_Address} from '../blockchain-data/hydrocontract';
 import {Hydro_Testnet_Token_ABI, Hydro_Testnet_Token_Address} from '../blockchain-data/hydrocontract_testnet';
-import {FaucetButton} from './Button3';
 import Moment from 'react-moment';
 import JwPagination from 'jw-react-pagination';
 import { RotateSpinner } from "react-spinners-kit";
@@ -22,13 +21,13 @@ import  './FaucetModal.css';
 
 
 
-let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
-let web2 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+//let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+//let web2 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
 
 let numeral = require('numeral');
 let polltry = [];
 
-export default class ethereumExplorer extends Component {
+export default class EthereumExplorer extends Component {
 
   _isMounted = false;
   abortController = new AbortController()
@@ -36,31 +35,19 @@ export default class ethereumExplorer extends Component {
 
   componentDidMount(){
       this._isMounted = true;
-      this.loadBlockchain();
       this.loadSnowflake();
       this.loadmarket();
       this.loadGA();
+      //this.loadetherscan();
 
      }
      
-     
-  async loadBlockchain() { 
-         
-  let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
-      
-  const network = await web3.eth.net.getNetworkType();
-  if (this._isMounted){
-  this.setState({net:network});}
-  if(this.state.net == "rinkeby" && this._isMounted){
-    this.setState({networkmessage:true})
-    
-    }
- 
-  }
 
   async loadSnowflake(){
+  const{mainnet} = this.state
 
-  if(this.state.mainnet == true){
+  if(mainnet == true){
+  const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
   const snowSolidity =  new web3.eth.Contract(HydroToken_ABI, HydroToken_Address);
   
   if (this._isMounted){
@@ -69,49 +56,49 @@ export default class ethereumExplorer extends Component {
 
   const blockNumber = await web3.eth.getBlockNumber();
   if (this._isMounted){
-  this.setState({blocks:blockNumber - 800000});}
+  this.setState({blocks:blockNumber - 50000});}
 
   //snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})
-  snowSolidity.events.Transfer({fromBlock: 8843000, toBlock:'latest'})
+  snowSolidity.events.Transfer({fromBlock: this.state.blocks, toBlock:'latest'})
   .on('data', (log) => {
       
     let { returnValues: { _from, _to, _amount }, blockNumber } = log
     
     let values = {_from,_to,_amount,blockNumber}
   
-    if (this._isMounted){
+    if (this._isMounted && this.state.mainnet == true){
         this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
-
+        
         var newest = this.state.hydroTransfer;
         var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
         if (this._isMounted){
         this.setState({hydroTransfer:newsort});
         this.setState({loading:false});}
-
-  })
-}else{
+      })
+}
+else{
+  const web2 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
   const snowSolidity =  new web2.eth.Contract(Hydro_Testnet_Token_ABI, Hydro_Testnet_Token_Address);
   
   if (this._isMounted){
-  this.setState({snowSolidity});
-  this.setState({hydroTransfer:[]});}
-
+  this.setState({snowSolidity});}
+  this.setState({hydroTransfer:[]});
 
   const blockNumber = await web2.eth.getBlockNumber();
   if (this._isMounted){
-  this.setState({blocks:blockNumber - 800000});}
+  this.setState({blocks:blockNumber - 70000});}
 
   //snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})
-  snowSolidity.events.Transfer({fromBlock: 5200000, toBlock:'latest'})
+  snowSolidity.events.Transfer({fromBlock: this.state.blocks, toBlock:'latest'})
   .on('data', (log) => {
       
     let { returnValues: { _from, _to, _amount }, blockNumber } = log
     
     let values = {_from,_to,_amount,blockNumber}
   
-    if (this._isMounted){
+    if (this._isMounted && this.state.mainnet !== true ){
         this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
-
+       
         var newest = this.state.hydroTransfer;
         var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
         if (this._isMounted){
@@ -134,6 +121,17 @@ async loadmarket(){
         .catch(console.log)
 }
 
+ loadetherscan(){
+  fetch ('https://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=379224&toBlock=latest&address=0xebbdf302c940c6bfd49c6b165f457fdb324649bc&topic0=5472616e73666572a&apikey=ZPRBBU2E6Z4QMEXPI7BWMCMVK7I6XZ6ZXE')
+.then(res => res.json())
+.then((check)=>{
+  if(this._isMounted){
+this.setState({checktx:check})
+
+  }
+})
+
+ }
   componentWillUnmount(){
     this.abortController.abort()
     this._isMounted = false;}
@@ -158,6 +156,7 @@ async loadmarket(){
         mainnet:true,
         marketcap:[],
         summaryModalShow: false,
+        checktx:[],
         
     }
         this.onChangePage = this.onChangePage.bind(this);
@@ -169,7 +168,8 @@ async loadmarket(){
   }
 
   toggleChange = () => {
-    this.setState({mainnet: !this.state.mainnet},() => { this.loadSnowflake()
+    this.setState({mainnet: !this.state.mainnet},() => { 
+    this.loadSnowflake()
     this.setState({loading:true})
     this.GA_ChangeNetwork()
     });

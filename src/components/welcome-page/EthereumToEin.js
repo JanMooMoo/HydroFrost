@@ -218,8 +218,8 @@ componentWillUnmount(){
 
          <Col className="col_border" md={6}>   
          <div>
-           <h4 className="banana">{deposit.from}
-           </h4>Ethereum Account
+           <h6 className="ethereumaccount">{deposit.from}
+           </h6>Ethereum Account
          </div>
          </Col>
 

@@ -54,7 +54,7 @@ export default class SnowflakeWithdraw extends Component {
 
     this.setState({hydroWithdraw:[]});}
 
-  snowSolidity.events.SnowflakeWithdraw({fromBlock:8338504, toBlock:'latest'})
+  snowSolidity.events.SnowflakeWithdraw({fromBlock:this.state.blocks, toBlock:'latest'})
   //snowSolidity.events.SnowflakeDeposit({fromBlock:7728191, toBlock:'latest'})
   .on('data', (log) => {
   
@@ -86,7 +86,7 @@ export default class SnowflakeWithdraw extends Component {
     
     this.setState({hydroWithdraw:[]});}
 
-    snowSolidity.events.SnowflakeWithdraw({fromBlock:5000000, toBlock:'latest'})
+    snowSolidity.events.SnowflakeWithdraw({fromBlock:this.state.blocks, toBlock:'latest'})
   .on('data', (log) => {
    
     let { returnValues: { einFrom, to, amount }, blockNumber } = log
@@ -212,8 +212,8 @@ export default class SnowflakeWithdraw extends Component {
         </Col>
 
         <Col className= "col_border2" md={6}>  
-        <h4 className="ethereumaccount">{transfer.to}
-        </h4>To Ethereum Account
+        <h6 className="ethereumaccount">{transfer.to}
+        </h6>To Ethereum Account
         </Col>
 
         <Col className="col_no_border" md={2}>

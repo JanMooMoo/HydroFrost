@@ -51,12 +51,12 @@ componentDidMount(){
 
   const blockNumber = await web3.eth.getBlockNumber();
   if (this._isMounted){
-  this.setState({blocks:blockNumber - 800000});}
+  this.setState({blocks:blockNumber - 600000});}
   if (this._isMounted){
   this.setState({hydroTransfer:[]});}
   
   
-  snowSolidity.events.SnowflakeTransfer({fromBlock:8438504, toBlock:'latest'})
+  snowSolidity.events.SnowflakeTransfer({fromBlock:this.state.blocks, toBlock:'latest'})
 
 
   .on('data', (log) => {
@@ -90,7 +90,7 @@ componentDidMount(){
     if (this._isMounted){
     this.setState({hydroTransfer:[]});}
 
-  snowSolidity.events.SnowflakeTransfer({fromBlock:5000000, toBlock:'latest'})
+  snowSolidity.events.SnowflakeTransfer({fromBlock:this.state.blocks, toBlock:'latest'})
   .on('data', (log) => {
   
     let { returnValues: { einFrom,einTo, amount }, blockNumber } = log

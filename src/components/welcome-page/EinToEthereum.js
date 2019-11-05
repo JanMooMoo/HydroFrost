@@ -183,8 +183,8 @@ export default class EinToEthereum extends Component {
 
         <Col className= "col_border" md={6}>   
         <div>
-        <h4 className="banana">{withdraw.to}
-        </h4>Ethereum Account
+        <h6 className="ethereumaccount">{withdraw.to}
+        </h6>Ethereum Account
         </div>
         </Col>
 

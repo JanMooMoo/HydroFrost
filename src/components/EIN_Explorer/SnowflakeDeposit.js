@@ -50,11 +50,11 @@ export default class SnowflakeDeposit extends Component {
 
     const blockNumber = await web3.eth.getBlockNumber();
     if (this._isMounted){
-    this.setState({blocks:blockNumber - 800000});}
+    this.setState({blocks:blockNumber - 704500});}
 
     this.setState({hydroDeposit:[]});}
 
-  snowSolidity.events.SnowflakeDeposit({fromBlock:8338504, toBlock:'latest'})
+  snowSolidity.events.SnowflakeDeposit({fromBlock:this.state.blocks, toBlock:'latest'})
   //snowSolidity.events.SnowflakeDeposit({fromBlock:7728191, toBlock:'latest'})
   .on('data', (log) => {
   
@@ -82,11 +82,11 @@ export default class SnowflakeDeposit extends Component {
 
     const blockNumber = await web2.eth.getBlockNumber();
     if (this._isMounted){
-    this.setState({blocks:blockNumber - 800000});}
+    this.setState({blocks:blockNumber - 600000});}
 
     this.setState({hydroDeposit:[]});}
 
-    snowSolidity.events.SnowflakeDeposit({fromBlock:5000000, toBlock:'latest'})
+    snowSolidity.events.SnowflakeDeposit({fromBlock:this.state.blocks, toBlock:'latest'})
   .on('data', (log) => {
    
     let { returnValues: { from, einTo, amount }, blockNumber } = log
@@ -212,8 +212,8 @@ export default class SnowflakeDeposit extends Component {
         </Col>
 
         <Col className= "col_border2" md={6}>  
-        <h4 className="ethereumaccount">{Deposit.from}
-        </h4>From Ethereum Account
+        <h6 className="ethereumaccount">{Deposit.from}
+        </h6>From Ethereum Account
         </Col>
 
         <Col className="col_no_border" md={2}>
