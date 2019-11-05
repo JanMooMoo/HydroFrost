@@ -27,7 +27,7 @@ import  './FaucetModal.css';
 let numeral = require('numeral');
 let polltry = [];
 
-export default class EthereumExplorer extends Component {
+export default class ethereumExplorer extends Component {
 
   _isMounted = false;
   abortController = new AbortController()
