@@ -29,7 +29,7 @@ export default class DetailsPage extends Component {
            
 <Center>
 <FlipPage className='flipNews' orientation='horizontal' pageBackground=
-'linear-gradient(to bottom, rgb(90, 90, 161),rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' 
+'linear-gradient(to bottom, rgb(212, 212, 212),rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' 
 treshold='20' uncutPages width='300' height='400'>
 
 <article>
@@ -109,7 +109,7 @@ and new infrastructure on top of the ecosystem.
 
 <Col xs={12} md={12} lg={4}>
 <Center><FlipPage className='flipNews' orientation='horizontal' pageBackground=
-  'linear-gradient(to bottom, rgb(90, 90, 161),rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' treshold='20' uncutPages width='300' height='400'>
+  'linear-gradient(to bottom, rgb(212, 212, 212),rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' treshold='20' showSwipeHint perspective='90rem' uncutPages width='300' height='400'>
  <article>
  <div className="flipcard">
  <Center><h1></h1></Center>
@@ -175,7 +175,7 @@ and empower an emergent middle class, bringing fintech to the masses.
 
 <Col xs={12} md={12} lg={4}>
 <Center><FlipPage className='flipNews' orientation='horizontal' pageBackground=
-  'linear-gradient(to bottom, rgb(90, 90, 161),rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' treshold='20' uncutPages width='300' height='400'>
+  'linear-gradient(to bottom, rgb(212, 212, 212),rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' treshold='20' uncutPages width='300' height='400'>
  <article>
  <div className="flipcard">
  <Center><h1></h1></Center>
@@ -231,10 +231,12 @@ Point of Sale, Remittance, Document Signing and Storage, and Compliant Tokenizat
 </div>
 </article></Center>
 </FlipPage></Center></Col>
-
-
-
 </Row>
+
+<Row><Col><h1> </h1></Col></Row>
+<Row><Col><h1> </h1></Col></Row>
+<Row><Col className="market"><Center><h6 className="banana">If you find this Application Helpful and Wish to Support our Coffee in the Morning, You can do so by Tipping us on this Address 0x20F857b13D6C546eC77aFE47317EA3c5a75c1c6c ,If you found unpleasant bugs or have a suggestion, You can contact us at MyHydroFrost@gmail.com. Thank you! & Happy BUIDLING! </h6></Center></Col></Row>
+
 </Container>
    </div>
    

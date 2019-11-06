@@ -39,71 +39,91 @@ export default class SnowflakeDeposit extends Component {
      
 
 
- async loadSnowflake(){
-    if (this._isMounted){
-    this.setState({check_network:this.props.mainnet})}
+async loadSnowflake(){
 
-    if(this.state.check_network == true){
-    const snowSolidity =   new web3.eth.Contract(main1484_ABI, main1484_Address);
-    if (this._isMounted){
-    this.setState({snowSolidity});
+  if (this._isMounted){
+  this.setState({check_network:this.props.mainnet})}
 
-    const blockNumber = await web3.eth.getBlockNumber();
-    if (this._isMounted){
-    this.setState({blocks:blockNumber - 704500});}
+  if(this.state.check_network == true){
+  const snowSolidity =   new web3.eth.Contract(main1484_ABI, main1484_Address);
+  if (this._isMounted){
+  this.setState({snowSolidity});}
 
-    this.setState({hydroDeposit:[]});}
+  const blockNumber = await web3.eth.getBlockNumber();
+  if (this._isMounted){
+  this.setState({blocks:blockNumber - 711500});
+  this.setState({latestblock:blockNumber});}
+  if (this._isMounted){
+  this.setState({hydroDeposit:[]});}
 
-  snowSolidity.events.SnowflakeDeposit({fromBlock:this.state.blocks, toBlock:'latest'})
-  //snowSolidity.events.SnowflakeDeposit({fromBlock:7728191, toBlock:'latest'})
-  .on('data', (log) => {
+  snowSolidity.getPastEvents("SnowflakeDeposit",{fromBlock: this.state.blocks, toBlock:'latest'})
+  .then(events=>{
   
-    let { returnValues: { from, einTo, amount }, blockNumber } = log
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroDeposit:newsort});
+  this.setState({loading:false});}
+  })
+  .catch((err)=>console.error(err))
 
-    let values = {from,einTo, amount,blockNumber}
-    
-    
-    if (this._isMounted){
-        this.setState({hydroDeposit:[...this.state.hydroDeposit,values]})}
+  snowSolidity.events.SnowflakeDeposit({fromBlock:this.state.latestblock, toBlock:'latest'})
+  .on('data', (log) => {  
 
-        var newest = this.state.hydroDeposit;
-        var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-        if (this._isMounted){
-        this.setState({hydroDeposit:newsort});
-        this.setState({loading:false});}
+  if (this._isMounted){
+  this.setState({hydroDeposit:[...this.state.hydroDeposit,log]})}
+
+  var newest = this.state.hydroDeposit;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroDeposit:newsort});
+  this.setState({loading:false});}
 
   })
-} else{
+} 
+
+else{
 
   const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
 
   if (this._isMounted){
-    this.setState({snowSolidity});
+  this.setState({snowSolidity});}
 
-    const blockNumber = await web2.eth.getBlockNumber();
-    if (this._isMounted){
-    this.setState({blocks:blockNumber - 600000});}
+  const blockNumber = await web2.eth.getBlockNumber();
+  if (this._isMounted){
+  this.setState({blocks:blockNumber - 600000});
+  this.setState({latestblock:blockNumber});}
 
-    this.setState({hydroDeposit:[]});}
+  if (this._isMounted){
+  this.setState({hydroDeposit:[]});}
 
-    snowSolidity.events.SnowflakeDeposit({fromBlock:this.state.blocks, toBlock:'latest'})
+  snowSolidity.getPastEvents("SnowflakeDeposit",{fromBlock: this.state.blocks, toBlock:'latest'})
+  .then(events=>{
+  
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroDeposit:newsort});
+  this.setState({loading:false});}
+  })
+  .catch((err)=>console.error(err))
+  
+  snowSolidity.events.SnowflakeDeposit({fromBlock:this.state.latestblock, toBlock:'latest'})
   .on('data', (log) => {
    
-    let { returnValues: { from, einTo, amount }, blockNumber } = log
+  //let { returnValues: { from, einTo, amount }, blockNumber } = log
+  //let values = {from,einTo, amount,blockNumber}
     
-    let values = {from,einTo, amount,blockNumber}
-
-    
-    if (this._isMounted){
-        this.setState({hydroDeposit:[...this.state.hydroDeposit,values]})}
+  if (this._isMounted){
+  this.setState({hydroDeposit:[...this.state.hydroDeposit,log]})}
       
-        var newest = this.state.hydroDeposit;
-        var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-        if (this._isMounted){
-        this.setState({hydroDeposit:newsort});
-        this.setState({loading:false});}
-        })
-}
+  var newest = this.state.hydroDeposit;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroDeposit:newsort});
+  this.setState({loading:false});}
+      })
+    }
   }
 
   componentWillReceiveProps(nextProps){
@@ -143,6 +163,7 @@ export default class SnowflakeDeposit extends Component {
         contractaccount:'',
         number:'',
         blocks:'',
+        latestblock:'',
         EIN:'',
         check_network:'',
         
@@ -203,7 +224,7 @@ export default class SnowflakeDeposit extends Component {
         {this.state.pageOfItems.map((Deposit,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border2" md={2}>
-        <h4 className="banana">{numeral(Deposit.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(Deposit.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+        <h4 className="banana">{numeral(Deposit.returnValues.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(Deposit.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border2" md={2}>
@@ -212,12 +233,12 @@ export default class SnowflakeDeposit extends Component {
         </Col>
 
         <Col className= "col_border2" md={6}>  
-        <h6 className="ethereumaccount">{Deposit.from}
+        <h6 className="ethereumaccount">{Deposit.returnValues.from}
         </h6>From Ethereum Account
         </Col>
 
         <Col className="col_no_border" md={2}>
-        <h4 className="banana">ID: {Deposit.einTo}</h4>To Snowflake Account
+        <h4 className="banana">ID: {Deposit.returnValues.einTo}</h4>To Snowflake Account
         </Col>
          
         </Row>))}

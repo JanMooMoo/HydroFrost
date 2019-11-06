@@ -39,7 +39,7 @@ componentDidMount(){
     
      }
 
- async loadSnowflake(){
+async loadSnowflake(){
 
   if (this._isMounted){
   this.setState({check_network:this.props.mainnet})}
@@ -51,64 +51,85 @@ componentDidMount(){
 
   const blockNumber = await web3.eth.getBlockNumber();
   if (this._isMounted){
-  this.setState({blocks:blockNumber - 600000});}
+  this.setState({blocks:blockNumber - 600000});
+  this.setState({latestblock:blockNumber});}
   if (this._isMounted){
   this.setState({hydroTransfer:[]});}
-  
-  
-  snowSolidity.events.SnowflakeTransfer({fromBlock:this.state.blocks, toBlock:'latest'})
 
-
+  snowSolidity.getPastEvents("SnowflakeTransfer",{fromBlock: this.state.blocks, toBlock:'latest'})
+  .then(events=>{
+  
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroTransfer:newsort});
+  this.setState({loading:false});}
+  })
+  .catch((err)=>console.error(err))
+  
+  snowSolidity.events.SnowflakeTransfer({fromBlock:this.state.latestblock, toBlock:'latest'})
   .on('data', (log) => {
   
-    let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
+  //let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
+  //let values = {einFrom,einTo, amount,blockNumber}
     
-    let values = {einFrom,einTo, amount,blockNumber}
-    
-    
-    if (this._isMounted){
-        this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
+  if (this._isMounted){
+  this.setState({hydroTransfer:[...this.state.hydroTransfer,log]})}
 
-        var newest = this.state.hydroTransfer;
-        var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-        if (this._isMounted){
-        this.setState({hydroTransfer:newsort});
-        this.setState({loading:false});}
+  var newest = this.state.hydroTransfer;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroTransfer:newsort});
+  this.setState({loading:false});}
 
   })
-} else{
+} 
+
+else{
 
   const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
 
-    if (this._isMounted){
-    this.setState({snowSolidity});}
+  if (this._isMounted){
+  this.setState({snowSolidity});}
 
-    const blockNumber = await web2.eth.getBlockNumber();
-    if (this._isMounted){
-    this.setState({blocks:blockNumber - 800000});}
+  const blockNumber = await web2.eth.getBlockNumber();
+  if (this._isMounted){
+  this.setState({blocks:blockNumber -800000});
+  this.setState({latestblock:blockNumber});}
     
-    if (this._isMounted){
-    this.setState({hydroTransfer:[]});}
+  if (this._isMounted){
+  this.setState({hydroTransfer:[]});}
 
-  snowSolidity.events.SnowflakeTransfer({fromBlock:this.state.blocks, toBlock:'latest'})
+  snowSolidity.getPastEvents("SnowflakeTransfer",{fromBlock: this.state.blocks, toBlock:'latest'})
+  .then(events=>{
+    
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroTransfer:newsort});
+  this.setState({loading:false});}
+
+  })
+  .catch((err)=>console.error(err))  
+
+  snowSolidity.events.SnowflakeTransfer({fromBlock:this.state.latestblock, toBlock:'latest'})
   .on('data', (log) => {
   
-    let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
-    
-    let values = {einFrom,einTo, amount,blockNumber}
-   
-    
-    if (this._isMounted){
-        this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
+  //let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
+  //let values = {einFrom,einTo, amount,blockNumber}
+  
+  if(this._isMounted){
+  this.setState({hydroTransfer:[...this.state.hydroTransfer,log]})}
 
-        var newest = this.state.hydroTransfer;
-        var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-        if (this._isMounted){
-        this.setState({hydroTransfer:newsort});
-        this.setState({loading:false});}
-        })
-}
+  var newest = this.state.hydroTransfer;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroTransfer:newsort});
+  this.setState({loading:false});}
+
+    })
   }
+}
 
   componentWillReceiveProps(nextProps){
     if (this._isMounted){
@@ -145,10 +166,12 @@ componentDidMount(){
         hydroTransfer:[],
         contract:'',
         blocks:'',
+        latestblock:'',
         contractaccount:'',
         number:'',
         EIN:'',
         check_network:'',
+        
         
         
     }
@@ -208,7 +231,7 @@ componentDidMount(){
         {this.state.pageOfItems.map((transfer,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border2" md={2}>
-        <h4 className="ethereumaccount">{numeral(transfer.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(transfer.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+        <h4 className="ethereumaccount">{numeral(transfer.returnValues.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(transfer.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border2" md={2}>
@@ -218,13 +241,13 @@ componentDidMount(){
 
         <Col className= "col_border2" md={4}>   
         <div>
-        <h4 className="ethereumaccount">ID: {transfer.einTo}
+        <h4 className="ethereumaccount">ID: {transfer.returnValues.einTo}
         </h4>To Snowflake
         </div>
         </Col>
 
         <Col className="col_no_border" md={4}>
-        <h4 className="ethereumaccount">ID: {transfer.einFrom}</h4>From Snowflake 
+        <h4 className="ethereumaccount">ID: {transfer.returnValues.einFrom}</h4>From Snowflake 
         </Col>
          
         </Row>))}

@@ -254,6 +254,8 @@ constructor(props){
       </Modal.Header> 
  
       <Modal.Body> 
+      <Row><Col><h1> </h1></Col></Row>
+      <Row><Col><h1> </h1></Col></Row>
       <Row><Col md={12} className="gethydro"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={120} width={110} className="navbar-brand"/><h6> </h6><h6 className="grass2">Request 10,000 Rinkeby Testnet Hydro for Development and Testing</h6></Col>
       </Row>
       <Row><Col><h1> </h1></Col></Row>

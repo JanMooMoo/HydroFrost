@@ -40,71 +40,91 @@ export default class SnowflakeWithdraw extends Component {
 
 
  async loadSnowflake(){
-    if (this._isMounted){
-    this.setState({check_network:this.props.mainnet})}
+    
+  if (this._isMounted){
+  this.setState({check_network:this.props.mainnet})}
 
-    if(this.state.check_network == true){
-    const snowSolidity =   new web3.eth.Contract(main1484_ABI, main1484_Address);
-    if (this._isMounted){
-    this.setState({snowSolidity});
+  if(this.state.check_network == true){
+  const snowSolidity =   new web3.eth.Contract(main1484_ABI, main1484_Address);
+  if (this._isMounted){
+  this.setState({snowSolidity});}
 
-    const blockNumber = await web3.eth.getBlockNumber();
-    if (this._isMounted){
-    this.setState({blocks:blockNumber - 800000});}
+  const blockNumber = await web3.eth.getBlockNumber();
+  if (this._isMounted){
+  this.setState({blocks:blockNumber - 1000000});
+  this.setState({latestblock:blockNumber});}
 
-    this.setState({hydroWithdraw:[]});}
+  if (this._isMounted){
+  this.setState({hydroWithdraw:[]});}
 
-  snowSolidity.events.SnowflakeWithdraw({fromBlock:this.state.blocks, toBlock:'latest'})
-  //snowSolidity.events.SnowflakeDeposit({fromBlock:7728191, toBlock:'latest'})
+  snowSolidity.getPastEvents("SnowflakeWithdraw",{fromBlock: this.state.blocks, toBlock:'latest'})
+  .then(events=>{
+  
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroWithdraw:newsort});
+  this.setState({loading:false});}
+  })
+  .catch((err)=>console.error(err))
+
+  snowSolidity.events.SnowflakeWithdraw({fromBlock:this.state.latestblock, toBlock:'latest'})
   .on('data', (log) => {
   
-    let { returnValues: { einFrom, to, amount }, blockNumber } = log
+  if (this._isMounted){
+  this.setState({hydroWithdraw:[...this.state.hydroWithdraw,log]})}
 
-    let values = {einFrom,to, amount,blockNumber}
-    
-    
-    if (this._isMounted){
-        this.setState({hydroWithdraw:[...this.state.hydroWithdraw,values]})}
-
-        var newest = this.state.hydroWithdraw;
-        var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-        if (this._isMounted){
-        this.setState({hydroWithdraw:newsort});
-        this.setState({loading:false});}
-
+  var newest = this.state.hydroWithdraw;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroWithdraw:newsort});
+  this.setState({loading:false});}
   })
-} else{
+} 
+
+else{
 
   const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
 
   if (this._isMounted){
-    this.setState({snowSolidity});
+  this.setState({snowSolidity});}
 
-    const blockNumber = await web2.eth.getBlockNumber();
-    if (this._isMounted){
-    this.setState({blocks:blockNumber - 800000});}
+  const blockNumber = await web2.eth.getBlockNumber();
+  if (this._isMounted){
+  this.setState({blocks:blockNumber - 800000});
+  this.setState({latestblock:blockNumber});}
     
-    this.setState({hydroWithdraw:[]});}
+  if (this._isMounted){
+  this.setState({hydroWithdraw:[]});}
 
-    snowSolidity.events.SnowflakeWithdraw({fromBlock:this.state.blocks, toBlock:'latest'})
+  snowSolidity.getPastEvents("SnowflakeWithdraw",{fromBlock: this.state.blocks, toBlock:'latest'})
+  .then(events=>{
+  
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroWithdraw:newsort});
+  this.setState({loading:false});}
+  })
+  .catch((err)=>console.error(err))
+
+  snowSolidity.events.SnowflakeWithdraw({fromBlock:this.state.latestblock, toBlock:'latest'})
   .on('data', (log) => {
    
-    let { returnValues: { einFrom, to, amount }, blockNumber } = log
-    
-    let values = {einFrom,to, amount,blockNumber}
+  //let { returnValues: { einFrom, to, amount }, blockNumber } = log
+  //let values = {einFrom,to, amount,blockNumber}
    
-    
-    if (this._isMounted){
-        this.setState({hydroWithdraw:[...this.state.hydroWithdraw,values]})}
+  if (this._isMounted){
+  this.setState({hydroWithdraw:[...this.state.hydroWithdraw,log]})}
 
-        var newest = this.state.hydroWithdraw;
-        var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-        if (this._isMounted){
-        this.setState({hydroWithdraw:newsort});
-        this.setState({loading:false});}
-        })
-}
+  var newest = this.state.hydroWithdraw;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroWithdraw:newsort});
+  this.setState({loading:false});}
+    })
   }
+}
 
   componentWillReceiveProps(nextProps){
     if (this._isMounted){
@@ -143,6 +163,7 @@ export default class SnowflakeWithdraw extends Component {
         contractaccount:'',
         number:'',
         blocks:'',
+        latestblock:'',
         EIN:'',
         check_network:'',
         
@@ -203,7 +224,7 @@ export default class SnowflakeWithdraw extends Component {
         {this.state.pageOfItems.map((transfer,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border2" md={2}>
-        <h4 className="banana">{numeral(transfer.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(transfer.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+        <h4 className="banana">{numeral(transfer.returnValues.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(transfer.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border2" md={2}>
@@ -212,12 +233,12 @@ export default class SnowflakeWithdraw extends Component {
         </Col>
 
         <Col className= "col_border2" md={6}>  
-        <h6 className="ethereumaccount">{transfer.to}
+        <h6 className="ethereumaccount">{transfer.returnValues.to}
         </h6>To Ethereum Account
         </Col>
 
         <Col className="col_no_border" md={2}>
-        <h4 className="banana">ID: {transfer.einFrom}</h4>From Snowflake Account
+        <h4 className="banana">ID: {transfer.returnValues.einFrom}</h4>From Snowflake Account
         </Col>
          
         </Row>))}
