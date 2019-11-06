@@ -203,12 +203,12 @@ export default class SnowflakeDeposit extends Component {
         {this.state.pageOfItems.map((Deposit,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border2" md={2}>
-        <h4 className="ethereumaccount">{numeral(Deposit.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(Deposit.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+        <h4 className="banana">{numeral(Deposit.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(Deposit.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border2" md={2}>
-        <h4 className="time">
-        {numeral(Deposit.blockNumber).format('0,0')}</h4>Mined
+        <h6 className="time">
+        {numeral(Deposit.blockNumber).format('0,0')}</h6>Mined
         </Col>
 
         <Col className= "col_border2" md={6}>  
@@ -217,7 +217,7 @@ export default class SnowflakeDeposit extends Component {
         </Col>
 
         <Col className="col_no_border" md={2}>
-        <h4 className="ethereumaccount">ID: {Deposit.einTo}</h4>To Snowflake Account
+        <h4 className="banana">ID: {Deposit.einTo}</h4>To Snowflake Account
         </Col>
          
         </Row>))}

@@ -249,7 +249,7 @@ constructor(props){
         
       <Modal.Header className="modalpie" closeButton>
       <Modal.Title id="contained-modal-title-vcenter">
-      <Center><div className="banana3">Hydro TestNet Faucet</div></Center>
+      <Center><div className="banana3">Request Hydro</div></Center>
       </Modal.Title>
       </Modal.Header> 
  

@@ -7,6 +7,7 @@ import ReactGA from 'react-ga';
 import { RotateSpinner } from "react-spinners-kit";
 import Center from 'react-center';
 import './togglebutton.css';
+import './backtotop.css';
 import {Nav,
   NavItem,
   NavLink,
@@ -184,12 +185,13 @@ componentWillUnmount(){
 
   return (
    <div>
+    
       <Container>
-         <Row><Col><h1> </h1></Col></Row>
-         <Row><Col><h1> </h1></Col></Row>
-         
         
-     
+         
+         <Row><Col><h1> </h1></Col></Row>
+         <Row><Col><h1> </h1></Col></Row>
+        
        <Title name={ !this.state.mainnet ? "Rinkeby":"Main"} title="Network"/>
        
        
@@ -256,6 +258,8 @@ componentWillUnmount(){
          <Col md={4} className="market"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={50} width={40} className="navbar-brand"/><h6 className="grass2">Hyrdo Marketcap</h6><h6 className="grass3"> $ {numeral(this.state.marketcap.usd_market_cap).format('0,0.00')}</h6><h6 className="grass2"> Hyrdo Price:</h6> <h6 className="grass3">$ {numeral(this.state.marketcap.usd).format('0,0.0000000000')} </h6></Col>
        </Row>
        
+       
+
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>

@@ -203,12 +203,12 @@ export default class SnowflakeWithdraw extends Component {
         {this.state.pageOfItems.map((transfer,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border2" md={2}>
-        <h4 className="ethereumaccount">{numeral(transfer.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(transfer.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+        <h4 className="banana">{numeral(transfer.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(transfer.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border2" md={2}>
-        <h4 className="time">
-        {numeral(transfer.blockNumber).format('0,0')}</h4>Mined
+        <h6 className="time">
+        {numeral(transfer.blockNumber).format('0,0')}</h6>Mined
         </Col>
 
         <Col className= "col_border2" md={6}>  
@@ -217,7 +217,7 @@ export default class SnowflakeWithdraw extends Component {
         </Col>
 
         <Col className="col_no_border" md={2}>
-        <h4 className="ethereumaccount">ID: {transfer.einFrom}</h4>From Snowflake Account
+        <h4 className="banana">ID: {transfer.einFrom}</h4>From Snowflake Account
         </Col>
          
         </Row>))}

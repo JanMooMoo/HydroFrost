@@ -56,57 +56,78 @@ export default class ethereumExplorer extends Component {
 
   const blockNumber = await web3.eth.getBlockNumber();
   if (this._isMounted){
-  this.setState({blocks:blockNumber - 50000});}
+  this.setState({blocks:blockNumber - 50000});
+  this.setState({latestblocks:blockNumber});
+  this.setState({hydroTransfer:[]});}
 
-  //snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})
-  snowSolidity.events.Transfer({fromBlock: this.state.blocks, toBlock:'latest'})
-  .on('data', (log) => {
-      
-    let { returnValues: { _from, _to, _amount }, blockNumber } = log
-    
-    let values = {_from,_to,_amount,blockNumber}
+  snowSolidity.getPastEvents("Transfer",{fromBlock: this.state.blocks, toBlock:'latest'})
+  .then(events=>{
   
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroTransfer:newsort});
+  this.setState({loading:false});}
+   
+  }).catch((err)=>console.error(err))
+
+  snowSolidity.events.Transfer({fromBlock: this.state.latestblocks, toBlock:'latest'})
+  .on('data', (log) => {
+
     if (this._isMounted && this.state.mainnet == true){
-        this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
-        
-        var newest = this.state.hydroTransfer;
-        var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-        if (this._isMounted){
-        this.setState({hydroTransfer:newsort});
-        this.setState({loading:false});}
-      })
-}
-else{
-  const web2 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
-  const snowSolidity =  new web2.eth.Contract(Hydro_Testnet_Token_ABI, Hydro_Testnet_Token_Address);
-  
-  if (this._isMounted){
-  this.setState({snowSolidity});}
-  this.setState({hydroTransfer:[]});
-
-  const blockNumber = await web2.eth.getBlockNumber();
-  if (this._isMounted){
-  this.setState({blocks:blockNumber - 70000});}
-
-  //snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})
-  snowSolidity.events.Transfer({fromBlock: this.state.blocks, toBlock:'latest'})
-  .on('data', (log) => {
-      
-    let { returnValues: { _from, _to, _amount }, blockNumber } = log
-    
-    let values = {_from,_to,_amount,blockNumber}
-  
-    if (this._isMounted && this.state.mainnet !== true ){
-        this.setState({hydroTransfer:[...this.state.hydroTransfer,values]})}
-       
-        var newest = this.state.hydroTransfer;
-        var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-        if (this._isMounted){
-        this.setState({hydroTransfer:newsort});
-        this.setState({loading:false});}
-
+    this.setState({hydroTransfer:[...this.state.hydroTransfer,log]})   
+    var newest = this.state.hydroTransfer;
+    var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+    if (this._isMounted){
+    this.setState({hydroTransfer:newsort});
+    this.setState({loading:false});}
+    }  
   })
 }
+
+else{
+
+  const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
+  const snowSolidity =  new web3.eth.Contract(Hydro_Testnet_Token_ABI, Hydro_Testnet_Token_Address);
+  
+  if (this._isMounted){
+  this.setState({snowSolidity});
+  this.setState({hydroTransfer:[]});}
+
+  const blockNumber = await web3.eth.getBlockNumber();
+  if (this._isMounted){
+  this.setState({blocks:blockNumber - 50000});
+  this.setState({hydroTransfer:[]});}
+
+  snowSolidity.getPastEvents("Transfer",{fromBlock: this.state.blocks, toBlock:'latest'})
+  .then(events=>{
+  
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroTransfer:newsort});
+  this.setState({loading:false});}
+
+  }).catch((err)=>console.error(err))
+  
+  //snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})
+  snowSolidity.events.Transfer({fromBlock: this.state.latestblocks, toBlock:'latest'})
+  .on('data', (log) => {
+      
+    //let { returnValues: { _from, _to, _amount }, blockNumber } = log
+    //let values = {_from,_to,_amount,blockNumber}
+  
+  if (this._isMounted && this.state.mainnet !== true ){
+  this.setState({hydroTransfer:[...this.state.hydroTransfer,log]})
+  var newest = this.state.hydroTransfer;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({hydroTransfer:newsort});
+  this.setState({loading:false});}
+     }
+  })
+}
+
 }
 
 async loadmarket(){
@@ -157,7 +178,9 @@ this.setState({checktx:check})
         marketcap:[],
         summaryModalShow: false,
         checktx:[],
-        
+        x:[],
+        blocks:'',
+        latestblocks:'',
     }
         this.onChangePage = this.onChangePage.bind(this);
   }
@@ -249,7 +272,7 @@ this.setState({checktx:check})
         {this.state.pageOfItems.map((transfer,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border2" md={2}>
-        <h4 className="banana">{numeral(transfer._amount/1E18).format('0,0.00')} </h4><Row><Col className="dollarvalue">Hydro ~ ${numeral(transfer._amount/1E18 * this.state.marketcap.usd).format('0,0.00')}</Col></Row>
+        <h4 className="banana">{numeral(transfer.returnValues._amount/1E18).format('0,0.00')} </h4><Row><Col className="dollarvalue">Hydro ~ ${numeral(transfer.returnValues._amount/1E18 * this.state.marketcap.usd).format('0,0.00')}</Col></Row>
         </Col>
 
         <Col className= "col_border2" md={2}>
@@ -260,13 +283,13 @@ this.setState({checktx:check})
 
         <Col className= "col_border2" md={4}>   
         <div>
-        <h6 className="ethereumaccount">{transfer._to}
+        <h6 className="ethereumaccount">{transfer.returnValues._to}
         </h6>To Ethereum Account
         </div>
         </Col>
 
         <Col className="col_border2" md={4}>
-        <h6 className="ethereumaccount">{transfer._from}</h6>From Ethereum Account
+        <h6 className="ethereumaccount">{transfer.returnValues._from}</h6>From Ethereum Account
         </Col>
          
         </Row>))}

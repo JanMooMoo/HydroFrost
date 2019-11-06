@@ -7,6 +7,8 @@ import Title from '../Title/Title';
 import './flipcard.css';
 
 
+
+
 export default class DetailsPage extends Component {
   render(){
   return (
@@ -23,11 +25,11 @@ export default class DetailsPage extends Component {
          <Row><Col><h1> </h1></Col></Row>
 
 <Row>
-<Col xs={12} md={4}>   
+<Col xs={12} md={12} lg={4}>   
            
 <Center>
 <FlipPage className='flipNews' orientation='horizontal' pageBackground=
-'linear-gradient(to bottom, rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' 
+'linear-gradient(to bottom, rgb(90, 90, 161),rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' 
 treshold='20' uncutPages width='300' height='400'>
 
 <article>
@@ -105,9 +107,9 @@ and new infrastructure on top of the ecosystem.
 </article></Center>
 </FlipPage></Center></Col>  
 
-<Col xs={12} md={4}>
+<Col xs={12} md={12} lg={4}>
 <Center><FlipPage className='flipNews' orientation='horizontal' pageBackground=
-  'linear-gradient(to bottom, rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' treshold='20' uncutPages width='300' height='400'>
+  'linear-gradient(to bottom, rgb(90, 90, 161),rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' treshold='20' uncutPages width='300' height='400'>
  <article>
  <div className="flipcard">
  <Center><h1></h1></Center>
@@ -115,7 +117,7 @@ and new infrastructure on top of the ecosystem.
  <Center><h1></h1></Center>
  <Center><h1></h1></Center>  
  <Center><h1></h1></Center>
- <Center><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={140} width={130} /></Center>
+ <Center><img src={require('../../Images/Hydrogen.png')} alt="snow" height={140} width={133} /></Center>
  <Center><h1></h1></Center>
  <Center><h1></h1></Center>
  <Center><h5 className="grass2">Hydrogen</h5></Center>
@@ -171,9 +173,9 @@ and empower an emergent middle class, bringing fintech to the masses.
 </FlipPage></Center></Col>
 
 
-<Col xs={12} md={4}>
+<Col xs={12} md={12} lg={4}>
 <Center><FlipPage className='flipNews' orientation='horizontal' pageBackground=
-  'linear-gradient(to bottom, rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' treshold='20' uncutPages width='300' height='400'>
+  'linear-gradient(to bottom, rgb(90, 90, 161),rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))' treshold='20' uncutPages width='300' height='400'>
  <article>
  <div className="flipcard">
  <Center><h1></h1></Center>
@@ -181,7 +183,7 @@ and empower an emergent middle class, bringing fintech to the masses.
  <Center><h1></h1></Center>
  <Center><h1></h1></Center>  
  <Center><h1></h1></Center>
- <Center><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={140} width={130} /></Center>
+ <Center><img src={require('../../Images/HydroLabs.png')} alt="snow" height={140} width={134} /></Center>
  <Center><h1></h1></Center>
  <Center><h1></h1></Center>
  <Center><h5 className="grass2">Hydro Labs</h5></Center>

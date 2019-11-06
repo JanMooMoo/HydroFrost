@@ -17,7 +17,7 @@
     border-bottom:1px solid rgb(219, 206, 164);
     font-family: 'Frank Ruhl Libre', serif;
     background:linear-gradient(45deg, rgb(46, 26, 26),rgb(219, 206, 164),rgb(88, 59, 59))!important;
-    
+    overflow:hidden;
     -webkit-text-stroke:0.00001px #3433;
     text-shadow:2px 2px 0 black,
                 1px 3px 0 #000,
