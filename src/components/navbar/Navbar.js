@@ -53,6 +53,7 @@ if(this.state.sideDrawerOpen){
 
      
 <Container>
+
 <Center>
      <ul className="navbar-nav align-items-center" >
      
