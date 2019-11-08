@@ -270,7 +270,7 @@ componentWillUnmount(){
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        
-  <Tabs defaultActiveKey="ethereum_deposit" transition={false} id="noanim-tab-example" mountOnEnter>
+  <Tabs defaultActiveKey="ein_sent" transition={false} id="noanim-tab-example" mountOnEnter>
   
   <Tab eventKey="resolver_added" title="Resolvers Added" className="tab">
    <ResolversAdded
