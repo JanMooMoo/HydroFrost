@@ -221,25 +221,25 @@ else{
        <Row><Col><h1> </h1></Col></Row>
       
       <Row className ="row_underline2">
-      <Col className= "col_border2" md={2}><h3>Amount</h3></Col>
-      <Col className= "col_border2" md={2}><h3>Block</h3></Col>
-      <Col className= "col_border2" md={4}><h3>To</h3></Col>
+      <Col className= "col_border" md={2}><h3>Amount</h3></Col>
+      <Col className= "col_border" md={2}><h3>Block</h3></Col>
+      <Col className= "col_border" md={4}><h3>To</h3></Col>
       <Col className="col_no_border" md={4}><h3>From</h3></Col>
       
       
         </Row>
         {this.state.pageOfItems.map((transfer,index)=>(
         <Row className ="row_underline" key={index}>
-        <Col className= "col_border2" md={2}>
+        <Col className= "col_border" md={2}>
         <h4 className="ethereumaccount">{numeral(transfer.returnValues.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(transfer.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
-        <Col className= "col_border2" md={2}>
+        <Col className= "col_border" md={2}>
         <h4 className="time">
         {numeral(transfer.blockNumber).format('0,0')}</h4>Mined
         </Col>
 
-        <Col className= "col_border2" md={4}>   
+        <Col className= "col_border" md={4}>   
         <div>
          
         <h4 className="ethereumaccount">ID 

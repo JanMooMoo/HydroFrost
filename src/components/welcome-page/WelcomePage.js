@@ -259,8 +259,15 @@ componentWillUnmount(){
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        
-  <Tabs defaultActiveKey="ethereum_deposit" transition={false} id="noanim-tab-example" mountOnEnter>
+  <Tabs defaultActiveKey="ein_sent" transition={false} id="noanim-tab-example" mountOnEnter>
   
+  <Tab eventKey="resolver_added" title="Resolvers Added" className="tab">
+   <ResolversAdded
+   number={this.state.number}
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
+  </Tab>
+
   <Tab eventKey="ethereum_deposit" title="Ethereum Deposits to EIN" className="tab" >
    <EthereumToEin
    number={this.state.number}
@@ -275,13 +282,6 @@ componentWillUnmount(){
    marketUsd={this.state.marketcap.usd}/>
   </Tab>
 
-  <Tab eventKey="ein_sent" title="Sent" className="tab">
-   <EinToEinSent
-   number={this.state.number}
-   mainnet={this.state.mainnet}
-   marketUsd={this.state.marketcap.usd}/>
-  </Tab>
-
   <Tab eventKey="ein_recieved" title="Recieved" className="tab">
    <EinToEinRecieved
    number={this.state.number}
@@ -289,12 +289,14 @@ componentWillUnmount(){
    marketUsd={this.state.marketcap.usd}/>
   </Tab>
 
-  <Tab eventKey="resolver_added" title="Resolvers Added" className="tab">
-   <ResolversAdded
+  <Tab eventKey="ein_sent" title="Sent" className="tab">
+   <EinToEinSent
    number={this.state.number}
    mainnet={this.state.mainnet}
    marketUsd={this.state.marketcap.usd}/>
   </Tab>
+
+  
   
 </Tabs>
 <Row><Col><h1> </h1></Col></Row>

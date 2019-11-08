@@ -215,25 +215,25 @@ else{
        <Row><Col><h1> </h1></Col></Row>
       
       <Row className ="row_underline2">
-      <Col className= "col_border2" md={2}><h3>Amount</h3></Col>
-      <Col className= "col_border2" md={2}><h3>Block</h3></Col>
-      <Col className= "col_border2" md={6}><h3>From</h3></Col>
+      <Col className= "col_border" md={2}><h3>Amount</h3></Col>
+      <Col className= "col_border" md={2}><h3>Block</h3></Col>
+      <Col className= "col_border" md={6}><h3>From</h3></Col>
       <Col className="col_no_border" md={2}><h3>To</h3></Col>
       
       
         </Row>
         {this.state.pageOfItems.map((Deposit,index)=>(
         <Row className ="row_underline" key={index}>
-        <Col className= "col_border2" md={2}>
+        <Col className= "col_border" md={2}>
         <h4 className="banana">{numeral(Deposit.returnValues.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(Deposit.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
-        <Col className= "col_border2" md={2}>
+        <Col className= "col_border" md={2}>
         <h6 className="time">
         {numeral(Deposit.blockNumber).format('0,0')}</h6>Mined
         </Col>
 
-        <Col className= "col_border2" md={6}>  
+        <Col className= "col_border" md={6}>  
         <h6 className="ethereumaccount">{Deposit.returnValues.from}
         </h6>From Ethereum Account
         </Col>

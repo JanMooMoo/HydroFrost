@@ -64,9 +64,9 @@ export default class SnowflakeAccount extends Component {
 
   const blockNumber = await web3.eth.getBlockNumber();
   if (this._isMounted){
-  this.setState({blocks:blockNumber});}
+  this.setState({blocks:blockNumber});
 
-  this.setState({number:params.id})
+  this.setState({number:params.id})}
 
   /*if(passedEin !== null && this._isMounted){
     this.setState({number:passedEin},()=>console.log("check", this.state.number))
@@ -92,9 +92,9 @@ else
 
   const blockNumber = await web3.eth.getBlockNumber();
   if (this._isMounted){
-  this.setState({blocks:blockNumber});}
+  this.setState({blocks:blockNumber});
 
-  this.setState({number:params.id})
+  this.setState({number:params.id})}
   
   const get_ein = await snowSolidity.methods.deposits(params.id).call();
   if (this._isMounted){
@@ -272,6 +272,13 @@ componentWillUnmount(){
        
   <Tabs defaultActiveKey="ethereum_deposit" transition={false} id="noanim-tab-example" mountOnEnter>
   
+  <Tab eventKey="resolver_added" title="Resolvers Added" className="tab">
+   <ResolversAdded
+   number={this.state.number}
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
+  </Tab>
+
   <Tab eventKey="ethereum_deposit" title="Ethereum Deposits to EIN" className="tab" >
    <EthereumToEin
    number={this.state.number}
@@ -286,13 +293,6 @@ componentWillUnmount(){
    marketUsd={this.state.marketcap.usd}/>
   </Tab>
 
-  <Tab eventKey="ein_sent" title="Sent" className="tab">
-   <EinToEinSent
-   number={this.state.number}
-   mainnet={this.state.mainnet}
-   marketUsd={this.state.marketcap.usd}/>
-  </Tab>
-
   <Tab eventKey="ein_recieved" title="Recieved" className="tab">
    <EinToEinRecieved
    number={this.state.number}
@@ -300,8 +300,8 @@ componentWillUnmount(){
    marketUsd={this.state.marketcap.usd}/>
   </Tab>
 
-  <Tab eventKey="resolver_added" title="Resolvers Added" className="tab">
-   <ResolversAdded
+  <Tab eventKey="ein_sent" title="Sent" className="tab">
+   <EinToEinSent
    number={this.state.number}
    mainnet={this.state.mainnet}
    marketUsd={this.state.marketcap.usd}/>
