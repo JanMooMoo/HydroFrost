@@ -25,21 +25,10 @@
   width:calc(100% + 4px);
   height:calc(100% + 4px);
   z-index:-1;
-  animation:animate 50s linear;
+
   }
 
-  @keyframes animate
-  {
-  0%
-  { background-position: 0 0;
-  }
-  50%
-  { background-position: 300% 0;
-  }
-  100%
-  { background-position: 0 0;
-  }
-  }
+ 
   .flipNews:after{
     filter:blur(5px);
   }
@@ -72,6 +61,7 @@
   overflow:hidden;
   font-family: 'Frank Ruhl Libre', serif;
   
+  
 }
 
 
@@ -96,7 +86,6 @@ color:#ffffff;
     bottom:1;
     background:rgba(19, 2, 4, 0.315);
     background:linear-gradient(to top, rgb(61, 61, 218), rgb(0, 28, 88), rgb(1, 1, 8));
-
     opacity: 0.7;
     height:7%;
     width:70%;
@@ -114,3 +103,48 @@ color:#ffffff;
     position:absolute;
     overflow:hidden;
     }
+
+    .topButton {
+      position: fixed;
+      bottom: 10px;
+      float: right;
+      right: 18.5%;
+      left: 93.25%;
+      height: 50px;
+      max-width: 50px;
+      max-height: 50px;
+      width: 100%;
+      font-size: 12px;
+      border-color: rgb(214, 201, 149);
+      background:linear-gradient(to bottom, rgb(61, 61, 218), rgb(0, 28, 88), rgb(1, 1, 8));
+      padding: .5px;
+      border-radius: 4px;
+      scroll-behavior: smooth;
+      z-index:100;
+  }
+
+  @media(max-width:900px){
+  .topButton {
+    position: fixed;
+    bottom: 10px;
+    float: right;
+    right: 18.5%;
+    left: 80.25%;
+    height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    width: 100%;
+    font-size: 12px;
+    border-color: rgb(214, 201, 149);
+    background:linear-gradient(to bottom, rgb(61, 61, 218), rgb(0, 28, 88), rgb(1, 1, 8));
+    padding: .5px;
+    border-radius: 4px;
+    scroll-behavior: smooth;
+    z-index:100;
+}}
+/*On Hover Color Change*/
+  .topButton:hover {
+      background-color: #7dbbf1;
+      scroll-behavior: smooth;
+      z-index:1;
+  }

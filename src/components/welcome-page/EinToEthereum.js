@@ -13,6 +13,7 @@ import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Moment from 'react-moment';
+import {Link} from 'react-router-dom';
 import JwPagination from 'jw-react-pagination';
 
 
@@ -149,6 +150,10 @@ export default class EinToEthereum extends Component {
     this.setState({ pageOfItems });
   }
 
+  reload(){
+    window.location.reload()
+  }
+
   render(){
   return (
    <div>
@@ -188,8 +193,12 @@ export default class EinToEthereum extends Component {
         </div>
         </Col>
 
-        <Col className="col_no_border" md={2}>
-        <h4 className="banana">ID: {withdraw.einFrom}</h4>EIN Account
+        <Col className="col_no_border" md={2} onClick={this.reload}>
+        <h4 className="banana">ID
+        <Link to={{pathname:'/Accounts/'+withdraw.einFrom}} className="accountlink">
+        : {withdraw.einFrom}
+        </Link>
+        </h4>EIN Account
         </Col>
          
         </Row>))}

@@ -46,6 +46,7 @@ if(this.state.sideDrawerOpen){
   backdrop=<Backdrop click={this.backdropClickHandler}/>
 }
   return (
+    
 
     
    <NavWrapper className="navbar navbar-expand-sm px-sm-5">
@@ -68,7 +69,7 @@ if(this.state.sideDrawerOpen){
        </Link>
       
   
-      
+       
 
     
        <li className="navlink2">

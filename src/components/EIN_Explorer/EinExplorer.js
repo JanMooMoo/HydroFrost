@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import Title from '../Title/Title';
 import ReactGA from 'react-ga';
 import Center from 'react-center';
-
+import {Link} from 'react-router-dom';
 import {
     Nav,
     Container,
@@ -241,15 +241,24 @@ else{
 
         <Col className= "col_border2" md={4}>   
         <div>
-        <h4 className="ethereumaccount">ID: {transfer.returnValues.einTo}
-        </h4>To Snowflake
+         
+        <h4 className="ethereumaccount">ID 
+        <Link to={{pathname:'/Accounts/' + transfer.returnValues.einTo}} className="accountlink">
+        : {transfer.returnValues.einTo}
+        </Link>
+        </h4>
+        To Snowflake
         </div>
         </Col>
 
         <Col className="col_no_border" md={4}>
-        <h4 className="ethereumaccount">ID: {transfer.returnValues.einFrom}</h4>From Snowflake 
+        <h4 className="ethereumaccount">ID
+        <Link to={{pathname:'/Accounts/'+transfer.returnValues.einFrom,}} className="accountlink">  
+        : {transfer.returnValues.einFrom}</Link>
+        </h4>
+        From Snowflake 
         </Col>
-         
+        
         </Row>))}
        
        <Row><Col><h1> </h1></Col></Row>

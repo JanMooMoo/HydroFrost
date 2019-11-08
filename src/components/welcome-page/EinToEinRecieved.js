@@ -78,9 +78,7 @@ export default class EinToEinRecieved extends Component {
     this.setState({loading:false});}
     
    });   
-
-
-    }
+ }
 
 else{
   const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
@@ -164,6 +162,10 @@ onChangePage(pageOfItems) {
   this.setState({ pageOfItems });
 }
 
+reload(){
+  window.location.reload()
+}
+
 /*<Col className= "col_border" md={2}>   
 <h6 className="time"><Moment unix format="LLLL">{recieved.blockNumber}</Moment></h6>
 </Col>*/
@@ -201,16 +203,23 @@ onChangePage(pageOfItems) {
         <h6 className="time">{numeral(recieved.blockNumber).format('0,0')}</h6>Mined
         </Col>
 
-        <Col className= "col_border" md={6}>   
+        <Col className= "col_border" md={6} onClick={this.reload}>   
         <div>
-        <h4 className="banana">ID: {recieved.einTo}
+        <h4 className="banana">ID
+        <Link to={{pathname:'/Accounts/'+recieved.einTo}} className="accountlink">
+        : {recieved.einTo}
+        </Link>
         </h4>EIN Account
         </div>
         </Col>
 
         <Col className="col_no_border"  md={2}>
-        <h4 className="banana" >ID:{recieved.einFrom}</h4>EIN Account
-    
+        
+        <h4 className="banana" onClick={this.reload}>ID
+        <Link to={{pathname:'/Accounts/'+recieved.einFrom}} className="accountlink">
+        : {recieved.einFrom}
+        </Link>
+        </h4>EIN Account
         </Col>
          
        </Row>))}

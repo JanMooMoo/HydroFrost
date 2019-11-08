@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import Title from '../Title/Title';
 import ReactGA from 'react-ga';
 import Center from 'react-center';
+import {Link} from 'react-router-dom';
 import {
     Nav,
     Container,
@@ -238,7 +239,11 @@ else{
         </Col>
 
         <Col className="col_no_border" md={2}>
-        <h4 className="banana">ID: {transfer.returnValues.einFrom}</h4>From Snowflake Account
+        <h4 className="banana">ID 
+        <Link to={{pathname:'/Accounts/'+transfer.returnValues.einFrom}} className="accountlink">
+        : {transfer.returnValues.einFrom}
+        </Link>
+        </h4>From Snowflake Account
         </Col>
          
         </Row>))}

@@ -10,6 +10,7 @@ import {
 } from 'react-bootstrap';
 
 import Web3 from 'web3';
+import {Link} from 'react-router-dom';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Moment from 'react-moment';
@@ -72,7 +73,7 @@ export default class EinToEinSent extends Component {
         var newest = this.state.ein_transfer_out;
         var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
         if (this._isMounted){
-        this.setState({eth_transfer_out:newsort});
+        this.setState({ein_transfer_out:newsort});
         this.setState({loading:false});}
           
          });   
@@ -101,7 +102,7 @@ export default class EinToEinSent extends Component {
   var newest = this.state.ein_transfer_out;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
-  this.setState({eth_transfer_out:newsort});
+  this.setState({ein_transfer_out:newsort});
   this.setState({loading:false});}
     
    });   
@@ -159,6 +160,10 @@ export default class EinToEinSent extends Component {
   this.setState({ pageOfItems });
   }
 
+  reload(){
+    window.location.reload()
+  }
+
 
   render(){
   return (
@@ -195,13 +200,20 @@ export default class EinToEinSent extends Component {
       
       <Col className= "col_border" md={6}>   
       <div>
-      <h4 className="banana">ID: {send.einTo} 
+      <h4 className="banana" onClick={this.reload}>ID
+      <Link to={{pathname:'/Accounts/'+send.einTo}} className="accountlink" >
+      : {send.einTo} 
+      </Link>
       </h4> EIN Account
       </div>
       </Col>
 
       <Col className= "col_no_border" md={2}>
-      <h4 className="banana" >ID: {send.einFrom}</h4>EIN Account
+      <h4 className="banana" onClick={this.reload}>ID
+      <Link to={{pathname:'/Accounts/'+send.einFrom}} className="accountlink" onClick={this.reload}>
+        : {send.einFrom}
+      </Link>
+      </h4>EIN Account
       </Col>
          
        </Row>))}

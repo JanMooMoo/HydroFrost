@@ -34,7 +34,7 @@ let einFrom = [];
 let numeral = require('numeral');
 
 
-export default class WelcomePage extends Component {
+export default class SnowflakeAccount extends Component {
 
   _isMounted = false;
   abortController = new AbortController()
@@ -52,18 +52,32 @@ export default class WelcomePage extends Component {
      
   async loadBlockchain() { 
 
-  
+  const{params}=this.props.match
   const{mainnet} = this.state
-
+  const {passedEin}=this.props.location
+  
   if(this.state.mainnet == true){
   const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
   const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
   if (this._isMounted){
-  this.setState({snowSolidity});
-  this.setState({number:this.state.value})}
+  this.setState({snowSolidity});}
 
+  const blockNumber = await web3.eth.getBlockNumber();
+  if (this._isMounted){
+  this.setState({blocks:blockNumber});}
+
+  this.setState({number:params.id})
+
+  /*if(passedEin !== null && this._isMounted){
+    this.setState({number:passedEin},()=>console.log("check", this.state.number))
+  }
+
+  else{
+  if (this._isMounted){
+  this.setState({number:this.state.value})}
+  }*/
   
-  const get_ein = await snowSolidity.methods.deposits(this.state.value).call();
+  const get_ein = await snowSolidity.methods.deposits(params.id).call();
   if (this._isMounted){
   this.setState({EIN_balance:(get_ein)/1E18})
   this.setState({loading:false})
@@ -74,10 +88,15 @@ else
   const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
   const snowSolidity =  new web3.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
   if (this._isMounted){
-  this.setState({snowSolidity});
-  this.setState({number:this.state.value})}
+  this.setState({snowSolidity});}
+
+  const blockNumber = await web3.eth.getBlockNumber();
+  if (this._isMounted){
+  this.setState({blocks:blockNumber});}
+
+  this.setState({number:params.id})
   
-  const get_ein = await snowSolidity.methods.deposits(this.state.value).call();
+  const get_ein = await snowSolidity.methods.deposits(params.id).call();
   if (this._isMounted){
   this.setState({EIN_balance:(get_ein)/1E18})
   this.setState({loading:false})
@@ -181,6 +200,7 @@ componentWillUnmount(){
   render(){
 
   const {loading} = this.state
+  const {params} = this.props.match
   
 
   return (
@@ -188,21 +208,22 @@ componentWillUnmount(){
     
       <Container>
       <a id="top"></a>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-       
+         <Row><Col><h1> </h1></Col></Row>
+         <Row><Col><h1> </h1></Col></Row>
+        
        <Title name={ !this.state.mainnet ? "Rinkeby":"Main"} title="Network"/>
        
        
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
-       
+      
        <Row><Col><h4>
-        <Center><RotateSpinner
-                size={60}
-                color={!this.state.mainnet? "rgb(226, 188, 62)":"rgb(241, 241, 241)"}
-                loading={loading}/>
-        </Center>  
+       <Center>
+       <RotateSpinner
+        size={60}
+        color={!this.state.mainnet? "rgb(226, 188, 62)":"rgb(241, 241, 241)"}
+        loading={loading}/>
+      </Center>  
       </h4></Col></Row>
 
       <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
@@ -213,23 +234,15 @@ componentWillUnmount(){
       <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
       <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
       
-      
-     
-
        <Row>
        <Col md={8}></Col>
-       <Col><label className="searchlabel">Search for EIN</label>
+       <Col><label className="searchlabel"></label>
        </Col>
        </Row>
       
       <Row>
-      <Col md={8}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col><Col><form onSubmit={this.handleSubmit}>
-      <input type="text" value={this.state.value} onChange={this.handleChange} className="searchbar" /> 
-      <input type="submit" value="Submit" className="submit-button"/>
-      </form>
-      </Col>
+      <Col md={8}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col>
       </Row>
-      
 
       <Row>
     
@@ -252,8 +265,6 @@ componentWillUnmount(){
          <Col md={4} className="market"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={50} width={40} className="navbar-brand"/><h6 className="grass2">Hyrdo Marketcap</h6><h6 className="grass3"> $ {numeral(this.state.marketcap.usd_market_cap).format('0,0.00')}</h6><h6 className="grass2"> Hyrdo Price:</h6> <h6 className="grass3">$ {numeral(this.state.marketcap.usd).format('0,0.0000000000')} </h6></Col>
        </Row>
        
-       
-
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
@@ -304,7 +315,7 @@ componentWillUnmount(){
 <Row><Col className="market"><Center><h6 className="banana">If you find this Application Helpful and Wish to Support our Coffee in the Morning, You can do so by Tipping us on this Address 0x20F857b13D6C546eC77aFE47317EA3c5a75c1c6c ,If you found unpleasant bugs or have a suggestion, You can contact us at MyHydroFrost@gmail.com. Thank you! & Happy BUIDLING! </h6></Center></Col></Row>
 </Container>
 <button className="topButton"><a href="#top" className="accountlink">Top</a></button>
-     
+       
    </div>
   );
 }

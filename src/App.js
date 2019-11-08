@@ -10,8 +10,7 @@ import DetailsPage from './components/details-page/DetailsPage'
 import DefaultPage from './components/default-page/DefaultPage'
 import SideDrawer from './components/navbar/SideDrawer';
 import Backdrop from './components/navbar/Backdrop';
-
-
+import SnowflakeAccount from './components/welcome-page/SnowflakeAccount';
 
 
 
@@ -71,6 +70,7 @@ drawerToggleClickHandler =()=>{
         <Route path="/Ethereum" component ={ethereumExplorer}/>
         <Route path="/Snowflake" component ={SnowflakeExplorerPage}/>
         <Route path="/Builders" component ={DetailsPage}/>
+        <Route path="/Accounts/:id" component ={SnowflakeAccount}/>
         <Route component ={DefaultPage}/>
     
       </Switch>

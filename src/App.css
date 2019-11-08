@@ -163,6 +163,21 @@ color:rgb(231, 215, 69);
   border-bottom: none!important;
 }
 
+.accountlink{
+  text-transform:capitalize;
+  cursor: pointer;
+  transition:all 0.1s ease-in-out;
+  text-decoration: none!important;
+  color:rgb(226, 188, 62)!important;
+}
+.accountlink:hover{
+  text-transform:capitalize;
+  cursor: pointer;
+  transition:all 0.1s ease-in-out;
+  text-decoration: none!important;
+  color:white!important;
+}
+
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link  {
   color: rgb(245, 248, 255)!important;
   background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
