@@ -203,7 +203,7 @@ reload(){
         <h6 className="time">{numeral(recieved.blockNumber).format('0,0')}</h6>Mined
         </Col>
 
-        <Col className= "col_border" md={6}>   
+        <Col className= "col_border" md={6} onClick={this.reload}>   
         <div>
         <h4 className="banana">ID
         <Link to={{pathname:'/Accounts/'+recieved.einTo}} className="accountlink">
