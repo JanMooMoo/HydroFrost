@@ -70,7 +70,7 @@ drawerToggleClickHandler =()=>{
         <Route path="/Ethereum" component ={ethereumExplorer}/>
         <Route path="/Snowflake" component ={SnowflakeExplorerPage}/>
         <Route path="/Builders" component ={DetailsPage}/>
-        <Route path="/Accounts/:id" component ={SnowflakeAccount}/>
+        <Route exact path="/Accounts/:id" component ={SnowflakeAccount}/>
         <Route component ={DefaultPage}/>
     
       </Switch>

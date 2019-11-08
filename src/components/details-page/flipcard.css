@@ -121,6 +121,7 @@ color:#ffffff;
       border-radius: 4px;
       scroll-behavior: smooth;
       z-index:100;
+      color:white;
   }
 
   @media(max-width:900px){
