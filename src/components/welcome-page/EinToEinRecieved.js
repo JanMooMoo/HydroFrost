@@ -52,30 +52,41 @@ export default class EinToEinRecieved extends Component {
   this.setState({check_network:this.props.mainnet})
 
   if(this.state.check_network == true){
-    const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
+  const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
 
   if (this._isMounted){
   this.setState({snowSolidity});
   this.setState({ein_transfer_in:[]});}
 
-  snowSolidity.events.SnowflakeTransfer({filter:{einTo:this.props.number},fromBlock:7728191, toBlock:'latest'})
-    .on('data',(log)=>{
+  snowSolidity.getPastEvents("SnowflakeTransfer",{filter:{einTo:this.props.number},fromBlock:0, toBlock:'latest'})
+  .then(events=>{
+    
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({ein_transfer_in:newsort});
+  this.setState({loading:false});}
+ 
+  })
+  .catch((err)=>console.error(err))
+
+
+  snowSolidity.events.SnowflakeTransfer({filter:{einTo:this.props.number},fromBlock:'latest', toBlock:'latest'})
+  .on('data',(log)=>{
   
-  let { returnValues: { einFrom, einTo, amount }, blockNumber } = log
-
+  //let { returnValues: { einFrom, einTo, amount }, blockNumber } = log
+  //let values = {einFrom,einTo,amount,blockNumber}
   //web3.eth.getBlock(blockNumber, (error, block) => {
- // blockNumber = block.timestamp;
-
-  let values = {einFrom,einTo,amount,blockNumber}
+  // blockNumber = block.timestamp;
 
   if (this._isMounted){
-  this.setState({ein_transfer_in:[...this.state.ein_transfer_in,values]})}   
+  this.setState({ein_transfer_in:[...this.state.ein_transfer_in,log]})}   
   
   var newest = this.state.ein_transfer_in;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
-    this.setState({ein_transfer_in:newsort});
-    this.setState({loading:false});}
+  this.setState({ein_transfer_in:newsort});
+  this.setState({loading:false});}
     
    });   
  }
@@ -86,19 +97,27 @@ else{
   this.setState({snowSolidity});
   this.setState({ein_transfer_in:[]});}
 
-  snowSolidity.events.SnowflakeTransfer({filter:{einTo:this.props.number},fromBlock:0, toBlock:'latest'})
-    .on('data',(log)=>{
+  snowSolidity.getPastEvents("SnowflakeTransfer",{filter:{einTo:this.props.number},fromBlock:0, toBlock:'latest'})
+  .then(events=>{
+    
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({ein_transfer_in:newsort});
+  this.setState({loading:false});}
+  })
+  .catch((err)=>console.error(err))
+
+  snowSolidity.events.SnowflakeTransfer({filter:{einTo:this.props.number},fromBlock:'latest', toBlock:'latest'})
+  .on('data',(log)=>{
      
-  let { returnValues: { einFrom, einTo, amount }, blockNumber } = log
- 
-
+  //let { returnValues: { einFrom, einTo, amount }, blockNumber } = log
   //web3.eth.getBlock(blockNumber, (error, block) => {
- // blockNumber = block.timestamp;
-
-  let values = {einFrom,einTo,amount,blockNumber}
+  //blockNumber = block.timestamp;
+  //let values = {einFrom,einTo,amount,blockNumber}
   
   if (this._isMounted){
-  this.setState({ein_transfer_in:[...this.state.ein_transfer_in,values]})}   
+  this.setState({ein_transfer_in:[...this.state.ein_transfer_in,log]})}   
   
   var newest = this.state.ein_transfer_in;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
@@ -196,7 +215,7 @@ reload(){
        <Row className ="row_underline" key={index}>
 
         <Col className= "col_border" md={2}>   
-        <h4 className="banana"> {numeral(recieved.amount/1E18).format('0,0.00')}</h4>Hydro ~ $ {numeral(recieved.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+        <h5 className="banana"> {numeral(recieved.returnValues.amount/1E18).format('0,0.00')}</h5>Hydro ~ $ {numeral(recieved.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border" md={2}>   
@@ -205,21 +224,21 @@ reload(){
 
         <Col className= "col_border" md={6} onClick={this.reload}>   
         <div>
-        <h4 className="banana">ID
-        <Link to={{pathname:'/Accounts/'+recieved.einTo}} className="accountlink">
-        : {recieved.einTo}
+        <h5 className="banana">ID
+        <Link to={{pathname:'/Accounts/'+recieved.returnValues.einTo}} className="accountlink">
+        : {recieved.returnValues.einTo}
         </Link>
-        </h4>EIN Account
+        </h5>To EIN Account
         </div>
         </Col>
 
         <Col className="col_no_border"  md={2}>
         
-        <h4 className="banana" onClick={this.reload}>ID
-        <Link to={{pathname:'/Accounts/'+recieved.einFrom}} className="accountlink">
-        : {recieved.einFrom}
+        <h5 className="banana" onClick={this.reload}>ID
+        <Link to={{pathname:'/Accounts/'+recieved.returnValues.einFrom}} className="accountlink">
+        : {recieved.returnValues.einFrom}
         </Link>
-        </h4>EIN Account
+        </h5>From EIN Account
         </Col>
          
        </Row>))}

@@ -63,63 +63,78 @@ async loadSnowflake(){
   if(this.state.check_network == true){
     const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
 
-    if (this._isMounted){
-      this.setState({snowSolidity});
-      this.setState({eth_deposit:[]});}
-    
-      await snowSolidity.events.SnowflakeDeposit({filter:{einTo:this.props.number},fromBlock:7728191, toBlock:'latest'})
-        .on('data',async (log)=>{  
+  if (this._isMounted){
+  this.setState({snowSolidity});
+  this.setState({eth_deposit:[]});}
+
+  snowSolidity.getPastEvents("SnowflakeDeposit",{filter:{einTo:this.props.number},fromBlock:7728191, toBlock:'latest'})
+  .then(events=>{
       
-      let { returnValues: { from, einTo, amount }, blockNumber } = log
-     
-      //web3.eth.getBlock(blockNumber, (error, block) => {
-     // blockNumber = block.timestamp
-     
-     
-      let values = {from,einTo,amount,blockNumber}
-        
-      if (this._isMounted){
-      this.setState({eth_deposit:[...this.state.eth_deposit,values]})
-      this.setState({loading:false});}
-             
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({eth_deposit:newsort});
+  this.setState({loading:false});}
+  })
+  .catch((err)=>console.error(err))
     
-      var newest = this.state.eth_deposit;
-      var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-      if (this._isMounted){
-        this.setState({eth_deposit:newsort});
-        }
-     });
-    //})
-  }
+  await snowSolidity.events.SnowflakeDeposit({filter:{einTo:this.props.number},fromBlock:'latest', toBlock:'latest'})
+  .on('data',async (log)=>{  
+      
+  //let { returnValues: { from, einTo, amount }, blockNumber } = log  
+  //web3.eth.getBlock(blockNumber, (error, block) => {
+  // blockNumber = block.timestamp
+  //let values = {from,einTo,amount,blockNumber}
+        
+  if (this._isMounted){
+  this.setState({eth_deposit:[...this.state.eth_deposit,log]})
+  this.setState({loading:false});}
+         
+  var newest = this.state.eth_deposit;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({eth_deposit:newsort});
+     }
+  });
+//})
+}
+
 else{
+
   const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
 
   if (this._isMounted){
   this.setState({snowSolidity});
   this.setState({eth_deposit:[]});}
 
-  await snowSolidity.events.SnowflakeDeposit({filter:{einTo:this.props.number},fromBlock:0, toBlock:'latest'})
-    .on('data',async (log)=>{  
+  snowSolidity.getPastEvents("SnowflakeDeposit",{filter:{einTo:this.props.number},fromBlock:0, toBlock:'latest'})
+  .then(events=>{
+      
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({eth_deposit:newsort});
+  this.setState({loading:false});}
+  })
+  .catch((err)=>console.error(err))
+
+  await snowSolidity.events.SnowflakeDeposit({filter:{einTo:this.props.number},fromBlock:'latest', toBlock:'latest'})
+  .on('data',async (log)=>{  
   
-  let { returnValues: { from, einTo, amount }, blockNumber } = log
- 
+  //let { returnValues: { from, einTo, amount }, blockNumber } = log
   //web2.eth.getBlock(blockNumber, (error, block) => {
   //blockNumber = block.timestamp
- 
- 
-  let values = {from,einTo,amount,blockNumber}
+  //let values = {from,einTo,amount,blockNumber}
     
   if (this._isMounted){
-  this.setState({eth_deposit:[...this.state.eth_deposit,values]})
+  this.setState({eth_deposit:[...this.state.eth_deposit,log]})
   this.setState({loading:false});}
-         
-
+      
   var newest = this.state.eth_deposit;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
     this.setState({eth_deposit:newsort});
-    }
-    
+    } 
    });
  // });
   }
@@ -211,28 +226,27 @@ componentWillUnmount(){
        <Row className="row_underline" key={index}>
          
          
-             <Col className= "col_border"  md={2}>
-             <h4 className="banana">{numeral(deposit.amount/1E18).format('0,0.00')}</h4>Hydro ~ $ {numeral(deposit.amount/1E18 * this.props.marketUsd).format('0,0.00')}
-             </Col>
+        <Col className= "col_border"  md={2}>
+        <h5 className="banana">{numeral(deposit.returnValues.amount/1E18).format('0,0.00')}</h5>Hydro ~ $ {numeral(deposit.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+        </Col>
              
-
-             <Col className= "col_border" md={2}>   
+        <Col className= "col_border" md={2}>   
         <h6 className="time">{numeral(deposit.blockNumber).format('0,0')}</h6>Mined
         </Col>
 
          <Col className="col_border" md={6}>   
          <div>
-           <h6 className="ethereumaccount">{deposit.from}
-           </h6>Ethereum Account
+           <h6 className="ethereumaccount">{deposit.returnValues.from}
+           </h6>From Ethereum Account
          </div>
          </Col>
 
          <Col className="col_no_border" md={2}>
-         <h4 className="banana" onClick={this.reload}>ID
-         <Link to={{pathname:'/Accounts/'+deposit.einTo}} className="accountlink">
-         : {deposit.einTo}
+         <h5 className="banana" onClick={this.reload}>ID
+         <Link to={{pathname:'/Accounts/'+deposit.returnValues.einTo}} className="accountlink">
+         : {deposit.returnValues.einTo}
          </Link>
-         </h4>EIN Account
+         </h5>To EIN Account
          </Col>
          
        </Row>))}

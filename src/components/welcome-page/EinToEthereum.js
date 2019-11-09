@@ -48,18 +48,27 @@ export default class EinToEthereum extends Component {
   this.setState({snowSolidity});
   this.setState({eth_withdraw:[]});}
 
-  snowSolidity.events.SnowflakeWithdraw({filter:{einFrom:this.props.number},fromBlock:7728191, toBlock:'latest'})
+  snowSolidity.getPastEvents("SnowflakeWithdraw",{filter:{einFrom:this.props.number},fromBlock:0, toBlock:'latest'})
+    .then(events=>{
+      
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({eth_withdraw:newsort});
+  this.setState({loading:false});}
+  })
+  .catch((err)=>console.error(err))
+
+  snowSolidity.events.SnowflakeWithdraw({filter:{einFrom:this.props.number},fromBlock:'latest', toBlock:'latest'})
     .on('data',(log)=>{
 
-  let { returnValues: { einFrom,to, amount }, blockNumber } = log
-
+  //let { returnValues: { einFrom,to, amount }, blockNumber } = log
   //web3.eth.getBlock(blockNumber, (error, block) => {
   //blockNumber = block.timestamp;
-
-  let values = {einFrom,to,amount,blockNumber}
+  //let values = {einFrom,to,amount,blockNumber}
 
   if (this._isMounted){
-  this.setState({eth_withdraw:[...this.state.eth_withdraw,values]})}
+  this.setState({eth_withdraw:[...this.state.eth_withdraw,log]})}
 
   var newest = this.state.eth_withdraw;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
@@ -77,18 +86,27 @@ export default class EinToEthereum extends Component {
   this.setState({snowSolidity});
   this.setState({eth_withdraw:[]});}
 
-  snowSolidity.events.SnowflakeWithdraw({filter:{einFrom:this.props.number},fromBlock:0, toBlock:'latest'})
-    .on('data',(log)=>{
+  snowSolidity.getPastEvents("SnowflakeWithdraw",{filter:{einFrom:this.props.number},fromBlock:0, toBlock:'latest'})
+    .then(events=>{
+      
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({eth_withdraw:newsort});
+  this.setState({loading:false});}
+  })
+  .catch((err)=>console.error(err))
 
-  let { returnValues: { einFrom,to, amount }, blockNumber } = log
+  snowSolidity.events.SnowflakeWithdraw({filter:{einFrom:this.props.number},fromBlock:'latest', toBlock:'latest'})
+  .on('data',(log)=>{
 
+  //let { returnValues: { einFrom,to, amount }, blockNumber } = log
   //web3.eth.getBlock(blockNumber, (error, block) => {
   //blockNumber = block.timestamp;
-
-  let values = {einFrom,to,amount,blockNumber}
+  //let values = {einFrom,to,amount,blockNumber}
 
   if (this._isMounted){
-  this.setState({eth_withdraw:[...this.state.eth_withdraw,values]})}
+  this.setState({eth_withdraw:[...this.state.eth_withdraw,log]})}
 
   var newest = this.state.eth_withdraw;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
@@ -179,7 +197,7 @@ export default class EinToEthereum extends Component {
         {this.state.pageOfItems.map((withdraw,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border" md={2}>
-        <h4 className="banana">{numeral(withdraw.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(withdraw.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+        <h5 className="banana">{numeral(withdraw.returnValues.amount/1E18).format('0,0.00')} </h5>Hydro ~ $ {numeral(withdraw.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border" md={2}>   
@@ -188,17 +206,17 @@ export default class EinToEthereum extends Component {
 
         <Col className= "col_border" md={6}>   
         <div>
-        <h6 className="ethereumaccount">{withdraw.to}
-        </h6>Ethereum Account
+        <h6 className="ethereumaccount">{withdraw.returnValues.to}
+        </h6>To Ethereum Account
         </div>
         </Col>
 
         <Col className="col_no_border" md={2} onClick={this.reload}>
-        <h4 className="banana">ID
-        <Link to={{pathname:'/Accounts/'+withdraw.einFrom}} className="accountlink">
-        : {withdraw.einFrom}
+        <h5 className="banana">ID
+        <Link to={{pathname:'/Accounts/'+withdraw.returnValues.einFrom}} className="accountlink">
+        : {withdraw.returnValues.einFrom}
         </Link>
-        </h4>EIN Account
+        </h5>From EIN Account
         </Col>
          
         </Row>))}

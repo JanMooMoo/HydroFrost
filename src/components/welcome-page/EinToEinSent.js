@@ -49,55 +49,76 @@ export default class EinToEinSent extends Component {
   }
 
   async loadSnowflake(){
-    this.setState({check_network:this.props.mainnet})
 
+    this.setState({check_network:this.props.mainnet})
     if(this.state.check_network == true){
-      const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
-      if (this._isMounted){
-        this.setState({snowSolidity});
-        this.setState({ein_transfer_out:[]});}
+    const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
+    if (this._isMounted){
+    this.setState({snowSolidity});
+    this.setState({ein_transfer_out:[]});}
+
+    snowSolidity.getPastEvents("SnowflakeTransfer",{filter:{einFrom:this.props.number},fromBlock:0, toBlock:'latest'})
+    .then(events=>{
       
-        snowSolidity.events.SnowflakeTransfer({filter:{einFrom:this.props.number},fromBlock:7728191, toBlock:'latest'})
-        .on('data',(log)=>{
+    var newest = events;
+    var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+    if (this._isMounted){
+    this.setState({ein_transfer_out:newsort});
+    this.setState({loading:false});}
+    })
+    .catch((err)=>console.error(err))
+      
+    snowSolidity.events.SnowflakeTransfer({filter:{einFrom:this.props.number},fromBlock:'latest', toBlock:'latest'})
+    .on('data',(log)=>{
         
-        let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
+    //let { returnValues: { einFrom,einTo, amount }, blockNumber } = log 
+    //web3.eth.getBlock(blockNumber, (error, block) => {
+    //blockNumber = block.timestamp;
+    //let values = {einFrom,einTo,amount,blockNumber}
       
-        //web3.eth.getBlock(blockNumber, (error, block) => {
-        //blockNumber = block.timestamp;
+    if (this._isMounted){
+    this.setState({ein_transfer_out:[...this.state.ein_transfer_out,log]})}
+      
+    var newest = this.state.ein_transfer_out;
+    var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+    if (this._isMounted){
+    this.setState({ein_transfer_out:newsort});
+    this.setState({loading:false});}
+       
+    if(this.state.ein_transfer_out.length !==null && this.state.ein_transfer_out.length > 0){
+    this.setState({check_tx:true},()=>(console.log("check",this.state.tx)))
+    }     
         
-        let values = {einFrom,einTo,amount,blockNumber}
-      
-        if (this._isMounted){
-        this.setState({ein_transfer_out:[...this.state.ein_transfer_out,values]})}
-      
-        var newest = this.state.ein_transfer_out;
-        var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-        if (this._isMounted){
-        this.setState({ein_transfer_out:newsort});
-        this.setState({loading:false});}
-          
-         });   
-                
-       // })
-        } else{
+    });             
+  // })
+  } else{
 
   const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
   if (this._isMounted){
   this.setState({snowSolidity});
   this.setState({ein_transfer_out:[]});}
 
-  snowSolidity.events.SnowflakeTransfer({filter:{einFrom:this.props.number},fromBlock:0, toBlock:'latest'})
+  snowSolidity.getPastEvents("SnowflakeTransfer",{filter:{einFrom:this.props.number},fromBlock:0, toBlock:'latest'})
+  .then(events=>{
+      
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({ein_transfer_out:newsort});
+  this.setState({loading:false});}
+  })
+  .catch((err)=>console.error(err))
+
+  snowSolidity.events.SnowflakeTransfer({filter:{einFrom:this.props.number},fromBlock:'latest', toBlock:'latest'})
   .on('data',(log)=>{
   
-  let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
-
+  //let { returnValues: { einFrom,einTo, amount }, blockNumber } = log
   //web3.eth.getBlock(blockNumber, (error, block) => {
   //blockNumber = block.timestamp;
-  
-  let values = {einFrom,einTo,amount,blockNumber}
+  //let values = {einFrom,einTo,amount,blockNumber}
 
   if (this._isMounted){
-  this.setState({ein_transfer_out:[...this.state.ein_transfer_out,values]})}
+  this.setState({ein_transfer_out:[...this.state.ein_transfer_out,log]})}
 
   var newest = this.state.ein_transfer_out;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
@@ -150,6 +171,7 @@ export default class EinToEinSent extends Component {
         number:'',
         EIN:'',
         check_network:'',
+        check_tx:false,
         
     }
   
@@ -191,29 +213,29 @@ export default class EinToEinSent extends Component {
       <Row className ="row_underline" key={index}>
 
       <Col className= "col_border" md={2}>
-      <h4 className="banana">{numeral(send.amount/1E18).format('0,0.00')}</h4>Hydro Hydro ~ $ {numeral(send.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+      <h5 className="banana">{numeral(send.returnValues.amount/1E18).format('0,0.00')}</h5>Hydro Hydro ~ $ {numeral(send.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
       </Col>
 
       <Col className= "col_border" md={2}>   
-        <h6 className="time">{numeral(send.blockNumber).format('0,0')}</h6>Mined
-        </Col>
+      <h6 className="time">{numeral(send.blockNumber).format('0,0')}</h6>Mined
+      </Col>
       
       <Col className= "col_border" md={6}>   
       <div>
-      <h4 className="banana" onClick={this.reload}>ID
-      <Link to={{pathname:'/Accounts/'+send.einTo}} className="accountlink" >
-      : {send.einTo} 
+      <h5 className="banana" onClick={this.reload}>ID
+      <Link to={{pathname:'/Accounts/'+send.returnValues.einTo}} className="accountlink" >
+      : {send.returnValues.einTo} 
       </Link>
-      </h4> EIN Account
+      </h5>To EIN Account
       </div>
       </Col>
 
       <Col className= "col_no_border" md={2}>
-      <h4 className="banana" onClick={this.reload}>ID
-      <Link to={{pathname:'/Accounts/'+send.einFrom}} className="accountlink" onClick={this.reload}>
-        : {send.einFrom}
+      <h5 className="banana" onClick={this.reload}>ID
+      <Link to={{pathname:'/Accounts/'+send.returnValues.einFrom}} className="accountlink" onClick={this.reload}>
+        : {send.returnValues.einFrom}
       </Link>
-      </h4>EIN Account
+      </h5>From EIN Account
       </Col>
          
        </Row>))}

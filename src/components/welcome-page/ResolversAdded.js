@@ -191,7 +191,7 @@ export default class ResolversAdded extends Component {
       <Row className ="row_underline" key={index}>
 
       <Col className= "col_border" md={2} >
-      <h4 className="banana">{numeral(ResolverAdded.withdrawAllowance/1E18).format('0,0.00')}</h4>Hydro ~ $ {numeral(ResolverAdded.withdrawAllowance/1E18 * this.props.marketUsd).format('0,0.00')}
+      <h5 className="banana">{numeral(ResolverAdded.withdrawAllowance/1E18).format('0,0.00')}</h5>Hydro ~ $ {numeral(ResolverAdded.withdrawAllowance/1E18 * this.props.marketUsd).format('0,0.00')}
       </Col>
 
       <Col className= "col_border" md={2} >
@@ -206,7 +206,7 @@ export default class ResolversAdded extends Component {
       </Col>
 
       <Col className= "col_no_border" md={2}>
-      <h4 className="banana">ID: {ResolverAdded.ein}</h4>EIN Account
+      <h5 className="banana">ID: {ResolverAdded.ein}</h5>From EIN Account
       </Col>
          
        </Row>))}

@@ -15,7 +15,7 @@ import {HydroToken_ABI, HydroToken_Address} from '../blockchain-data/hydrocontra
 import {Hydro_Testnet_Token_ABI, Hydro_Testnet_Token_Address} from '../blockchain-data/hydrocontract_testnet';
 import Moment from 'react-moment';
 import JwPagination from 'jw-react-pagination';
-import { RotateSpinner } from "react-spinners-kit";
+import { RotateSpinner,ImpulseSpinner } from "react-spinners-kit";
 import {HydroTestFaucet} from './HydroTestFaucet'
 import  './FaucetModal.css';
 
@@ -62,7 +62,7 @@ export default class ethereumExplorer extends Component {
 
   snowSolidity.getPastEvents("Transfer",{fromBlock: this.state.blocks, toBlock:'latest'})
   .then(events=>{
-  
+ 
   var newest = events;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
@@ -73,15 +73,20 @@ export default class ethereumExplorer extends Component {
 
   snowSolidity.events.Transfer({fromBlock: this.state.latestblocks, toBlock:'latest'})
   .on('data', (log) => {
+    
+    if (this._isMounted){
+    this.setState({incoming:true});
+    this.setState({loading:true});}
 
-    if (this._isMounted && this.state.mainnet == true){
+    if (this._isMounted && this.state.mainnet == true)setTimeout(()=>{
     this.setState({hydroTransfer:[...this.state.hydroTransfer,log]})   
     var newest = this.state.hydroTransfer;
     var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
     if (this._isMounted){
     this.setState({hydroTransfer:newsort});
-    this.setState({loading:false});}
-    }  
+    this.setState({loading:false});
+    this.setState({incoming:false});}
+    },1000) 
   })
 }
 
@@ -101,6 +106,7 @@ else{
 
   snowSolidity.getPastEvents("Transfer",{fromBlock: this.state.blocks, toBlock:'latest'})
   .then(events=>{
+    
   
   var newest = events;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
@@ -113,18 +119,22 @@ else{
   //snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})
   snowSolidity.events.Transfer({fromBlock: this.state.latestblocks, toBlock:'latest'})
   .on('data', (log) => {
-      
+  
+  if (this._isMounted){
+  this.setState({incoming:true});
+  this.setState({loading:true});}
     //let { returnValues: { _from, _to, _amount }, blockNumber } = log
     //let values = {_from,_to,_amount,blockNumber}
   
-  if (this._isMounted && this.state.mainnet !== true ){
+  if (this._isMounted && this.state.mainnet !== true )setTimeout(()=>{
   this.setState({hydroTransfer:[...this.state.hydroTransfer,log]})
   var newest = this.state.hydroTransfer;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
   this.setState({hydroTransfer:newsort});
-  this.setState({loading:false});}
-     }
+  this.setState({loading:false});
+  this.setState({incoming:false});}
+     },1000)
   })
 }
 
@@ -181,6 +191,7 @@ this.setState({checktx:check})
         x:[],
         blocks:'',
         latestblocks:'',
+        incoming:false,
     }
         this.onChangePage = this.onChangePage.bind(this);
   }
@@ -227,6 +238,7 @@ this.setState({checktx:check})
   render(){
   
   const{loading}=this.state
+  const{incoming}=this.state
   let summaryModalClose =() =>this.setState({summaryModalShow:false});
 
   return (
@@ -242,13 +254,29 @@ this.setState({checktx:check})
        
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h4>
-        <Center><RotateSpinner
-                size={60}
-                color={!this.state.mainnet? "rgb(226, 188, 62)":"rgb(241, 241, 241)"}
-                loading={loading}/>
+       
+        <Row><Col></Col>
+        <Col>
+        <Center>
+        {!this.state.incoming&&<RotateSpinner
+        size={60}
+        color={!this.state.mainnet? "rgb(226, 188, 62)":"rgb(241, 241, 241)"}
+        loading={loading}/>}
         </Center>  
-      </h4></Col></Row>
+        </Col><Col></Col>
+        </Row>
+
+        <Row><Col></Col>
+        <Col>
+        <Center>
+        {this.state.incoming&&<ImpulseSpinner
+      
+        frontColor= {!this.state.mainnet? "rgb(226, 188, 62)":"#00ff89"}
+        size={60}
+        loading={loading}/>}
+        </Center>  
+        </Col><Col></Col>
+        </Row>
 
       <Row>
         <Col md={10}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col>
@@ -274,7 +302,7 @@ this.setState({checktx:check})
         {this.state.pageOfItems.map((transfer,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border2" md={2}>
-        <h4 className="banana">{numeral(transfer.returnValues._amount/1E18).format('0,0.00')} </h4><Row><Col className="dollarvalue">Hydro ~ ${numeral(transfer.returnValues._amount/1E18 * this.state.marketcap.usd).format('0,0.00')}</Col></Row>
+        <h5 className="banana">{numeral(transfer.returnValues._amount/1E18).format('0,0.00')} </h5><Row><Col className="dollarvalue">Hydro ~ ${numeral(transfer.returnValues._amount/1E18 * this.state.marketcap.usd).format('0,0.00')}</Col></Row>
         </Col>
 
         <Col className= "col_border2" md={2}>

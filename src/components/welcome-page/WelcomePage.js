@@ -236,15 +236,15 @@ componentWillUnmount(){
          <Col>
          <div className="account_box">
          
-           <h4 className="banana3">
+           <h5 className="banana3">
              EIN: {this.state.number} 
-           </h4>
-           <h4 className="banana3">
+           </h5>
+           <h5 className="banana3">
              Balance: {numeral(this.state.EIN_balance).format('0,0.00')} Hydro
-           </h4>
-           <h6 className="grass3">
+           </h5>
+           <h5 className="grass3">
             $ {numeral(this.state.EIN_balance * this.state.marketcap.usd).format('0,0.00000')}
-           </h6>
+           </h5>
            
          </div>
          </Col>

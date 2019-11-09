@@ -225,7 +225,7 @@ else{
         {this.state.pageOfItems.map((Deposit,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border" md={2}>
-        <h4 className="banana">{numeral(Deposit.returnValues.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(Deposit.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+        <h5 className="banana">{numeral(Deposit.returnValues.amount/1E18).format('0,0.00')} </h5>Hydro ~ $ {numeral(Deposit.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border" md={2}>
@@ -239,11 +239,11 @@ else{
         </Col>
 
         <Col className="col_no_border" md={2}>
-        <h4 className="banana">ID
+        <h5 className="banana">ID
         <Link to={{pathname:'/Accounts/'+Deposit.returnValues.einTo}} className="accountlink">
          : {Deposit.returnValues.einTo}
         </Link>
-        </h4>To Snowflake Account
+        </h5>To Snowflake Account
         </Col>
          
         </Row>))}

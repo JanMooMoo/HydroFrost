@@ -119,14 +119,12 @@ else{
   //let values = {einFrom,einTo, amount,blockNumber}
   
   if(this._isMounted){
-  this.setState({hydroTransfer:[...this.state.hydroTransfer,log]})}
+  this.setState({hydroTransfer:[...this.state.hydroTransfer,log]})
 
   var newest = this.state.hydroTransfer;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-  if (this._isMounted){
   this.setState({hydroTransfer:newsort});
   this.setState({loading:false});}
-
     })
   }
 }
@@ -231,31 +229,31 @@ else{
         {this.state.pageOfItems.map((transfer,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border" md={2}>
-        <h4 className="ethereumaccount">{numeral(transfer.returnValues.amount/1E18).format('0,0.00')} </h4>Hydro ~ $ {numeral(transfer.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+        <h5 className="banana">{numeral(transfer.returnValues.amount/1E18).format('0,0.00')} </h5>Hydro ~ $ {numeral(transfer.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
         </Col>
 
         <Col className= "col_border" md={2}>
-        <h4 className="time">
-        {numeral(transfer.blockNumber).format('0,0')}</h4>Mined
+        <h6 className="time">
+        {numeral(transfer.blockNumber).format('0,0')}</h6>Mined
         </Col>
 
         <Col className= "col_border" md={4}>   
         <div>
          
-        <h4 className="ethereumaccount">ID 
+        <h5 className="banana">ID 
         <Link to={{pathname:'/Accounts/' + transfer.returnValues.einTo}} className="accountlink">
         : {transfer.returnValues.einTo}
         </Link>
-        </h4>
+        </h5>
         To Snowflake
         </div>
         </Col>
 
         <Col className="col_no_border" md={4}>
-        <h4 className="ethereumaccount">ID
+        <h5 className="banana">ID
         <Link to={{pathname:'/Accounts/'+transfer.returnValues.einFrom,}} className="accountlink">  
         : {transfer.returnValues.einFrom}</Link>
-        </h4>
+        </h5>
         From Snowflake 
         </Col>
         
