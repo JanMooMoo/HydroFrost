@@ -32,6 +32,8 @@ html,body {
   background: linear-gradient(to bottom,  rgb(23, 70, 173),rgb(0, 28, 88),black)!important;
   background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
   background: rgb(0, 28, 88)!important;
+  background: linear-gradient(to bottom,  rgb(17, 50, 121),rgb(18, 57, 143),rgb(3, 21, 61),rgb(1, 10, 27))!important;
+
   color:rgb(231, 215, 69)!important;
   height:100%;
   width:100%;
@@ -356,6 +358,13 @@ a {
   color:rgb(226, 188, 62);
   padding-top: 10px;
   padding-bottom: 20px;
+}
+
+.statustime{
+  font-family:"Orbitron",bold;
+  color:rgb(128, 224, 39);
+  padding-top: 10px;
+  font-size:.9rem
 }
 
 .status{

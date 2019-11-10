@@ -119,6 +119,8 @@ else
 
 async loadStatus(){
 
+  const{params}=this.props.match
+
   const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
   const statusContract =  new web3.eth.Contract(status_rinkeby_ABI, status_rinkeby_Address);
   if (this._isMounted){
@@ -128,7 +130,7 @@ async loadStatus(){
   if (this._isMounted){
   this.setState({blocks:blockNumber});}
   
-  const get_status = await statusContract.methods.getStatus(this.state.number).call();
+  const get_status = await statusContract.methods.getStatus(params.id).call();
   if (this._isMounted){
   
   this.setState({current_status:(get_status)})

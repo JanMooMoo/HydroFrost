@@ -67,7 +67,7 @@ input:checked[type="checkbox"]:after{
     text-transform:capitalized;
     text-align:center;
     position: relative;
-    width:180px;
+    width:176px;
     height:40px;
     background: linear-gradient(to bottom, rgb(17, 17, 17),rgb(26, 15, 18),rgb(61, 33, 33), rgb(39, 24, 24), rgb(0, 0, 0));
     background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88));

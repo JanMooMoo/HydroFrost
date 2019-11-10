@@ -146,7 +146,7 @@ constructor(props){
       <Row className ="row_underline" key={index}>
       <Col md={5}><p className="statusblock"><Link to={{pathname:'/Accounts/' + status_update.ein}} className="accountlink">EIN: {status_update.ein}</Link> Updated Their Status To:</p>
       <h4 className="banana3"> {status_update.status}</h4></Col>
-      <Col md={5}></Col><Col md={2}><p className="statusblock"><Moment unix fromNow>{status_update.blockNumber}</Moment></p></Col></Row>))}
+      <Col md={5}></Col><Col md={2}><p className="statustime"><Moment unix fromNow>{status_update.blockNumber}</Moment></p></Col></Row>))}
 
   
       <Row><Col><h1> </h1></Col></Row>
