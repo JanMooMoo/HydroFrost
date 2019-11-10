@@ -128,7 +128,7 @@ async loadStatus(){
   if (this._isMounted){
   this.setState({blocks:blockNumber});}
   
-  const get_status = await statusContract.methods.getStatus(this.state.value).call();
+  const get_status = await statusContract.methods.getStatus(this.state.number).call();
   if (this._isMounted){
   
   this.setState({current_status:(get_status)})
@@ -140,12 +140,12 @@ async loadStatus(){
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
   this.setState({status_feed:newsort});}
-  console.log("check",this.state.status_feed)
+  //console.log("check",this.state.status_feed)
 
   if(this.state.status_feed.length > 0){
     this.setState({status_update:true})
-    console.log("checkupdate",this.state.status_feed.length)
-    console.log("checkupdate",this.state.status_update)
+    //console.log("checkupdate",this.state.status_feed.length)
+   // console.log("checkupdate",this.state.status_update)
   }
 
   })
