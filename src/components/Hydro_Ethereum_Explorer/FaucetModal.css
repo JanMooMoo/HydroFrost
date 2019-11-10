@@ -15,6 +15,7 @@
   
   .modal-header{
     border-bottom:1px solid rgb(219, 206, 164);
+    min-height:60px;
     font-family: 'Frank Ruhl Libre', serif;
     background:linear-gradient(45deg, rgb(46, 26, 26),rgb(219, 206, 164),rgb(88, 59, 59))!important;
     overflow:hidden;
@@ -24,6 +25,7 @@
                 1px 2px 0 #000,
                 1px 2px 0 #000,
                 2px 3px 0 #000;
+                
   }
   
 

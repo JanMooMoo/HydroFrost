@@ -77,7 +77,7 @@ Click here for more details</div></Center></a>
 The project was incubated by Hydrogen, 
 one of the leading fintech API companies in the world, 
 named “Fintech Startup of the Year”  by KPMG and “World Changing Technology” by Fast Company.  
-Project Hydro expanded to be a global,</h6></Col>
+Project Hydro expanded to be a global, </h6></Col>
 </div>
 </article></Center>
 
@@ -88,9 +88,10 @@ Project Hydro expanded to be a global,</h6></Col>
  
 <Center><h1> </h1></Center>
 <Col> <h6 className="radius">decentralized, 
-and open-source project. Project Hydro is managed by a Caymans based entity known as Hydro Labs. 
-The Hydro Labs team are tasked with maintaining the Hydro protocols, 
-encouraging new developers in the ecosystem, 
+and open-source project
+backed by Talented Community Developers, Evangelist & Supporters around the globe
+who are continuously building, 
+innovating and spreading the knowledge about the project.
  
 </h6></Col>
 </div>
@@ -217,7 +218,9 @@ and empower an emergent middle class, bringing fintech to the masses.
 <Center><h1></h1></Center>
 <h6 className="radius">Hydro Labs is a 24 person global team of passionate blockchain 
 and product development specialists, 
-dedicated to simplifying and fast-tracking blockchain adoption.
+dedicated to simplifying and fast-tracking blockchain adoption. 
+The Hydro Labs team are tasked with maintaining the Hydro protocols, 
+encouraging new developers in the ecosystem, 
 </h6>
 </div>
 </article></Center>

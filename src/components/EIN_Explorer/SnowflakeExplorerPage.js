@@ -193,8 +193,7 @@ componentWillUnmount(){
 
       <Row>
     
-         <Col>
-         <div className="account_box">
+        <Col className="account_box">
          
            <Center> <h4 className="banana3">
            Welcome to Hydro Frost
@@ -202,10 +201,8 @@ componentWillUnmount(){
            <Center> <h6 className="banana3">
            Explorer exclusively made for Snowflake 
            </h6></Center>
-          
            
-         </div>
-         </Col>
+        </Col>
        
          <Col md={4} className="market"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={50} width={40} className="navbar-brand"/><h6 className="grass2">Hyrdo Marketcap</h6><h6 className="grass3"> $ {numeral(this.state.marketcap.usd_market_cap).format('0,0.00')}</h6><h6 className="grass2"> Hyrdo Price:</h6> <h6 className="grass3">$ {numeral(this.state.marketcap.usd).format('0,0.0000000000')} </h6></Col>
        </Row>

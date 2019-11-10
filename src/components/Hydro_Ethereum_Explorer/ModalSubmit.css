@@ -68,7 +68,12 @@
     font-family:"Orbitron",bold;
     letter-spacing: 0.1rem;
     border: 1.5px solid rgb(226, 188, 62);
-    
+  }
+
+  @media(max-width:700px){
+    .ct-toast{
+      transform:translateY(-60%)!important;
+    }
   }
 
   .metamaskrequired{
@@ -76,8 +81,7 @@
     text-transform:uppercase;
     letter-spacing: 0.2rem;
     color:rgb(128, 224, 39);
-  
-  
+
   }
 
 .image{

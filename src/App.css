@@ -29,6 +29,7 @@
 
 html,body {
   font-family:"Oswald", sans-serif !important;
+  background: linear-gradient(to bottom,  rgb(23, 70, 173),rgb(0, 28, 88),black)!important;
   background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
   background: rgb(0, 28, 88)!important;
   color:rgb(231, 215, 69)!important;
@@ -127,8 +128,9 @@ color:rgb(231, 215, 69);
   color:rgb(226, 188, 62);
   padding:20px;
   margin-top:1rem;
-  height:180px;
-  min-height:180px!important;
+  margin-bottom:10px;
+  margin-right:13px;
+  margin-left:13px;
   overflow:hidden;
   text-shadow:2px 2px 0 black,
   1px 3px 0 #000,
@@ -139,6 +141,7 @@ color:rgb(231, 215, 69);
 
 .tab{
   background: linear-gradient(45deg, rgb(0, 28, 88),rgb(6, 38, 105), rgb(45, 63, 224))!important;
+  background: linear-gradient(to bottom,  rgb(17, 50, 121),rgb(18, 57, 143),rgb(3, 21, 61),rgb(1, 10, 27))!important;
   border: 1px solid rgb(219, 206, 164); 
   text-shadow:2px 2px 0 black,
   1px 3px 0 #000,
@@ -155,6 +158,7 @@ color:rgb(231, 215, 69);
 
 .contract{
   color:rgb(202, 42, 42);
+  
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
@@ -162,6 +166,7 @@ color:rgb(231, 215, 69);
   background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88));
   border-color: #dee2e6 #dee2e6 #fff;
   border-bottom: none!important;
+  
 }
 
 .accountlink{
@@ -182,6 +187,7 @@ color:rgb(231, 215, 69);
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link  {
   color: rgb(245, 248, 255)!important;
   background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
+  background: linear-gradient(to bottom,  rgb(23, 70, 173),rgb(3, 21, 61));
   border-left:1px solid rgb(219, 206, 164)!important;
   border-top:1px solid rgb(219, 206, 164)!important;
   border-right:1px solid rgb(219, 206, 164)!important;
@@ -199,6 +205,7 @@ color:rgb(231, 215, 69);
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover  {
   color: rgb(241, 239, 232)!important;
   background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88));
+  background: linear-gradient(to bottom,  rgb(23, 70, 173),rgb(3, 21, 61));
   border-color: #dee2e6 #dee2e6 #fff;
   border-left:1px solid rgb(219, 206, 164)!important;
   border-top:1px solid rgb(219, 206, 164)!important;
@@ -242,6 +249,7 @@ a {
 
 @media (min-width:1000px) {
   .searchbar{
+    
     border-radius:10px;
     color:black;
     width:330px;
@@ -249,6 +257,7 @@ a {
     font-size:1.3rem;
     text-align: center;
     border: 2px solid rgb(219, 206, 164);
+    
   }
 }
 
@@ -281,6 +290,7 @@ a {
   1px 2px 0 #000,
   1px 2px 0 #000,
   2px 3px 0 #000;
+  
 
 }
 
@@ -338,6 +348,23 @@ a {
   letter-spacing: 0.2rem;
   color:#ffffff;
   position:inline-block;
+
+}
+
+.statusblock{
+  font-family:"Orbitron",bold;
+  color:rgb(226, 188, 62);
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.status{
+  font-family:"Orbitron",bold;
+  text-transform:uppercase;
+  letter-spacing: 0.2rem;
+  color:#ffffff;
+  position:inline-block;
+  text-align:center;
 
 }
 

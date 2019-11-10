@@ -77,13 +77,8 @@ letter-spacing: 0.2rem;
 text-transform:capitalize;
 font-family:"Orbitron",bold;
 text-align:center;
-color:#ffffff;
--webkit-text-stroke:0.00001px #3433;
-    text-shadow:2px 2px 0 black,
-                2px 3px 0 #000,
-                2px 2px 0 #000,
-                3px 2px 0 #000,
-                2px 3px 0 #000;
+color:rgb(226, 188, 62);
+
 }
 
 
