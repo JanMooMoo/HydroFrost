@@ -32,7 +32,7 @@ html,body {
   background: linear-gradient(to bottom,  rgb(23, 70, 173),rgb(0, 28, 88),black)!important;
   background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
   background: rgb(0, 28, 88)!important;
-  background: linear-gradient(to bottom,  rgb(17, 50, 121),rgb(18, 57, 143),rgb(3, 21, 61),rgb(1, 10, 27))!important;
+  background: linear-gradient(to bottom, rgb(17, 50, 121),rgb(18, 57, 143),rgb(3, 21, 61),rgb(1, 10, 27))!important;
 
   color:rgb(231, 215, 69)!important;
   height:100%;
@@ -108,6 +108,7 @@ color:rgb(231, 215, 69);
   border-left:1px solid rgb(219, 206, 164);
   color:white;
   overflow:hidden;
+  background: linear-gradient(to bottom,  rgb(23, 70, 173),rgb(0, 28, 88),rgb(3, 21, 61));
   text-shadow:2px 2px 0 black,
   1px 3px 0 #000,
   1px 2px 0 #000,
@@ -207,7 +208,6 @@ color:rgb(231, 215, 69);
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover  {
   color: rgb(241, 239, 232)!important;
   background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88));
-  background: linear-gradient(to bottom,  rgb(23, 70, 173),rgb(3, 21, 61));
   border-color: #dee2e6 #dee2e6 #fff;
   border-left:1px solid rgb(219, 206, 164)!important;
   border-top:1px solid rgb(219, 206, 164)!important;

@@ -281,7 +281,7 @@ this.setState({checktx:check})
       <Row>
         <Col md={10}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col>
         <Col >
-        <button className="faucetbutton"><h6 className="faucet"onClick={() => this.setState({summaryModalShow:true},()=>this.GA_ModalFaucet())}>Faucet</h6></button> 
+        <button className="faucetbutton" onClick={() => this.setState({summaryModalShow:true},()=>this.GA_ModalFaucet())}><h6 className="faucet">Faucet</h6></button> 
           {this.state.summaryModalShow && <HydroTestFaucet
           show={this.state.summaryModalShow}
           onHide={summaryModalClose}
