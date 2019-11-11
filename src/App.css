@@ -117,6 +117,13 @@ color:rgb(231, 215, 69);
 
 }
 
+@media (max-width:767px) {
+.col_border2{
+  background: none;
+}
+
+}
+
 .col_no_border{
   color:white;
   padding-top:4px;
