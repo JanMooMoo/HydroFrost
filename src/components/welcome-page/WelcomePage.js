@@ -27,6 +27,7 @@ import EinToEthereum from './EinToEthereum';
 import EinToEinSent from './EinToEinSent';
 import EinToEinRecieved from './EinToEinRecieved';
 import ResolversAdded from './ResolversAdded';
+import Status from './Status';
 
 
 
@@ -368,6 +369,13 @@ componentWillUnmount(){
 
   <Tab eventKey="ein_sent" title="Sent" className="tab">
    <EinToEinSent
+   number={this.state.number}
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
+  </Tab>
+
+  <Tab eventKey="my_status" title="My Status" className="tab">
+   <Status
    number={this.state.number}
    mainnet={this.state.mainnet}
    marketUsd={this.state.marketcap.usd}/>

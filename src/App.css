@@ -363,14 +363,14 @@ a {
 .statusblock{
   font-family:"Orbitron",bold;
   color:rgb(226, 188, 62);
-  padding-top: 10px;
+  padding-top: 7px;
   padding-bottom: 20px;
 }
 
 .statustime{
   font-family:"Orbitron",bold;
   color:rgb(128, 224, 39);
-  padding-top: 10px;
+  padding-top: 7px;
   font-size:.9rem
 }
 
