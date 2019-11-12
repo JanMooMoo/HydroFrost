@@ -31,17 +31,19 @@ export default class Status extends Component {
 
 componentDidMount(){
       this._isMounted = true;
-      if (this._isMounted){ this.setState({check_network: this.props.mainnet},()=>this.loadStatus());}
+     // if (this._isMounted){ this.setState({check_network: this.props.mainnet},()=>this.loadStatus());}
     
      }
 
      async loadStatus(){
 
+        if (this._isMounted){
+        this.setState({my_past_status:[]});}
+
         const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
         const statusContract =  new web3.eth.Contract(status_rinkeby_ABI, status_rinkeby_Address);
         if (this._isMounted){
-        this.setState({statusContract});
-        this.setState({my_past_status:[]});}
+        this.setState({statusContract});}
       
         const blockNumber = await web3.eth.getBlockNumber();
         if (this._isMounted){
@@ -88,9 +90,9 @@ componentDidMount(){
         if (this._isMounted){
         this.setState({my_past_status:newsort});
         this.setState({loading:false})
-        console.log("check",this.state.my_past_status)}
+        }
           
-        });   }
+        }); }
     })
      } 
         

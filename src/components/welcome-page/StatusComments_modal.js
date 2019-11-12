@@ -21,14 +21,14 @@ export class StatusComments extends Component{
     componentDidMount(){
         this._isMounted = true;
         this.load3box();
-        this.LogIn();
+        //this.LogIn();
         //this.toastinfo();
         //this.loadBlockchainData();
        
        }
        
 async load3box() { 
-
+  
 // const profile = await Box.getProfile(this.state.account,window.web3)
 //console.log(profile)
 // if (this._isMounted){
@@ -39,13 +39,16 @@ async load3box() {
 //const spaceData = await Box.getSpace('0x20F857b13D6C546eC77aFE47317EA3c5a75c1c6c','StatusComments')
 //console.log("spacedata",spaceData)
 
-//const box = await Box.openBox(this.state.account,window.ethereum)
-//if (this._isMounted){
-//this.setState({box:box})}
+  
+  //const box = await Box.openBox(this.state.account,window.ethereum)
+  //if (this._isMounted){
+  //this.setState({box:box})}
 
-//const posts = await Box.getThread('StatusComments',this.props.status_info.ein & this.props.status_info.blockNumber & this.props.status_info.transactionHash)
+
+//const posts = await Box.getThread('StatusComments',this.props.status_info.ein + this.props.status_info.blockNumber + this.props.status_info.transactionHash)
 //console.log("posts",posts)
-setTimeout(()=>this.setState({loading:false}),5000)
+if (this._isMounted){
+setTimeout(()=>this.setState({loading:false}),7000)}
 }
 
 async LogIn(){
@@ -80,11 +83,9 @@ async LogIn(){
      
   const accounts = await web3.eth.getAccounts();
   if (this._isMounted){
-  this.setState({account: accounts[0]})
+  this.setState({account: accounts[0]});}
 
   const Box = require('3box')
-
-  ;}
 
 }
    
@@ -172,6 +173,8 @@ constructor(props){
         box={this.state.box}
         currentUserAddr= {this.state.account}
         
+      
+
         // optional
         members={false}
         showCommentCount={3}

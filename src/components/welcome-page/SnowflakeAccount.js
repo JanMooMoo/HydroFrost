@@ -26,6 +26,7 @@ import EinToEthereum from './EinToEthereum';
 import EinToEinSent from './EinToEinSent';
 import EinToEinRecieved from './EinToEinRecieved';
 import ResolversAdded from './ResolversAdded';
+import Status from './Status';
 
 
 
@@ -329,7 +330,7 @@ componentWillUnmount(){
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        
-  <Tabs defaultActiveKey="ein_sent" transition={false} id="noanim-tab-example" mountOnEnter>
+  <Tabs defaultActiveKey="my_status" transition={false} id="noanim-tab-example" mountOnEnter>
   
   <Tab eventKey="resolver_added" title="Resolvers Added" className="tab">
    <ResolversAdded
@@ -366,6 +367,13 @@ componentWillUnmount(){
    marketUsd={this.state.marketcap.usd}/>
   </Tab>
   
+  <Tab eventKey="my_status" title="My Status" className="tab">
+   <Status
+   number={this.state.number}
+   mainnet={this.state.mainnet}
+   marketUsd={this.state.marketcap.usd}/>
+  </Tab>
+
 </Tabs>
 <Row><Col><h1> </h1></Col></Row>
 <Row><Col><h1> </h1></Col></Row>

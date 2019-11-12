@@ -23,9 +23,9 @@
   
   
   .comment_picture-bgWhite {
-    background-color: rgb(12, 3, 3)!important;
-    margin-left:0.2rem !important;
-    margin-top:0.2rem;
+  background-color: rgb(12, 3, 3)!important;
+  margin-left:0.2rem !important;
+  margin-top:0.2rem;
   position:relative!important;
   align-items: center!important;
   border-radius:10px!important;
@@ -136,11 +136,31 @@
   .input_send{
     size:100px!important;
     visibility: visible!important;
-    display: flex;
+    display: flex!important;
     background:linear-gradient(45deg, rgb(46, 26, 26),rgb(165, 152, 109),rgb(88, 59, 59))!important;
-    align-items: center;
-    border-radius: 10px;
-    justify-content: center;
+    width:100px!important;
+    border-radius:10px!important;
+    width: 40%!important;
+    margin-left: 30%!important;
+    margin-right: 30%!important;
+    justify-content:center!important;
+    margin-top:2px;
+    
+  }
+
+  @media(max-width:767px){
+  .input_send{
+    width: 100%!important;
+    margin-top: 0%!important;
+    margin-right: 0%!important;
+    background: transparent!important;
+
+    }
+  }
+
+  .input_login{
+    background:transparent!important;
+    
   }
   
   .comment_content_context_main_user_info_username a {
@@ -187,7 +207,7 @@
         border-bottom:1px solid rgb(219, 206, 164)!important;
         border-left:1px solid rgb(219, 206, 164)!important;
         border-right:1px solid rgb(219, 206, 164)!important;
-       
+        margin-top:140px!important;
         -webkit-text-stroke:0.00001px #3433;
         text-shadow:2px 2px 0 black,
                     1px 2px 0 #000,
