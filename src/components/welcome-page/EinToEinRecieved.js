@@ -246,14 +246,6 @@ reload(){
       <Col className="col_no_border" md={2}><h3>From</h3></Col>
       </Row>
 
-      {!this.state.check_tx && !this.state.loading && <Row className ="row_underline">
-      <Col className="banana">
-      <Center>
-      <h3>No Transaction History</h3>
-      </Center>
-      </Col>
-      </Row>}
-
       {this.state.pageOfItems.map((recieved,index)=>(
       <Row className ="row_underline" key={index}>
 
@@ -286,7 +278,15 @@ reload(){
          
      </Row>))}
 
-      <Row><Col><h1> </h1></Col></Row>
+     {!this.state.check_tx && !this.state.loading && <Row className ="row_underline">
+     <Col className="banana">
+     <Center>
+     <h3>No Transaction History</h3>
+     </Center>
+     </Col>
+     </Row>}
+
+     <Row><Col><h1> </h1></Col></Row>
      <Row><Col><h1> </h1></Col></Row>
      <Row><Col><h1> </h1></Col></Row>
      <Row><Col><Center><JwPagination items={this.state.ein_transfer_in} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>

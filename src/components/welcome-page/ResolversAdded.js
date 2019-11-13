@@ -31,11 +31,8 @@ export default class ResolversAdded extends Component {
   componentWillMount(){
       this._isMounted = true;
       if (this._isMounted){ this.setState({check_network: this.props.mainnet},()=>this.loadSnowflake());}
-
-
      }
-     
-     
+      
   async loadBlockchain() { 
          
   let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
@@ -50,8 +47,9 @@ export default class ResolversAdded extends Component {
   }
 
   async loadSnowflake(){
-  
+  this.setState({loading:true})
   this.setState({check_network:this.props.mainnet})
+  this.setState({check_tx:false})
   
 
   if(this.state.check_network == true){
@@ -59,6 +57,10 @@ export default class ResolversAdded extends Component {
   if (this._isMounted){
   this.setState({snowSolidity});
   this.setState({resolvers_added:[]});}
+
+  const blockNumber = await web3.eth.getBlockNumber();
+  if (this._isMounted){
+  this.setState({blocks:blockNumber});}
 
   snowSolidity.events.SnowflakeResolverAdded({filter:{ein:this.props.number},fromBlock:7728191, toBlock:'latest'})
   .on('data',(log)=>{
@@ -71,8 +73,7 @@ export default class ResolversAdded extends Component {
   let values = {ein,resolver,withdrawAllowance,blockNumber}
          
   if (this._isMounted){
-  this.setState({resolvers_added:[...this.state.resolvers_added,values]})
-  this.setState({loading:false});}
+  this.setState({resolvers_added:[...this.state.resolvers_added,values]})}
 
   var newest = this.state.resolvers_added;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
@@ -83,9 +84,11 @@ export default class ResolversAdded extends Component {
   this.setState({check_tx:true},()=>(console.log()))}  
   else{
   this.setState({check_tx:false},()=>(console.log()))}
+
         }
       });   
     })
+    
   } 
   
   else{
@@ -93,6 +96,10 @@ export default class ResolversAdded extends Component {
   if (this._isMounted){
   this.setState({snowSolidity});
   this.setState({resolvers_added:[]});}
+
+  const blockNumber = await web2.eth.getBlockNumber();
+  if (this._isMounted){
+  this.setState({blocks:blockNumber});}
   
   snowSolidity.events.SnowflakeResolverAdded({filter:{ein:this.props.number},fromBlock:0, toBlock:'latest'})
   .on('data',(log)=>{
@@ -105,8 +112,7 @@ export default class ResolversAdded extends Component {
   let values = {ein,resolver,withdrawAllowance,blockNumber}
            
   if (this._isMounted){
-  this.setState({resolvers_added:[...this.state.resolvers_added,values]})
-  this.setState({loading:false});}
+  this.setState({resolvers_added:[...this.state.resolvers_added,values]})}
   
   var newest = this.state.resolvers_added;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
@@ -116,11 +122,15 @@ export default class ResolversAdded extends Component {
   this.setState({check_tx:true},()=>(console.log()))}  
   else{
   this.setState({check_tx:false},()=>(console.log()))}
+
        }  
      });           
     })
    } 
+  if (this._isMounted){
+  this.setState({loading:false})}
   }
+  
 
   componentWillReceiveProps(nextProps){
   if (this._isMounted){
@@ -152,15 +162,14 @@ export default class ResolversAdded extends Component {
         account:'',
         balance:'',
         details:'',
-        loading:true,
         exampleItems: exampleItems,
         pageOfItems: [],
-        search:'',
         resolvers_added:[],
         contract:'',
         contractaccount:'',
         number:'',
         EIN:'',
+        loading:true,
         check_network:'',
         check_tx:false,
         
@@ -205,14 +214,6 @@ export default class ResolversAdded extends Component {
       <Col className= "col_no_border" md={2}><h3>Added By</h3></Col>
       </Row>
 
-      {!this.state.check_tx && !this.state.loading && <Row className ="row_underline">
-      <Col className="banana">
-      <Center>
-      <h3>No Resolvers Added</h3>
-      </Center>
-      </Col>
-      </Row>}
-
       {this.state.pageOfItems.map((ResolverAdded,index)=>(
       <Row className ="row_underline" key={index}>
 
@@ -240,6 +241,14 @@ export default class ResolversAdded extends Component {
       </Col>
          
       </Row>))}
+
+      {!this.state.check_tx && !this.state.loading && <Row className ="row_underline">
+      <Col className="banana">
+      <Center>
+      <h3>No Contract Added</h3>
+      </Center>
+      </Col>
+      </Row>}
 
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
