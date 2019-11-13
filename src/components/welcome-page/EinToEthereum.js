@@ -14,6 +14,7 @@ import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Moment from 'react-moment';
 import {Link} from 'react-router-dom';
+import { ImpulseSpinner } from "react-spinners-kit";
 import JwPagination from 'jw-react-pagination';
 
 
@@ -29,17 +30,16 @@ export default class EinToEthereum extends Component {
 
   componentWillMount(){
       this._isMounted = true;
-      if (this._isMounted){this.setState({check_network: this.props.mainnet});}
+      if (this._isMounted){ this.setState({check_network: this.props.mainnet},()=>this.loadSnowflake());}
       
 
      }
      
-     
-  
-
+    
   async loadSnowflake(){
 
   this.setState({check_network:this.props.mainnet})
+  this.setState({loading:true})
 
   if(this.state.check_network == true){
   const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
@@ -49,54 +49,23 @@ export default class EinToEthereum extends Component {
   this.setState({eth_withdraw:[]});}
 
   snowSolidity.getPastEvents("SnowflakeWithdraw",{filter:{einFrom:this.props.number},fromBlock:0, toBlock:'latest'})
-    .then(events=>{
+  .then(events=>{
       
   var newest = events;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
   this.setState({eth_withdraw:newsort});
   this.setState({loading:false});}
-  })
-  .catch((err)=>console.error(err))
-
-  snowSolidity.events.SnowflakeWithdraw({filter:{einFrom:this.props.number},fromBlock:'latest', toBlock:'latest'})
-    .on('data',(log)=>{
-
-  //let { returnValues: { einFrom,to, amount }, blockNumber } = log
-  //web3.eth.getBlock(blockNumber, (error, block) => {
-  //blockNumber = block.timestamp;
-  //let values = {einFrom,to,amount,blockNumber}
-
-  if (this._isMounted){
-  this.setState({eth_withdraw:[...this.state.eth_withdraw,log]})}
-
-  var newest = this.state.eth_withdraw;
-  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-  if (this._isMounted){
-  this.setState({eth_withdraw:newsort});
-  this.setState({loading:false});}
-    
-   });   
-  } 
+  if( this.state.eth_withdraw !== 'undefined' && this.state.eth_withdraw.length > 0){
+  this.setState({check_tx:true},()=>(console.log()))}  
   else{
-  
-  const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
+  this.setState({check_tx:false},()=>(console.log()))}
 
-  if (this._isMounted){
-  this.setState({snowSolidity});
-  this.setState({eth_withdraw:[]});}
 
-  snowSolidity.getPastEvents("SnowflakeWithdraw",{filter:{einFrom:this.props.number},fromBlock:0, toBlock:'latest'})
-    .then(events=>{
-      
-  var newest = events;
-  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-  if (this._isMounted){
-  this.setState({eth_withdraw:newsort});
-  this.setState({loading:false});}
   })
   .catch((err)=>console.error(err))
 
+  //WEBSOCKT
   snowSolidity.events.SnowflakeWithdraw({filter:{einFrom:this.props.number},fromBlock:'latest', toBlock:'latest'})
   .on('data',(log)=>{
 
@@ -113,6 +82,61 @@ export default class EinToEthereum extends Component {
   if (this._isMounted){
   this.setState({eth_withdraw:newsort});
   this.setState({loading:false});}
+  
+  if( this.state.eth_withdraw !== 'undefined' && this.state.eth_withdraw.length > 0){
+  this.setState({check_tx:true},()=>(console.log()))}  
+  else{
+  this.setState({check_tx:false},()=>(console.log()))}
+
+   });   
+  } 
+  else{
+  
+  const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
+
+  if (this._isMounted){
+  this.setState({snowSolidity});
+  this.setState({eth_withdraw:[]});}
+
+  snowSolidity.getPastEvents("SnowflakeWithdraw",{filter:{einFrom:this.props.number},fromBlock:0, toBlock:'latest'})
+  .then(events=>{
+      
+  var newest = events;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({eth_withdraw:newsort});
+  this.setState({loading:false});}
+
+  if( this.state.eth_withdraw !== 'undefined' && this.state.eth_withdraw.length > 0){
+  this.setState({check_tx:true},()=>(console.log()))}  
+  else{
+  this.setState({check_tx:false},()=>(console.log()))}
+
+  })
+  .catch((err)=>console.error(err))
+
+  //WEBSOCKET
+  snowSolidity.events.SnowflakeWithdraw({filter:{einFrom:this.props.number},fromBlock:'latest', toBlock:'latest'})
+  .on('data',(log)=>{
+
+  //let { returnValues: { einFrom,to, amount }, blockNumber } = log
+  //web3.eth.getBlock(blockNumber, (error, block) => {
+  //blockNumber = block.timestamp;
+  //let values = {einFrom,to,amount,blockNumber}
+
+  if (this._isMounted){
+  this.setState({eth_withdraw:[...this.state.eth_withdraw,log]})}
+
+  var newest = this.state.eth_withdraw;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({eth_withdraw:newsort});
+  this.setState({loading:false});}
+
+  if( this.state.eth_withdraw !== 'undefined' && this.state.eth_withdraw.length > 0){
+  this.setState({check_tx:true},()=>(console.log()))}  
+  else{
+  this.setState({check_tx:false},()=>(console.log()))}
     
    });   
   } 
@@ -159,6 +183,7 @@ export default class EinToEthereum extends Component {
         number:'',
         EIN:'',
         check_network:'',
+        check_tx:false,
         
     }
         this.onChangePage = this.onChangePage.bind(this);
@@ -173,27 +198,44 @@ export default class EinToEthereum extends Component {
   }
 
   render(){
+
+    const {loading}=this.state
+
   return (
    <div>
-      <Container>
-         <Row><Col><h1> </h1></Col></Row>
-         <Row><Col><h1> </h1></Col></Row>
+        <Container>
+        <Row><Col><h1> </h1></Col></Row>
+        <Row><Col><h1> </h1></Col></Row>
          
-     
-       <Title name="Hydro Withdraw From" title="EIN To Ethereum"/>
+        <Title name="Hydro Withdraw From" title="EIN To Ethereum"/>
+
+        <Center>
+        <ImpulseSpinner
+        size={50}
+        frontColor= {!this.props.mainnet? "rgb(226, 188, 62)":"#00ff89"}
+        loading={loading}/>
+        </Center>  
        
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
+        <Row><Col><h1> </h1></Col></Row>
+        <Row><Col><h1> </h1></Col></Row>
+        <Row><Col><h1> </h1></Col></Row>
       
-      <Row className ="row_underline2">
-      <Col className= "col_border" md={2}><h3>Amount</h3></Col>
-      <Col className= "col_border" md={2}><h3>Block</h3></Col>
-      <Col className= "col_border" md={6}><h3>To</h3></Col>
-      <Col className="col_no_border" md={2}><h3>From</h3></Col>
-      
-      
+        <Row className ="row_underline2">
+        <Col className= "col_border" md={2}><h3>Amount</h3></Col>
+        <Col className= "col_border" md={2}><h3>Block</h3></Col>
+        <Col className= "col_border" md={6}><h3>To</h3></Col>
+        <Col className="col_no_border" md={2}><h3>From</h3></Col>
         </Row>
+        
+        {!this.state.check_tx && !this.state.loading && <Row className ="row_underline">
+        <Col className="banana">
+        <Center>
+        <h3>No Transaction History</h3>
+        </Center>
+        </Col>
+        </Row>}
+
+        
         {this.state.pageOfItems.map((withdraw,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border" md={2}>
@@ -213,20 +255,20 @@ export default class EinToEthereum extends Component {
 
         <Col className="col_no_border" md={2} onClick={this.reload}>
         <h5 className="banana">ID
-        <Link to={{pathname:'/Accounts/'+withdraw.returnValues.einFrom}} className="accountlink">
+        <a href={`/Accounts/${withdraw.returnValues.einFrom}`} className="accountlink">
         : {withdraw.returnValues.einFrom}
-        </Link>
+        </a>
         </h5>From EIN Account
         </Col>
          
         </Row>))}
        
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><Center><JwPagination items={this.state.eth_withdraw} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
+        <Row><Col><h1> </h1></Col></Row>
+        <Row><Col><h1> </h1></Col></Row>
+        <Row><Col><h1> </h1></Col></Row>
+        <Row><Col><Center><JwPagination items={this.state.eth_withdraw} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
+        <Row><Col><h1> </h1></Col></Row>
+        <Row><Col><h1> </h1></Col></Row>
    
      </Container>
        

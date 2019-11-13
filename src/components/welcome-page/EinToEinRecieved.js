@@ -13,6 +13,7 @@ import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Moment from 'react-moment';
 import JwPagination from 'jw-react-pagination';
+import { ImpulseSpinner } from "react-spinners-kit";
 import {Link} from 'react-router-dom';
 
 
@@ -28,7 +29,8 @@ export default class EinToEinRecieved extends Component {
   
   componentWillMount(){
       this._isMounted = true;
-      if (this._isMounted){this.setState({check_network: this.props.mainnet});}
+      if (this._isMounted){ this.setState({check_network: this.props.mainnet},()=>this.loadSnowflake());}
+
   
      }
      
@@ -50,7 +52,7 @@ export default class EinToEinRecieved extends Component {
   async loadSnowflake(){
     
   this.setState({check_network:this.props.mainnet})
-
+  this.setState({loading:true})
   if(this.state.check_network == true){
   const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
 
@@ -66,6 +68,11 @@ export default class EinToEinRecieved extends Component {
   if (this._isMounted){
   this.setState({ein_transfer_in:newsort});
   this.setState({loading:false});}
+
+  if( this.state.ein_transfer_in !== 'undefined' && this.state.ein_transfer_in.length > 0){
+  this.setState({check_tx:true},()=>(console.log()))}  
+  else{
+  this.setState({check_tx:false},()=>(console.log()))} 
  
   })
   .catch((err)=>console.error(err))
@@ -87,11 +94,19 @@ export default class EinToEinRecieved extends Component {
   if (this._isMounted){
   this.setState({ein_transfer_in:newsort});
   this.setState({loading:false});}
+
+  if( this.state.ein_transfer_out !== 'undefined' && this.state.ein_transfer_out.length > 0){
+  this.setState({check_tx:true},()=>(console.log()))}  
+  else{
+  this.setState({check_tx:false},()=>(console.log()))} 
     
    });   
+   
  }
 
 else{
+
+  //PAST DATA
   const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
   if (this._isMounted){
   this.setState({snowSolidity});
@@ -105,9 +120,16 @@ else{
   if (this._isMounted){
   this.setState({ein_transfer_in:newsort});
   this.setState({loading:false});}
+
+  if( this.state.ein_transfer_in !== 'undefined' && this.state.ein_transfer_in.length > 0){
+  this.setState({check_tx:true},()=>(console.log()))}  
+  else{
+  this.setState({check_tx:false},()=>(console.log()))} 
+
   })
   .catch((err)=>console.error(err))
 
+  //WEBSOCKET
   snowSolidity.events.SnowflakeTransfer({filter:{einTo:this.props.number},fromBlock:'latest', toBlock:'latest'})
   .on('data',(log)=>{
      
@@ -122,13 +144,17 @@ else{
   var newest = this.state.ein_transfer_in;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
-    this.setState({ein_transfer_in:newsort});
-    this.setState({loading:false});}
+  this.setState({ein_transfer_in:newsort});
+  this.setState({loading:false});}
+
+  if(this.state.ein_transfer_in !== 'undefined' && this.state.ein_transfer_in.length > 0){
+  this.setState({check_tx:true},()=>(console.log()))}  
+  else{
+  this.setState({check_tx:false},()=>(console.log()))} 
     
    });   
-  }      
-     
-  }
+  }          
+}
 
   componentWillReceiveProps(nextProps){
     if (this._isMounted){
@@ -170,7 +196,7 @@ else{
         number:'',
         mainnet:'',
         EIN:'',
-        check:'',
+        check_tx:false,
         
     }
     this.onChangePage = this.onChangePage.bind(this);
@@ -190,65 +216,82 @@ reload(){
 </Col>*/
 
   render(){
+
+    const {loading}=this.state
+
   return (
    <div>
       <Container>
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
+      <Row><Col><h1> </h1></Col></Row>
+      <Row><Col><h1> </h1></Col></Row>
          
      
-       <Title name="Recieved" title="From EIN"/>
+      <Title name="Recieved" title="From EIN"/>
+
+      <Center>
+      <ImpulseSpinner
+      size={50}
+      frontColor= {!this.props.mainnet? "rgb(226, 188, 62)":"#00ff89"}
+      loading={loading}/>
+      </Center>  
        
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
+      <Row><Col><h1> </h1></Col></Row>
+      <Row><Col><h1> </h1></Col></Row>
+      <Row><Col><h1> </h1></Col></Row>
       
       <Row className ="row_underline2">
       <Col className= "col_border" md={2}><h3>Amount</h3></Col>
       <Col className= "col_border" md={2}><h3>Block</h3></Col>
       <Col className= "col_border" md={6}><h3>Recieved By</h3></Col>
       <Col className="col_no_border" md={2}><h3>From</h3></Col>
-      
-      
       </Row>
+
+      {!this.state.check_tx && !this.state.loading && <Row className ="row_underline">
+      <Col className="banana">
+      <Center>
+      <h3>No Transaction History</h3>
+      </Center>
+      </Col>
+      </Row>}
+
       {this.state.pageOfItems.map((recieved,index)=>(
-       <Row className ="row_underline" key={index}>
+      <Row className ="row_underline" key={index}>
 
-        <Col className= "col_border" md={2}>   
-        <h5 className="banana"> {numeral(recieved.returnValues.amount/1E18).format('0,0.00')}</h5>Hydro ~ $ {numeral(recieved.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
-        </Col>
+      <Col className= "col_border" md={2}>   
+      <h5 className="banana"> {numeral(recieved.returnValues.amount/1E18).format('0,0.00')}</h5>Hydro ~ $ {numeral(recieved.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+      </Col>
 
-        <Col className= "col_border" md={2}>   
-        <h6 className="time">{numeral(recieved.blockNumber).format('0,0')}</h6>Mined
-        </Col>
+      <Col className= "col_border" md={2}>   
+      <h6 className="time">{numeral(recieved.blockNumber).format('0,0')}</h6>Mined
+      </Col>
 
-        <Col className= "col_border" md={6} onClick={this.reload}>   
-        <div>
-        <h5 className="banana">ID
-        <Link to={{pathname:'/Accounts/'+recieved.returnValues.einTo}} className="accountlink">
-        : {recieved.returnValues.einTo}
-        </Link>
-        </h5>To EIN Account
-        </div>
-        </Col>
+      <Col className= "col_border" md={6} onClick={this.reload}>   
+      <div>
+      <h5 className="banana">ID
+      <a href={`/Accounts/${recieved.returnValues.einTo}`} className="accountlink">
+      : {recieved.returnValues.einTo}
+      </a>
+      </h5>To EIN Account
+      </div>
+      </Col>
 
-        <Col className="col_no_border"  md={2}>
+      <Col className="col_no_border"  md={2}>
         
-        <h5 className="banana" onClick={this.reload}>ID
-        <Link to={{pathname:'/Accounts/'+recieved.returnValues.einFrom}} className="accountlink">
-        : {recieved.returnValues.einFrom}
-        </Link>
-        </h5>From EIN Account
-        </Col>
+      <h5 className="banana" onClick={this.reload}>ID
+      <a href={`/Accounts/${recieved.returnValues.einFrom}`} className="accountlink">
+      : {recieved.returnValues.einFrom}
+      </a>
+      </h5>From EIN Account
+      </Col>
          
-       </Row>))}
+     </Row>))}
 
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><Center><JwPagination items={this.state.ein_transfer_in} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
+      <Row><Col><h1> </h1></Col></Row>
+     <Row><Col><h1> </h1></Col></Row>
+     <Row><Col><h1> </h1></Col></Row>
+     <Row><Col><Center><JwPagination items={this.state.ein_transfer_in} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
+     <Row><Col><h1> </h1></Col></Row>
+     <Row><Col><h1> </h1></Col></Row>
    
      </Container>
        

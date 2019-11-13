@@ -5,7 +5,7 @@
     background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
 
     border-radius: 60px;
-    border:2px solid rgb(226, 188, 62);
+    border:1px solid rgb(226, 188, 62);
     height:580px;
     width:1000px;
     overflow:hidden;

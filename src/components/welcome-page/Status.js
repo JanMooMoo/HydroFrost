@@ -19,6 +19,7 @@ import JwPagination from 'jw-react-pagination';
 import {StatusComments} from './StatusComments_modal';
 
 
+
 let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
 
 let numeral = require('numeral');
@@ -31,6 +32,8 @@ export default class Status extends Component {
 
 componentDidMount(){
       this._isMounted = true;
+      if (this._isMounted){ this.setState({number: this.props.number},()=>this.loadStatus());}
+
      // if (this._isMounted){ this.setState({check_network: this.props.mainnet},()=>this.loadStatus());}
     
      }
@@ -38,7 +41,9 @@ componentDidMount(){
      async loadStatus(){
 
         if (this._isMounted){
-        this.setState({my_past_status:[]});}
+        this.setState({loading:true})
+        this.setState({my_past_status:[]});
+        this.setState({check_tx:false});}
 
         const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
         const statusContract =  new web3.eth.Contract(status_rinkeby_ABI, status_rinkeby_Address);
@@ -70,11 +75,9 @@ componentDidMount(){
         })
         
         .catch((err)=>console.error(err))*/
-        
+        this.setState({my_past_status:[]});
         statusContract.events.StatusUpdated({fromBlock:'0', toBlock:'latest'})
         .on('data',(log)=>{
-
-        //console.log("check",log)
 
         if( this._isMounted && log.returnValues !==null && log.returnValues.ein == this.props.number){
 
@@ -89,14 +92,18 @@ componentDidMount(){
         var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
         if (this._isMounted){
         this.setState({my_past_status:newsort});
-        this.setState({loading:false})
-        }
-          
-        }); }
-    })
-     } 
         
-    }
+        if( this.state.my_past_status !== 'undefined' && this.state.my_past_status.length > 0){
+        this.setState({check_tx:true},()=>(console.log()))}  
+        else{
+        this.setState({check_tx:false},()=>(console.log()))}
+        }
+        });
+      }
+    })
+  } 
+        this.setState({loading:false})   
+}
 
   componentWillReceiveProps(nextProps){
     if (this._isMounted){
@@ -109,13 +116,11 @@ componentDidMount(){
     if(this.props.number !== prevProps.number)
     {
       this.setState({number:this.props.number})
-      this.setState({loading:true})
       this.loadStatus();
     }
 
     if(this.props.mainnet !== prevProps.mainnet){
       this.setState({mainnet:this.props.mainnet})
-      this.setState({loading:true})
       this.loadStatus()
     }
   }
@@ -137,11 +142,12 @@ componentDidMount(){
         latestblock:'',
         contractaccount:'',
         summaryModalShow: false,
-        number:'',
         EIN:'',
         check_network:'',
         my_past_status:[],
         activeStatus:[],
+        sorted:[],
+        check_tx:false,
         
         
         
@@ -170,16 +176,14 @@ componentDidMount(){
   return (
     <div>
       <Container>
-         <Row><Col><h1> </h1></Col></Row>
-         <Row><Col><h1> </h1></Col></Row>
+        <Row><Col><h1> </h1></Col></Row>
+        <Row><Col><h1> </h1></Col></Row>
          
-     
-         <Center><img src={require('../../Images/statuslogo.png')} alt="snow" height={120} width={110} /></Center>
+        <Center><img src={require('../../Images/statuslogo.png')} alt="snow" height={90} width={80} /></Center>
 
-       
         <Center>
         <ImpulseSpinner
-        size={60}
+        size={50}
         color={!this.state.check_network? "rgb(226, 188, 62)":"rgb(241, 241, 241)"}
         loading={loading}/>
         </Center>  
@@ -190,9 +194,16 @@ componentDidMount(){
         <Col className= "col_border" md={2}><h3>Time</h3></Col>
         <Col className= "col_border" md={7}><h3>Status Update</h3></Col>
         <Col className="col_no_border" md={3}><h3>Comments</h3></Col>
-      
-      
         </Row>
+
+        {!this.state.check_tx && !this.state.loading && <Row className ="row_underline">
+        <Col className="banana">
+        <Center>
+        <h3>No Status Update</h3>
+        </Center>
+        </Col>
+        </Row>}
+        
         {this.state.pageOfItems.map((myStatus,index)=>(
         <Row className ="row_underline" key={index}>
         <Col className= "col_border" md={2}>
@@ -213,9 +224,6 @@ componentDidMount(){
         onHide={summaryModalClose}
         />}
         </Col>
-
-       
-        
         </Row>))}
        
        <Row><Col><h1> </h1></Col></Row>

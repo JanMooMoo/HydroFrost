@@ -13,6 +13,7 @@ import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Center from 'react-center';
 import JwPagination from 'jw-react-pagination';
+import { ImpulseSpinner } from "react-spinners-kit";
 import Moment from 'react-moment';
 
 
@@ -29,7 +30,8 @@ export default class ResolversAdded extends Component {
 
   componentWillMount(){
       this._isMounted = true;
-      if (this._isMounted){this.setState({check_network: this.props.mainnet});}
+      if (this._isMounted){ this.setState({check_network: this.props.mainnet},()=>this.loadSnowflake());}
+
 
      }
      
@@ -42,7 +44,7 @@ export default class ResolversAdded extends Component {
   if (this._isMounted){
   this.setState({net:network});}
   if(this.state.net == "rinkeby" && this._isMounted){
-    this.setState({networkmessage:true})
+  this.setState({networkmessage:true})
 
     }
   }
@@ -75,61 +77,67 @@ export default class ResolversAdded extends Component {
   var newest = this.state.resolvers_added;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
-  this.setState({resolvers_added:newsort});}
-    
-   });   
-          
-  })
-  } 
+  this.setState({resolvers_added:newsort});
+
+  if( this.state.resolvers_added !== 'undefined' && this.state.resolvers_added.length > 0){
+  this.setState({check_tx:true},()=>(console.log()))}  
   else{
-    const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
-    if (this._isMounted){
-    this.setState({snowSolidity});
-    this.setState({resolvers_added:[]});}
+  this.setState({check_tx:false},()=>(console.log()))}
+        }
+      });   
+    })
+  } 
   
-    snowSolidity.events.SnowflakeResolverAdded({filter:{ein:this.props.number},fromBlock:0, toBlock:'latest'})
-    .on('data',(log)=>{
+  else{
+  const snowSolidity =  new web2.eth.Contract(rinkeby1484_ABI, rinkeby1484_Address);
+  if (this._isMounted){
+  this.setState({snowSolidity});
+  this.setState({resolvers_added:[]});}
   
-    let { returnValues: { ein,resolver,withdrawAllowance }, blockNumber } = log
+  snowSolidity.events.SnowflakeResolverAdded({filter:{ein:this.props.number},fromBlock:0, toBlock:'latest'})
+  .on('data',(log)=>{
   
-    web3.eth.getBlock(blockNumber, (error, block) => {
-    blockNumber = block.timestamp;
+  let { returnValues: { ein,resolver,withdrawAllowance }, blockNumber } = log
+  
+  web3.eth.getBlock(blockNumber, (error, block) => {
+  blockNumber = block.timestamp;
       
-    let values = {ein,resolver,withdrawAllowance,blockNumber}
+  let values = {ein,resolver,withdrawAllowance,blockNumber}
            
-    if (this._isMounted){
-    this.setState({resolvers_added:[...this.state.resolvers_added,values]})
-    this.setState({loading:false});}
+  if (this._isMounted){
+  this.setState({resolvers_added:[...this.state.resolvers_added,values]})
+  this.setState({loading:false});}
   
-    var newest = this.state.resolvers_added;
-    var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-    if (this._isMounted){
-    this.setState({resolvers_added:newsort});
-    }
-      
+  var newest = this.state.resolvers_added;
+  var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
+  if (this._isMounted){
+  this.setState({resolvers_added:newsort});
+  if( this.state.resolvers_added !== 'undefined' && this.state.resolvers_added.length > 0){
+  this.setState({check_tx:true},()=>(console.log()))}  
+  else{
+  this.setState({check_tx:false},()=>(console.log()))}
+       }  
      });           
     })
-  }
-  
+   } 
   }
 
   componentWillReceiveProps(nextProps){
-    if (this._isMounted){
-      this.setState({check_network:nextProps.mainnet});
-     }
+  if (this._isMounted){
+  this.setState({check_network:nextProps.mainnet});}
   }
 
   componentDidUpdate(prevProps){
 
-    if(this.props.number !== prevProps.number)
-    {
-      this.setState({number:this.props.number})
-      this.loadSnowflake();
+  if(this.props.number !== prevProps.number)
+  {
+    this.setState({number:this.props.number})
+    this.loadSnowflake();
+  }
+  if(this.props.mainnet !== prevProps.mainnet){
+    this.setState({mainnet:this.props.mainnet})
+    this.loadSnowflake()
     }
-      if(this.props.mainnet !== prevProps.mainnet){
-      this.setState({mainnet:this.props.mainnet})
-      this.loadSnowflake()
-      }
   }
 
   componentWillUnmount(){
@@ -154,6 +162,7 @@ export default class ResolversAdded extends Component {
         number:'',
         EIN:'',
         check_network:'',
+        check_tx:false,
         
     }
         this.onChangePage = this.onChangePage.bind(this);
@@ -165,6 +174,9 @@ export default class ResolversAdded extends Component {
 
 
   render(){
+
+    const {loading}=this.state
+
   return (
    <div>
       <Container>
@@ -172,7 +184,14 @@ export default class ResolversAdded extends Component {
       <Row><Col><h1> </h1></Col></Row>
          
      
-       <Title name="Added" title="Resolvers"/>
+      <Title name="Added" title="Resolvers"/>
+
+      <Center>
+      <ImpulseSpinner
+      size={50}
+      frontColor= {!this.props.mainnet? "rgb(226, 188, 62)":"#00ff89"}
+      loading={loading}/>
+      </Center>  
        
      
       <Row><Col><h1> </h1></Col></Row>
@@ -184,9 +203,16 @@ export default class ResolversAdded extends Component {
       <Col className= "col_border" md={2}><h3>Date</h3></Col>
       <Col className= "col_border" md={6}><h3>Resolvers Added</h3></Col>
       <Col className= "col_no_border" md={2}><h3>Added By</h3></Col>
-      
-      
       </Row>
+
+      {!this.state.check_tx && !this.state.loading && <Row className ="row_underline">
+      <Col className="banana">
+      <Center>
+      <h3>No Resolvers Added</h3>
+      </Center>
+      </Col>
+      </Row>}
+
       {this.state.pageOfItems.map((ResolverAdded,index)=>(
       <Row className ="row_underline" key={index}>
 
@@ -206,10 +232,14 @@ export default class ResolversAdded extends Component {
       </Col>
 
       <Col className= "col_no_border" md={2}>
-      <h5 className="banana">ID: {ResolverAdded.ein}</h5>From EIN Account
+      <h5 className="banana">ID
+      <a href={`/Accounts/${ResolverAdded.ein}`} className="accountlink">
+      : {ResolverAdded.ein}
+      </a>
+      </h5>From EIN Account
       </Col>
          
-       </Row>))}
+      </Row>))}
 
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>

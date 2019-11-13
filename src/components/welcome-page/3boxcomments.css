@@ -1,4 +1,5 @@
 .comment {
+  
     width: 100%;
     min-height: 60px;
     display: flex;
@@ -26,6 +27,7 @@
   background-color: rgb(12, 3, 3)!important;
   margin-left:0.2rem !important;
   margin-top:0.2rem;
+  margin-bottom:0.2rem;
   position:relative!important;
   align-items: center!important;
   border-radius:10px!important;
@@ -34,6 +36,10 @@
   .comment_picture{
     padding:1px!important;
     align-items: center!important;
+    min-width: 60px;
+    min-height: 59px;
+    max-width: 60px;
+    max-height: 59px;
   }
   
   .comment_content {
@@ -129,6 +135,7 @@
     text-decoration: none!important
   }
   .comment_content_context_time{
+    font-family:"Oswald", sans-serif !important;
     color:rgb(122, 170, 84)!important;
     font-size:15px!important;
   }
@@ -160,11 +167,13 @@
 
   .input_login{
     background:transparent!important;
+    margin-left: 100000px!important;
     
   }
   
   .comment_content_context_main_user_info_username a {
      text-decoration: none !important; 
+     
   }
   
   .comment_content_text {
@@ -186,23 +195,30 @@
       .comment_content_context_main_user_info {
         flex-direction: column;
         align-items: flex-start;
+        font-size: 11px;
       }
   
       .comment_content_context_main_user_info_address {
         margin-left: 0;
+        font-family:"Oswald", sans-serif !important;
+        font-size: 12px;
       }
   
       .comment_content_context_main_user_info_username {
-        font-size: 18px;
+        font-size: 14px;
         margin-left:1px!important;
+        font-family:"Oswald", sans-serif !important;
       }
   
       .comment_content_text {
-        font-size: 15px;
+        
+        font-family:"Oswald", sans-serif !important;
       }
   
       .dialogue_button{
         background:linear-gradient(45deg, rgb(46, 26, 26),rgb(165, 152, 109),rgb(88, 59, 59))!important;
+        
+
         border-top:1px solid rgb(219, 206, 164)!important;
         border-bottom:1px solid rgb(219, 206, 164)!important;
         border-left:1px solid rgb(219, 206, 164)!important;
@@ -223,6 +239,17 @@
 
 
       .threebox-comments-react{
-
-
+        margin-top:20px!important;
       }
+
+      .input_commentAs{
+        top:-20px!important;
+        color:rgb(226, 188, 62);
+        font-family:"Orbitron",bold;
+        width: 40%!important;
+        margin-left: 30%!important;
+        margin-right: 30%!important;
+        left:none!important;
+      
+      }
+

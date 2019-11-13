@@ -83,9 +83,9 @@ async LogIn(){
      
   const accounts = await web3.eth.getAccounts();
   if (this._isMounted){
-  this.setState({account: accounts[0]});}
+  this.setState({account: accounts[0]});
 
-  const Box = require('3box')
+  const Box = require('3box')}
 
 }
    
@@ -137,7 +137,7 @@ constructor(props){
         
       <Modal.Header className="modalpie" closeButton>
       <Modal.Title id="contained-modal-title-vcenter">
-      <Center><div className="banana3">Status Update</div></Center>
+      <Center><div className="banana3">Status</div></Center>
       </Modal.Title>
       </Modal.Header> 
  
@@ -170,7 +170,7 @@ constructor(props){
         adminEthAddr='0x20F857b13D6C546eC77aFE47317EA3c5a75c1c6c'
         
         // Required props for context A) & B)
-        box={this.state.box}
+        
         currentUserAddr= {this.state.account}
         
       

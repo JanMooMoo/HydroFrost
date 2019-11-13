@@ -119,7 +119,7 @@ else{
   //snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})
   snowSolidity.events.Transfer({fromBlock: this.state.latestblocks, toBlock:'latest'})
   .on('data', (log) => {
-  
+
   if (this._isMounted){
   this.setState({incoming:true});
   this.setState({loading:true});}

@@ -27,6 +27,7 @@ import EinToEinSent from './EinToEinSent';
 import EinToEinRecieved from './EinToEinRecieved';
 import ResolversAdded from './ResolversAdded';
 import Status from './Status';
+import {Statusfeed} from './Statusfeed_modal'
 
 
 
@@ -259,6 +260,8 @@ componentWillUnmount(){
 
   const {loading} = this.state
   const {params} = this.props.match
+  let summaryModalClose =() =>this.setState({summaryModalShow:false});
+
   
 
   return (
@@ -278,11 +281,11 @@ componentWillUnmount(){
        <Row><Col><h4>
        <Center>
        <RotateSpinner
-        size={60}
-        color={!this.state.mainnet? "rgb(226, 188, 62)":"rgb(241, 241, 241)"}
-        loading={loading}/>
-      </Center>  
-      </h4></Col></Row>
+       size={60}
+       color={!this.state.mainnet? "rgb(226, 188, 62)":"rgb(241, 241, 241)"}
+       loading={loading}/>
+       </Center>  
+       </h4></Col></Row>
 
       <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
       <Row className={ !this.state.loading? 'row':'hidden'}><Col><h1> </h1></Col></Row>
@@ -299,7 +302,15 @@ componentWillUnmount(){
        </Row>
       
       <Row>
-      <Col md={8}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col>
+      <Col md={2}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col>
+      <Col md={3} xs={1}><button className="statusbutton" onClick={() => this.setState({summaryModalShow:true})}><p className="faucet">Status Feed</p></button>
+      
+      {this.state.summaryModalShow && <Statusfeed
+      show={this.state.summaryModalShow}
+      onHide={summaryModalClose}
+      />}</Col>
+      
+      
       </Row>
 
       <Row>
@@ -330,7 +341,7 @@ componentWillUnmount(){
        <Row><Col><h1> </h1></Col></Row>
        <Row><Col><h1> </h1></Col></Row>
        
-  <Tabs defaultActiveKey="my_status" transition={false} id="noanim-tab-example" mountOnEnter>
+  <Tabs defaultActiveKey="my_status" transition={false} id="noanim-tab-example" mountOnEnter unmountOnExit>
   
   <Tab eventKey="resolver_added" title="Resolvers Added" className="tab">
    <ResolversAdded
