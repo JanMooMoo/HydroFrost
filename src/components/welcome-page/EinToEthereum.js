@@ -244,11 +244,11 @@ export default class EinToEthereum extends Component {
         </div>
         </Col>
 
-        <Col className="col_no_border" md={2} onClick={this.reload}>
+        <Col className="col_no_border" md={2}>
         <h5 className="banana">ID
-        <a href={`/Accounts/${withdraw.returnValues.einFrom}`} className="accountlink">
+        <Link to={{pathname:'/Accounts/'+withdraw.returnValues.einFrom,}} className="accountlink">
         : {withdraw.returnValues.einFrom}
-        </a>
+        </Link>
         </h5>From EIN Account
         </Col>
          

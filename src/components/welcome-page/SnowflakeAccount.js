@@ -60,6 +60,9 @@ export default class SnowflakeAccount extends Component {
   const{params}=this.props.match
   const{mainnet} = this.state
   const {passedEin}=this.props.location
+
+  if (this._isMounted){
+  this.setState({loading:true})}
   
   if(this.state.mainnet == true){
   const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
@@ -188,6 +191,16 @@ async loadmarket(){
  initializeReactGA() {
   ReactGA.initialize('UA-151322976-1');
   ReactGA.pageview(window.location.pathname + window.location.search);
+}
+
+componentDidUpdate(prevProps){
+
+  if(this.props.match !== prevProps.match)
+  {
+    this.setState({match:this.props.match})
+    this.loadBlockchain();
+    this.loadStatus();
+  }
 }
 
 componentWillUnmount(){

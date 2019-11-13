@@ -275,10 +275,10 @@ componentWillUnmount(){
       </Col>
 
       <Col className="col_no_border" md={2}>
-      <h5 className="banana" onClick={this.reload}>ID
-      <a href={`/Accounts/${deposit.returnValues.einTo}`} className="accountlink">
+      <h5 className="banana">ID
+      <Link to={{pathname:'/Accounts/'+deposit.returnValues.einTo,}} className="accountlink">
       : {deposit.returnValues.einTo}
-      </a>
+      </Link>
       </h5>To EIN Account
       </Col>
          

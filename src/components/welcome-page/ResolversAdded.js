@@ -12,6 +12,7 @@ import Web3 from 'web3';
 import {rinkeby1484_ABI, rinkeby1484_Address} from '../blockchain-data/config';
 import {main1484_ABI, main1484_Address} from '../blockchain-data/Snowflake_Main';
 import Center from 'react-center';
+import {Link} from 'react-router-dom';
 import JwPagination from 'jw-react-pagination';
 import { ImpulseSpinner } from "react-spinners-kit";
 import Moment from 'react-moment';
@@ -234,9 +235,9 @@ export default class ResolversAdded extends Component {
 
       <Col className= "col_no_border" md={2}>
       <h5 className="banana">ID
-      <a href={`/Accounts/${ResolverAdded.ein}`} className="accountlink">
+      <Link to={{pathname:'/Accounts/'+ResolverAdded.ein,}} className="accountlink">
       : {ResolverAdded.ein}
-      </a>
+      </Link>
       </h5>From EIN Account
       </Col>
          

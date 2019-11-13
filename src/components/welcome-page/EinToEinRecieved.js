@@ -257,22 +257,22 @@ reload(){
       <h6 className="time">{numeral(recieved.blockNumber).format('0,0')}</h6>Mined
       </Col>
 
-      <Col className= "col_border" md={6} onClick={this.reload}>   
+      <Col className= "col_border" md={6}>   
       <div>
       <h5 className="banana">ID
-      <a href={`/Accounts/${recieved.returnValues.einTo}`} className="accountlink">
+      <Link to={{pathname:'/Accounts/'+recieved.returnValues.einTo,}} className="accountlink">
       : {recieved.returnValues.einTo}
-      </a>
+      </Link>
       </h5>To EIN Account
       </div>
       </Col>
 
       <Col className="col_no_border"  md={2}>
         
-      <h5 className="banana" onClick={this.reload}>ID
-      <a href={`/Accounts/${recieved.returnValues.einFrom}`} className="accountlink">
+      <h5 className="banana">ID
+      <Link to={{pathname:'/Accounts/'+recieved.returnValues.einFrom,}} className="accountlink">
       : {recieved.returnValues.einFrom}
-      </a>
+      </Link>
       </h5>From EIN Account
       </Col>
          

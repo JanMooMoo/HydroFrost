@@ -251,8 +251,8 @@ export default class EinToEinSent extends Component {
       <Col className= "col_border" md={6}>   
       <div>
       <h5 className="banana">ID
-      <a href={`/Accounts/${send.returnValues.einTo}`} className="accountlink" >
-      : {send.returnValues.einTo} </a>
+      <Link to={{pathname:'/Accounts/'+send.returnValues.einTo,}} className="accountlink">
+      : {send.returnValues.einTo} </Link>
       
       </h5>To EIN Account
       </div>
@@ -260,8 +260,8 @@ export default class EinToEinSent extends Component {
 
       <Col className= "col_no_border" md={2}>
       <h5 className="banana">ID
-      <a href={`/Accounts/${send.returnValues.einFrom}`} className="accountlink">
-        : {send.returnValues.einFrom}</a>
+      <Link to={{pathname:'/Accounts/'+send.returnValues.einFrom,}} className="accountlink">
+        : {send.returnValues.einFrom}</Link>
       
       </h5>From EIN Account
       </Col>
