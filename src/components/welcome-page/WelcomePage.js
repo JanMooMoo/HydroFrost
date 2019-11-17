@@ -202,9 +202,15 @@ componentWillUnmount(){
   }
 
   handleChange(event) {
+    const val = event.target.value;
+    if(event.target.validity.valid){
     
     this.setState({value: event.target.value},() => {
-      console.log()});
+    console.log()});}
+
+    else if(val === ''|| val === '-') this.setState({message:val},()=>{
+    console.log()
+    })
   }
 
   handleSubmit(event) {
@@ -293,7 +299,7 @@ componentWillUnmount(){
 
       <Col md={3}></Col>
       <Col><form onSubmit={this.handleSubmit}>
-      <input type="text" value={this.state.value} onChange={this.handleChange} className="searchbar" /> 
+      <input type="tel" value={this.state.value} onChange={this.handleChange} pattern="^-?[0-9]\d*\.?\d*$" className="searchbar" /> 
       <input type="submit" value="Submit" className="submit-button"/>
       </form>
       </Col>
@@ -322,7 +328,7 @@ componentWillUnmount(){
  
          </Col>
        
-         <Col md={4} className="market"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={50} width={40} className="navbar-brand"/>
+         <Col md={4} className="market"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={40} width={40} className="hydroimage"/>
          <h6 className="grass2">Hyrdo Marketcap</h6>
          <h6 className="grass3"> $ {numeral(this.state.marketcap.usd_market_cap).format('0,0.00')}</h6>
          <h6 className="grass2"> Hyrdo Price:</h6> 
@@ -338,6 +344,8 @@ componentWillUnmount(){
        <Row><Col><h1> </h1></Col></Row>
        
   <Tabs defaultActiveKey="my_status" transition={false} id="noanim-tab-example" mountOnEnter unmountOnExit>
+
+    
   
   <Tab eventKey="resolver_added" title="Resolvers Added" className="tab">
    <ResolversAdded
@@ -345,6 +353,7 @@ componentWillUnmount(){
    mainnet={this.state.mainnet}
    marketUsd={this.state.marketcap.usd}/>
   </Tab>
+  
 
   <Tab eventKey="ethereum_deposit" title="Ethereum Deposits to EIN" className="tab" >
    <EthereumToEin

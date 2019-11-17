@@ -104,6 +104,13 @@ export class HydroTestFaucet extends Component{
    }
 })
 
+
+
+.on('confirmation', (confirmationNumber,receipt)=>{ 
+  console.log("check",confirmationNumber)
+  console.log("check",receipt)})
+ 
+
 .on('error',(error)=>{
   if(error !== null){
     txerror = error

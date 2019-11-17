@@ -158,7 +158,7 @@ constructor(props){
       <Row><Col><h1> </h1></Col></Row>
       <Row><Col><h1> </h1></Col></Row>
       <Row ><Col><Center><h3 className="banana3">{this.props.status_info.status}</h3></Center></Col></Row>
-      <Row className ="row_underline"><Col md={10}></Col><Col><p className="statustime"><Moment unix fromNow>{this.props.status_info.blockNumber}</Moment></p></Col></Row>
+      <Row ><Col md={10}></Col><Col><p className="statustime"><Moment unix fromNow>{this.props.status_info.blockNumber}</Moment></p></Col></Row>
       <Row><Col><h1> </h1></Col></Row>
 
       <Row className = "nothing">

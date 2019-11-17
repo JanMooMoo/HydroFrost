@@ -107,13 +107,12 @@ else{
   snowSolidity.getPastEvents("Transfer",{fromBlock: this.state.blocks, toBlock:'latest'})
   .then(events=>{
     
-  
   var newest = events;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
   this.setState({hydroTransfer:newsort});
   this.setState({loading:false});}
-
+ 
   }).catch((err)=>console.error(err))
   
   //snowSolidity.events.Transfer({fromBlock: 8823000, toBlock:'latest'})

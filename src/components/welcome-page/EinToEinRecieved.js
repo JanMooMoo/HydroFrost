@@ -50,9 +50,11 @@ export default class EinToEinRecieved extends Component {
   }
 
   async loadSnowflake(){
-    
+
+  if (this._isMounted){  
   this.setState({check_network:this.props.mainnet})
-  this.setState({loading:true})
+  this.setState({loading:true})}
+  
   if(this.state.check_network == true){
   const snowSolidity =  new web3.eth.Contract(main1484_ABI, main1484_Address);
 

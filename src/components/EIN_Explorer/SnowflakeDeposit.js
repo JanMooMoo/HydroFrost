@@ -197,28 +197,23 @@ else{
   return (
    <div>
       <Container>
-         <Row><Col><h1> </h1></Col></Row>
-         <Row><Col><h1> </h1></Col></Row>
-       
-     
-       <Title name="Ein" title="Deposit"/>
 
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h4>
-        <Center><RotateSpinner
-                size={60}
-                color={!this.state.check_network? "rgb(226, 188, 62)":"rgb(241, 241, 241)"}
-                loading={loading}/>
+        <Row className ="row_underline_header">
+        <Col><Title name="Ein" title="Deposit"/>
+        <Center>
+        <RotateSpinner
+        size={60}
+        color={!this.state.check_network? "rgb(226, 188, 62)":"rgb(241, 241, 241)"}
+        loading={loading}/>
         </Center>  
-      </h4></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-      
-      <Row className ="row_underline2">
-      <Col className= "col_border" md={2}><h3>Amount</h3></Col>
-      <Col className= "col_border" md={2}><h3>Block</h3></Col>
-      <Col className= "col_border" md={6}><h3>From</h3></Col>
-      <Col className="col_no_border" md={2}><h3>To</h3></Col>
+        </Col>
+        </Row>
+
+        <Row className ="row_underline2">
+        <Col className= "col_border" md={2}><h3>Amount</h3></Col>
+        <Col className= "col_border" md={2}><h3>Block</h3></Col>
+        <Col className= "col_border" md={6}><h3>From</h3></Col>
+        <Col className="col_no_border" md={2}><h3>To</h3></Col>
       
       
         </Row>
@@ -248,12 +243,8 @@ else{
          
         </Row>))}
        
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><Center><JwPagination items={this.state.hydroDeposit} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
-       <Row><Col><h1> </h1></Col></Row>
+       
+       <Row className ="row_underline_footer"><Col><Center><JwPagination items={this.state.hydroDeposit} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
    
      </Container>
        

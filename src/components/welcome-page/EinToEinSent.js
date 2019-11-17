@@ -191,19 +191,32 @@ export default class EinToEinSent extends Component {
         EIN:'',
         check_network:'',
         check_tx:false,
+        activeStatus:[],
         
     }
   
     this.onChangePage = this.onChangePage.bind(this);
+    
   }
   
   onChangePage(pageOfItems) {
   this.setState({ pageOfItems });
+  
+  this.handleConvert = (send)=>{
+    
+    web3.eth.getBlock(send.blockNumber,(error, block)=>{
+    this.setState({activeStatus:block.timestamp},()=>console.log("check",this.state.activeStatus))
+    })
+      
+    
+  }
   }
 
   reload(){
     window.location.reload()
   }
+
+  
 
 
   render(){
@@ -213,22 +226,16 @@ export default class EinToEinSent extends Component {
   return (
    <div>
       <Container>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-         
-     
+      <Row className ="row_underline_header">
+      <Col>
       <Title name="Sent " title="To EIN"/>
-
       <Center>
       <ImpulseSpinner
       size={50}
       frontColor= {!this.props.mainnet? "rgb(226, 188, 62)":"#00ff89"}
       loading={loading}/>
       </Center>  
-       
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
+      </Col></Row>
       
       <Row className ="row_underline2">
       <Col className ="col_border" md={2}><h3 >Amount</h3></Col>
@@ -244,8 +251,8 @@ export default class EinToEinSent extends Component {
       <h5 className="banana">{numeral(send.returnValues.amount/1E18).format('0,0.00')}</h5>Hydro Hydro ~ $ {numeral(send.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
       </Col>
 
-      <Col className= "col_border" md={2}>   
-      <h6 className="time">{numeral(send.blockNumber).format('0,0')}</h6>Mined
+      <Col className= "col_border" md={2} >   
+      <h6 className="time" onClick={()=>this.handleConvert(send)}>{numeral(send.blockNumber).format('0,0')} {this.state.activeStatus}</h6>Mined
       </Col>
       
       <Col className= "col_border" md={6}>   
@@ -276,12 +283,8 @@ export default class EinToEinSent extends Component {
       </Col>
       </Row>}
 
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><Center><JwPagination items={this.state.ein_transfer_out} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
+      <Row className ="row_underline_footer"><Col><Center><JwPagination items={this.state.ein_transfer_out} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
+      
    
      </Container>
        
