@@ -204,21 +204,15 @@ export default class EinToEthereum extends Component {
   return (
    <div>
         <Container>
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
-         
+        <Row className ="row_underline_header"><Col>
         <Title name="Hydro Withdraw From" title="EIN To Ethereum"/>
-
         <Center>
         <ImpulseSpinner
         size={50}
         frontColor= {!this.props.mainnet? "rgb(226, 188, 62)":"#00ff89"}
         loading={loading}/>
-        </Center>  
-       
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
+        </Center></Col></Row>
+         
       
         <Row className ="row_underline2">
         <Col className= "col_border" md={2}><h3>Amount</h3></Col>
@@ -262,12 +256,8 @@ export default class EinToEthereum extends Component {
         </Col>
         </Row>}
 
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><Center><JwPagination items={this.state.eth_withdraw} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
+        <Row className ="row_underline_footer"><Col><Center><JwPagination items={this.state.eth_withdraw} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
+     
    
      </Container>
        

@@ -5,8 +5,6 @@ import {status_rinkeby_ABI,status_rinkeby_Address} from '../blockchain-data/Stat
 import Web3 from 'web3';
 import {Link} from 'react-router-dom';
 import Moment from 'react-moment';
-
-
 import { ImpulseSpinner } from "react-spinners-kit";
 
 let web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
@@ -126,41 +124,23 @@ constructor(props){
  
       <Modal.Body> 
 
-      <Row className ="row_underline"><Col md={12} className="gethydro"><img src={require('../../Images/statuslogo.png')} alt="snow" height={120} width={110} className="navbar-brand"/><h6> </h6><h6 className="grass2">Most Recent Status Update</h6></Col>
-      </Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-
-     <Center> <ImpulseSpinner
+      <Row className ="statusfeed_underline">
+      <Col md={12} className="gethydro"><img src={require('../../Images/statuslogo.png')} alt="snow" height={120} width={110} className="navbar-brand"/><h6></h6>
+      <h6 className="grass2">Most Recent Status Update</h6>
+      <Center><ImpulseSpinner
       frontColor= "#00ff89"
       size={60}
-      loading={loading}/></Center>
-  
+      loading={loading}/></Center></Col>
+      </Row>
+
       {this.state.sorted.map((status_update,index)=>(
-      <Row className ="row_underline" key={index}>
-      <Col md={5}><p className="statusblock"><a href={`/Accounts/${status_update.ein}`} className="accountlink">EIN: {status_update.ein}</a> Updated Their Status To:</p>
+      <Row className ="statusfeed_underline" key={index}>
+      <Col md={5}><p className="statusblock">
+      <Link to={{pathname:'/Accounts/'+status_update.ein}} className="accountlink">EIN: {status_update.ein}</Link> Updated Their Status To:</p>
       <h4 className="banana3"> {status_update.status}</h4></Col>
       <Col md={5}></Col><Col md={2}><p className="statustime"><Moment unix fromNow>{status_update.blockNumber}</Moment></p></Col></Row>))}
       
-  
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col md={4}></Col><Col md={4}><input type ="submit" value="Close" className="modalsubmit" onClick={this.props.onHide}/></Col><Col md={4}></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-     
+      <Row className="statusfeed_button"><Col md={4}></Col><Col md={4}><input type ="submit" value="Close" className="modalsubmit" onClick={this.props.onHide}/></Col><Col md={4}></Col></Row>
       
       </Modal.Body>
             

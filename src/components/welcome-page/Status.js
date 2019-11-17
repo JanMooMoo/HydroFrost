@@ -161,8 +161,9 @@ componentDidMount(){
     this.setState({ pageOfItems });
 
   this.handleShow = (myStatus)=>{
+    if (this._isMounted){
       this.setState({summaryModalShow:true})
-      this.setState({activeStatus:myStatus})  
+      this.setState({activeStatus:myStatus})}  
     }
   }
 
@@ -175,10 +176,9 @@ componentDidMount(){
   
   return (
     <div>
-      <Container>
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
-         
+        <Container>
+
+        <Row className ="row_underline_header"><Col>
         <Center><img src={require('../../Images/statuslogo.png')} alt="snow" height={90} width={80} /></Center>
 
         <Center>
@@ -186,9 +186,8 @@ componentDidMount(){
         size={50}
         color={!this.state.check_network? "rgb(226, 188, 62)":"rgb(241, 241, 241)"}
         loading={loading}/>
-        </Center>  
-     
-        <Row><Col><h1> </h1></Col></Row>
+        </Center>
+        </Col></Row>
       
         <Row className ="row_underline2">
         <Col className= "col_border" md={2}><h3>Time</h3></Col>
@@ -226,14 +225,9 @@ componentDidMount(){
         </Col>
         </Row>}
 
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
-        <Row ><Col ><Center><JwPagination items={this.state.my_past_status} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
-        <Row><Col><h1> </h1></Col></Row>
-   
-     </Container>
+        <Row className ="row_underline_footer"><Col ><Center><JwPagination items={this.state.my_past_status} onChangePage={this.onChangePage} maxPages={10} pageSize={5}/></Center></Col></Row>
+     
+        </Container>
        
    </div>
   );

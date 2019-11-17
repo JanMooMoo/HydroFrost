@@ -309,7 +309,7 @@ constructor(props){
         </Center>  
       </h4></Col></Row>
       <Row><Col md={3}className="gethydro"></Col><Col ms={2}><input type="text" value={this.state.HydroRequest} onChange={this.handleChange} placeholder="Your Eth Wallet Address" className="modalsearch" /></Col><Col md={3}></Col></Row>
-      <Row><Col md={3}className="gethydro"></Col><Col ms={2}><input type="button" value="Submit" className="modalsubmit" onClick={this.handleSubmitMail} /></Col><Col md={3}></Col></Row>
+      <Row ><Col md={3}className="gethydro"></Col><Col ms={2}><input type="button" value="Submit" className="modalsubmit" onClick={this.handleSubmitMail} /></Col><Col md={3}></Col></Row>
   	  </form>
      
       

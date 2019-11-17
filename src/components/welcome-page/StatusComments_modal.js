@@ -105,11 +105,11 @@ constructor(props){
         loading:true,
         sorted:[],
         account:'',
-      space:'',
-      address:'',
-      box:'',
-      thread:'',
-      spacename:'',
+        space:'',
+        address:'',
+        box:'',
+        thread:'',
+        spacename:'',
     }
 
   }
@@ -143,26 +143,25 @@ constructor(props){
  
       <Modal.Body> 
 
-      
 
-     
-      <Row><Col><Center><h6 className="grass2">EIN {this.props.status_info.ein} Updated Status To</h6></Center></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-
-     <Center> <ImpulseSpinner
+      <Row className="modalrow_button"><Col><Center><h6 className="grass2">EIN {this.props.status_info.ein} Updated Status To</h6></Center> <Center>
+      <ImpulseSpinner
       frontColor= "#00ff89"
       size={60}
-      loading={loading}/></Center>
+      loading={loading}/>
+      </Center></Col></Row>
   
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
+      <Row ><Col>
+     
+      </Col></Row>
+     
       <Row ><Col><Center><h3 className="banana3">{this.props.status_info.status}</h3></Center></Col></Row>
       <Row ><Col md={10}></Col><Col><p className="statustime"><Moment unix fromNow>{this.props.status_info.blockNumber}</Moment></p></Col></Row>
       <Row><Col><h1> </h1></Col></Row>
 
       <Row className = "nothing">
-      <Col xs={12}><h6><Center> <ThreeBoxComments 
+      <Col xs={12}>
+      <h6><Center> <ThreeBoxComments 
         // required
               
         spaceName='StatusComments'
@@ -172,33 +171,18 @@ constructor(props){
         // Required props for context A) & B)
         
         currentUserAddr= {this.state.account}
-        
       
-
         // optional
         members={false}
         showCommentCount={3}
         useHovers={false}
-             
-             
-          /></Center>
+        /></Center>
       </h6></Col>
       </Row> 
 
-
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col md={4}></Col><Col md={4}><input type ="submit" value="Connect" className="modalsubmit" onClick={() => this.LogIn()}/></Col><Col md={4}></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col md={4}></Col><Col md={4}><input type ="submit" value="Close" className="modalsubmit" onClick={this.props.onHide}/></Col><Col md={4}></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
-      <Row><Col><h1> </h1></Col></Row>
+      <Row className="modalrow_button"><Col md={4}></Col><Col md={4}><input type ="submit" value="Connect" className="modalsubmit" onClick={() => this.LogIn()}/></Col><Col md={4}></Col></Row>
+      <Row className="modalrow_button"><Col md={4}></Col><Col md={4}><input type ="submit" value="Close" className="modalsubmit" onClick={this.props.onHide}/></Col><Col md={4}></Col></Row>
+     
      
       
       </Modal.Body>

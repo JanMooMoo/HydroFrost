@@ -3,8 +3,7 @@
     background:linear-gradient(45deg, rgb(17, 17, 17),rgb(60, 74, 112));
     bfackground:linear-gradient(45deg, rgb(0, 0, 0),rgb(43, 37, 37),rgb(63, 62, 70), rgb(58, 51, 56), rgb(6, 1, 7));
     background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
-
-    border-radius: 60px;
+    border-radius: 40px;
     border:1px solid rgb(226, 188, 62);
     height:580px;
     width:1000px;
@@ -52,7 +51,6 @@
     position: relative;
     width:125px;
     height:42px;
-    
     background: linear-gradient(to bottom, rgb(17, 17, 17),rgb(26, 15, 18),rgb(61, 33, 33), rgb(39, 24, 24), rgb(0, 0, 0));
     background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88));
     border:0.2rem solid var(--mainDark);
