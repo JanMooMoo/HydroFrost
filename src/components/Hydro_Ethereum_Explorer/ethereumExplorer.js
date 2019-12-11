@@ -279,7 +279,7 @@ this.setState({checktx:check})
 
       <Row>
         <Col md={10}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col>
-        <Col >
+        <Col md={2} sm={12} xs={12} lg={2}>
         <button className="faucetbutton" onClick={() => this.setState({summaryModalShow:true},()=>this.GA_ModalFaucet())}><h6 className="faucet">Faucet</h6></button> 
           {this.state.summaryModalShow && <HydroTestFaucet
           show={this.state.summaryModalShow}

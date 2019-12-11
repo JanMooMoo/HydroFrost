@@ -1,7 +1,7 @@
 input[type="checkbox"]
 {
     position:relative;
-    width:90px;
+    width:145px;
     height:37px;
     -webkit-appearance:none;
     background:linear-gradient(0deg,rgb(226, 188, 62),rgb(170, 141, 46));
@@ -29,7 +29,7 @@ input[type="checkbox"]:before
     position:absolute;
     top:0;
     left:0;
-    width:50px;
+    width:120px;
     height:37px;
     background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
     background: linear-gradient(to right, rgb(1, 1, 5), rgb(0, 28, 88))!important;
@@ -40,7 +40,7 @@ input[type="checkbox"]:before
 }
 
 input:checked[type="checkbox"]:before{
-    left:40px;
+    left:25px;
 }
 
 input[type="checkbox"]:after
@@ -48,7 +48,7 @@ input[type="checkbox"]:after
     content:'';
     position:absolute;
     top:calc(50% - 2px);
-    left:35px;
+    left:80px;
     width:4px;
     height:4px;
     background:linear-gradient(0deg,rgb(235, 193, 57),rgb(247, 191, 10));
@@ -59,7 +59,7 @@ input[type="checkbox"]:after
 
 input:checked[type="checkbox"]:after{
     background:rgb(132, 212, 57);
-    left:75px;
+    left:105px;
     box-shadow:0 0 5px rgb(132, 245, 26), 0 0 15px rgb(122, 252, 0);
 }
 

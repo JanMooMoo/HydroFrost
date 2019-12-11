@@ -61,9 +61,7 @@ async loadStatusData() {
   var newest = this.state.all_status_feed;
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
-  this.setState({all_status_feed:newsort})
-
-  }    
+  this.setState({all_status_feed:newsort})}    
  });
  
 }) 

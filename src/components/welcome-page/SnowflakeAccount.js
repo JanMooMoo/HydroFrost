@@ -314,8 +314,16 @@ componentWillUnmount(){
        </Row>
       
       <Row>
-      <Col md={2}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col>
-      <Col md={3} xs={1}><button className="statusbutton" onClick={() => this.setState({summaryModalShow:true})}><p className="faucet">Status Feed</p></button>
+      <Col md={3} sm={10} lg={2}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input></Col>
+      <Col md={5} sm={6} xs={6} lg={3}>
+      <a href= "https://rinkeby.hydrostore.io/" className="accountlink" target="_blank">
+      <button className="dappbutton" >
+      <p className="faucet">Dapp Store</p>
+      </button>
+      </a>
+      </Col>
+
+      <Col md={4} sm={6} xs={6} lg={3}><button className="statusbutton" onClick={() => this.setState({summaryModalShow:true})}><p className="faucet">Status Feed</p></button>
       
       {this.state.summaryModalShow && <Statusfeed
       show={this.state.summaryModalShow}
@@ -327,7 +335,7 @@ componentWillUnmount(){
 
       <Row>
     
-          <Col className="account_box">
+          <Col lg={8}className="account_box">
          
            <h5 className="banana3">
              EIN: {this.state.number} 
@@ -345,7 +353,7 @@ componentWillUnmount(){
         
          </Col>
        
-         <Col md={4} className="market"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={50} width={40} className="navbar-brand"/><h6 className="grass2">Hyrdo Marketcap</h6><h6 className="grass3"> $ {numeral(this.state.marketcap.usd_market_cap).format('0,0.00')}</h6><h6 className="grass2"> Hyrdo Price:</h6> <h6 className="grass3">$ {numeral(this.state.marketcap.usd).format('0,0.0000000000')} </h6></Col>
+         <Col md={4} lg={3}className="market"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={50} width={40} className="navbar-brand"/><h6 className="grass2">Hyrdo Marketcap</h6><h6 className="grass3"> $ {numeral(this.state.marketcap.usd_market_cap).format('0,0.00')}</h6><h6 className="grass2"> Hyrdo Price:</h6> <h6 className="grass3">$ {numeral(this.state.marketcap.usd).format('0,0.0000000000')} </h6></Col>
        </Row>
        
        <Row><Col><h1> </h1></Col></Row>

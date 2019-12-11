@@ -112,6 +112,7 @@
     white-space: nowrap;
     text-align: left;
     color: rgb(202, 202, 212)!important;
+    font-size:18px!important;
     
     -webkit-text-stroke:0.00001px #3433;
       text-shadow:2px 2px 0 black,
@@ -129,6 +130,7 @@
     margin-left: 1px !important;
     padding-bottom: 2px;
     white-space: nowrap;
+    margin-top:2px;
   }
   
   .comment_content_context_main_user_info:hover {
@@ -136,8 +138,9 @@
   }
   .comment_content_context_time{
     font-family:"Oswald", sans-serif !important;
-    color:rgb(122, 170, 84)!important;
-    font-size:15px!important;
+    color:rgb(106, 238, 243)!important;
+    font-size:18px!important;
+    margin-top:6px;
   }
   
   .input_send{
@@ -180,6 +183,9 @@
     font-size: 20px!important;
     text-align: left;
     word-break: break-word;
+    margin-bottom:7px;
+    margin-top:4px;
+    
   }
   
   .comment_loading {
@@ -195,7 +201,8 @@
   .comment_content_context_main_user_info {
   flex-direction: column;
   align-items: flex-start;
-  font-size: 11px;
+  font-size: 14px!important;
+  margin-top:3px;
   }
   
   .comment_content_context_main_user_info_address {

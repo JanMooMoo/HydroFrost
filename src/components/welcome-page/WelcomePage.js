@@ -309,7 +309,7 @@ componentWillUnmount(){
       />}</Col>
 
       
-      <Col md={2} sm={12} xs={12} lg={4}><form onSubmit={this.handleSubmit}>
+      <Col md={3} sm={12} xs={12} lg={4}><form onSubmit={this.handleSubmit}>
       <input  type="tel" value={this.state.value} onChange={this.handleChange} pattern="^-?[0-9]\d*\.?\d*$" className="searchbar" /> 
       <input  type="submit" value="Submit" className="submit-button"/>
       </form>
@@ -339,7 +339,7 @@ componentWillUnmount(){
  
          </Col>
        
-         <Col md={4} className="market"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={40} width={40} className="hydroimage"/>
+         <Col md={4} lg={4}className="market"><img src={require('../../Images/Hydrosmall.png')} alt="snow" height={40} width={40} className="hydroimage"/>
          <h6 className="grass2">Hyrdo Marketcap</h6>
          <h6 className="grass3"> $ {numeral(this.state.marketcap.usd_market_cap).format('0,0.00')}</h6>
          <h6 className="grass2"> Hyrdo Price:</h6> 
