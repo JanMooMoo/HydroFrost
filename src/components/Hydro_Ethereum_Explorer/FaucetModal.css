@@ -75,7 +75,9 @@
                     2px 3px 0 #000;
     }
     .faucetbutton:hover{
-        
+    
+        background: linear-gradient(to left, rgb(1, 1, 5), rgb(22, 63, 150));
+        transition:all 0.2s ease-in-out;
         color:white;
     }
     .faucetbutton:focus{

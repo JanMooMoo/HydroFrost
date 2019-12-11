@@ -248,7 +248,7 @@ export default class EinToEinSent extends Component {
       <Row className ="row_underline" key={index}>
 
       <Col className= "col_border" md={2}>
-      <h5 className="banana">{numeral(send.returnValues.amount/1E18).format('0,0.00')}</h5>Hydro Hydro ~ $ {numeral(send.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
+      <h5 className="banana">{numeral(send.returnValues.amount/1E18).format('0,0.00')}</h5>Hydro ~ $ {numeral(send.returnValues.amount/1E18 * this.props.marketUsd).format('0,0.00')}
       </Col>
 
       <Col className= "col_border" md={2} >   

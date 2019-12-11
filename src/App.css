@@ -33,13 +33,12 @@ html,body {
   background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
   background: rgb(0, 28, 88)!important;
   background: linear-gradient(to bottom, rgb(17, 50, 121),rgb(18, 57, 143),rgb(3, 21, 61),rgb(1, 10, 27))!important;
-
   color:rgb(231, 215, 69)!important;
   height:100%;
-  width:100%;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   backgrdound: linear-gradient(to left, rgb(106, 106, 161), rgb(0, 28, 88), rgb(1, 1, 8))!important;
-  
+ 
 
 }
 
@@ -193,10 +192,72 @@ color:rgb(231, 215, 69);
   2px 3px 0 #000;
 }
 
+.totalSnowflake_box{
+  
+  background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
+  border:2px solid rgb(219, 206, 164);
+  border-radius:25px;
+  color:rgb(241, 241, 241);
+  margin-right:13px;
+  margin-left:13px;
+  padding-top:5px;
+  margin-top:15px;
+  margin-bottom:10px;
+  text-align: center;
+  overflow:hidden;
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
+}
+
+.welcome_box{
+  
+  background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
+  border:2px solid rgb(219, 206, 164);
+  border-radius:25px;
+  color:rgb(241, 241, 241);
+  margin-right:20px;
+  margin-left:20px;
+  padding-top:50px;
+  padding-bottom:10px;
+  margin-top:15px;
+  margin-bottom:10px;
+  text-align: center;
+  text-shadow:2px 2px 0 black,
+  1px 3px 0 #000,
+  1px 2px 0 #000,
+  1px 2px 0 #000,
+  2px 3px 0 #000;
+}
+
+@media(max-width:1200px){
+  .welcome_box{
+  
+    background: linear-gradient(to left, rgb(1, 1, 5), rgb(0, 28, 88), rgb(1, 1, 5))!important;
+    border:2px solid rgb(219, 206, 164);
+    border-radius:25px;
+    color:rgb(241, 241, 241);
+    margin-right:13px;
+    margin-left:13px;
+    padding-top:50px;
+    padding-bottom:10px;
+    margin-top:15px;
+    margin-bottom:10px;
+    text-align: center;
+    text-shadow:2px 2px 0 black,
+    1px 3px 0 #000,
+    1px 2px 0 #000,
+    1px 2px 0 #000,
+    2px 3px 0 #000;
+  }
+}
+
 .tab{
   background: linear-gradient(45deg, rgb(0, 28, 88),rgb(6, 38, 105), rgb(45, 63, 224))!important;
   background: linear-gradient(to bottom,  rgb(17, 50, 121),rgb(18, 57, 143),rgb(3, 21, 61),rgb(1, 10, 27))!important;
-  border: 1px solid rgb(219, 206, 164); 
+  border: 1px solid rgb(219, 206, 164)!important; 
   border-top-right-radius:10px;
   border-bottom-left-radius:10px;
   border-bottom-right-radius:10px;
@@ -320,7 +381,6 @@ a {
   .searchbar{
     border-radius:10px;
     color:black;
-    width:6rem;
     height:40px;
     font-size:1.3rem;
     text-align: center;
@@ -328,9 +388,8 @@ a {
   }
 }
 
-@media (min-width:1000px) {
+@media (min-width:1200px) {
   .searchbar{
-    
     border-radius:10px;
     color:black;
     width:330px;
@@ -359,6 +418,17 @@ a {
   }
 }
 
+@media (max-width:1200px) {
+  .searchlabel{
+    text-align: center;
+    color:rgb(219, 206, 164);
+    width:330px;
+    text-align: center;
+    display:none;
+    
+  }
+}
+
 .submit-button{
   border-radius:10px;
   margin-top:12px;
@@ -379,8 +449,7 @@ a {
 @media (min-width:768px) {
   .submit-button{
     border-radius:10px;
-    margin-top:12px;
-    width:6rem;
+
     height:40px;
     background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
     color:rgb(226, 188, 62);
@@ -396,7 +465,6 @@ a {
   @media (min-width:1200px) {
     .submit-button{
       border-radius:10px;
-      margin-top:12px;
       width:330px;
       height:40px;
       background: linear-gradient(45deg, rgb(0, 28, 88), rgb(45, 63, 224));
@@ -482,10 +550,11 @@ a {
 .faucet{
   font-family:"Orbitron",bold;
   text-transform:uppercase;
+  font-size:0.7rem;
   letter-spacing: 0.2rem;
   color:rgb(235, 193, 57);
   position:inline-block;
-  margin-top:5px;
+  margin-top:10px;
   text-align: center!important;
 }
 
@@ -584,6 +653,7 @@ a {
   margin-top:15px;
   margin-bottom:10px;
   text-align: center;
+  overflow:hidden;
   text-shadow:2px 2px 0 black,
   1px 3px 0 #000,
   1px 2px 0 #000,

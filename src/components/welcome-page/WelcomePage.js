@@ -7,6 +7,7 @@ import {status_rinkeby_ABI,status_rinkeby_Address} from '../blockchain-data/Stat
 import ReactGA from 'react-ga';
 import { RotateSpinner } from "react-spinners-kit";
 import Center from 'react-center';
+import {Link} from 'react-router-dom';
 import {Statusfeed} from './Statusfeed_modal'
 import './togglebutton.css';
 import './backtotop.css';
@@ -289,18 +290,28 @@ componentWillUnmount(){
        </Row>
       
       <Row>
-      <Col md={2} xs={5}><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input> </Col>    
-      <Col md={3} xs={1}><button className="statusbutton" onClick={() => this.setState({summaryModalShow:true})}><p className="faucet">Status Feed</p></button>
+      <Col md={3} sm={10} lg={2} ><input type="checkbox" checked={this.state.mainnet} onChange={this.toggleChange}></input> </Col>    
+      
+
+      <Col md={5} sm={6} xs={6} lg={3}>
+      <a href= "https://rinkeby.hydrostore.io/" className="accountlink" target="_blank">
+      <button className="dappbutton" >
+      <p className="faucet">Dapp Store</p>
+      </button>
+      </a>
+      </Col>
+
+      <Col md={4} sm={6} xs={6} lg={3}><button className="statusbutton" onClick={() => this.setState({summaryModalShow:true})}><p className="faucet">Status Feed</p></button>
       
       {this.state.summaryModalShow && <Statusfeed
       show={this.state.summaryModalShow}
       onHide={summaryModalClose}
       />}</Col>
 
-      <Col md={3}></Col>
-      <Col><form onSubmit={this.handleSubmit}>
-      <input type="tel" value={this.state.value} onChange={this.handleChange} pattern="^-?[0-9]\d*\.?\d*$" className="searchbar" /> 
-      <input type="submit" value="Submit" className="submit-button"/>
+      
+      <Col md={2} sm={12} xs={12} lg={4}><form onSubmit={this.handleSubmit}>
+      <input  type="tel" value={this.state.value} onChange={this.handleChange} pattern="^-?[0-9]\d*\.?\d*$" className="searchbar" /> 
+      <input  type="submit" value="Submit" className="submit-button"/>
       </form>
       </Col>
       </Row>

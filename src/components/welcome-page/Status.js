@@ -55,7 +55,7 @@ componentDidMount(){
         this.setState({blocks:blockNumber});}
         
   
-        if (this._isMounted){
+        
        
         /*statusContract.getPastEvents("StatusUpdated",{filter:{ein:970},fromBlock:0, toBlock:'latest'})
         .then(events=>{
@@ -75,33 +75,37 @@ componentDidMount(){
         })
         
         .catch((err)=>console.error(err))*/
-        this.setState({my_past_status:[]});
+        if (this._isMounted){
+        this.setState({my_past_status:[]})};
+
         statusContract.events.StatusUpdated({fromBlock:'0', toBlock:'latest'})
         .on('data',(log)=>{
 
-        if( this._isMounted && log.returnValues !==null && log.returnValues.ein == this.props.number){
+        if(this._isMounted && log.returnValues !==null && log.returnValues.ein == this.props.number){
 
         let { returnValues: { ein,status,}, blockNumber,transactionHash } = log
         web3.eth.getBlock(blockNumber, (error, block) => {
         blockNumber = block.timestamp;
         let values = {ein,status,blockNumber,transactionHash}
         
-        this.setState({my_past_status:[...this.state.my_past_status,values]})
+        if (this._isMounted){
+        this.setState({my_past_status:[...this.state.my_past_status,values]})}
         
         var newest = this.state.my_past_status;
         var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
-        if (this._isMounted){
-        this.setState({my_past_status:newsort});
         
-        if( this.state.my_past_status !== 'undefined' && this.state.my_past_status.length > 0){
+        if (this._isMounted){
+        this.setState({my_past_status:newsort})};
+        
+        if(this._isMounted && this.state.my_past_status !== 'undefined' && this.state.my_past_status.length > 0){
         this.setState({check_tx:true},()=>(console.log()))}  
         else{
         this.setState({check_tx:false},()=>(console.log()))}
-        }
+        
         });
       }
     })
-  }     if (this._isMounted){
+       if (this._isMounted){
         this.setState({loading:false})}  
 }
 
@@ -141,7 +145,7 @@ componentDidMount(){
         blocks:'',
         latestblock:'',
         contractaccount:'',
-        summaryModalShow: false,
+        coomentModalShow: false,
         EIN:'',
         check_network:'',
         my_past_status:[],
@@ -162,7 +166,8 @@ componentDidMount(){
 
   this.handleShow = (myStatus)=>{
     if (this._isMounted){
-      this.setState({summaryModalShow:true})
+      this.setState({commentModalShow:true})}
+    if (this._isMounted){
       this.setState({activeStatus:myStatus})}  
     }
   }
@@ -171,7 +176,7 @@ componentDidMount(){
 
   render(){
 
-    let summaryModalClose =() =>this.setState({summaryModalShow:false}); 
+    let commentModalClose =() =>this.setState({commentModalShow:false}); 
     const {loading}=this.state
   
   return (
@@ -208,11 +213,11 @@ componentDidMount(){
         <Col className="col_no_border" md={3}>
         <p></p><Center><button className="commentbutton" onClick={() => this.handleShow(myStatus)}><p className="faucet">Comments</p></button></Center>
         
-        {this.state.summaryModalShow && 
+        {this.state.commentModalShow && 
         <StatusComments
         status_info = {this.state.activeStatus}
-        show={this.state.summaryModalShow}
-        onHide={summaryModalClose}
+        show={this.state.commentModalShow}
+        onHide={commentModalClose}
         />}
         </Col>
         </Row>))}

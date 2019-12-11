@@ -62,15 +62,16 @@ async loadStatusData() {
   var newsort= newest.concat().sort((a,b)=> b.blockNumber- a.blockNumber);
   if (this._isMounted){
   this.setState({all_status_feed:newsort})
- 
-  
+
   }    
  });
  
 }) 
-setTimeout(()=>this.setState({sorted:this.state.all_status_feed},()=> this.setState({loading:false})),3000)
-
+if (this._isMounted){
+setTimeout(()=>this.setState({sorted:this.state.all_status_feed},()=> this.setState({loading:false})),4000)
 }
+}
+
    
 
 componentWillUnmount(){

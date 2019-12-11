@@ -83,9 +83,9 @@ async LogIn(){
      
   const accounts = await web3.eth.getAccounts();
   if (this._isMounted){
-  this.setState({account: accounts[0]});
+  this.setState({account: accounts[0]})};
 
-  const Box = require('3box')}
+  const Box = require('3box')
 
 }
    

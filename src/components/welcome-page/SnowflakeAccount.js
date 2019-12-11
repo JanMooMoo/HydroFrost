@@ -61,8 +61,7 @@ export default class SnowflakeAccount extends Component {
   const{mainnet} = this.state
   const {passedEin}=this.props.location
 
-  if (this._isMounted){
-  this.setState({loading:true})}
+ 
   
   if(this.state.mainnet == true){
   const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://mainnet.infura.io/ws/v3/72e114745bbf4822b987489c119f858b'));
