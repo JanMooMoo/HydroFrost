@@ -240,7 +240,12 @@ Point of Sale, Remittance, Document Signing and Storage, and Compliant Tokenizat
 </FlipPage></Center></Col>
 </Row>
 
-<Row><Col><h1> </h1></Col></Row>
+<Row>
+<Col xs={12} md={12} lg={12} >
+<Center><img className='partner-image' xs={12} md={12} lg={12} src={require('../../Images/hydropartners.jpg')} alt="snow" /></Center>
+</Col>
+</Row>
+
 <Row><Col><h1> </h1></Col></Row>
 <Row><Col className="market"><Center><h6 className="banana">If you find this Application Helpful and Wish to Support our Coffee in the Morning, You can do so by Tipping us on this Address 0x20F857b13D6C546eC77aFE47317EA3c5a75c1c6c ,If you found unpleasant bugs or have a suggestion, You can contact us at MyHydroFrost@gmail.com. Thank you! & Happy BUIDLING! </h6></Center></Col></Row>
 <a href= "/Builders#moon" className="accountlink"> <button className="topButton">Top</button></a>
