@@ -30,7 +30,7 @@
     "socket.io": "^2.3.0",
     "styled-components": "^4.4.0",
     "uifx": "^2.0.3",
-    "web3": "^1.2.2"
+    "web3": "^4.16.0"
   },
   "scripts": {
     "start": "react-scripts start",
